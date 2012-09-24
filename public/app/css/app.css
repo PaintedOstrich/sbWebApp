@@ -1,5 +1,7 @@
 /* app css stylesheet */
-
+body {
+  padding-top: 40px;
+}
 .phones {
   list-style: none;
 }
