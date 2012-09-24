@@ -15,24 +15,35 @@
 
 //PhoneDetailCtrl.$inject = ['$scope', '$routeParams', 'Phone'];
 
+
+/**
+ * Highlight the focused tab.
+ * @param {String} className The class name of the li dom node to highlight.
+ */
+function highLight(className) {
+  var navBar = $('#mainNav');
+  navBar.find('li.active').removeClass('active');
+  navBar.find('li.' + className).addClass('active');
+}
+
 function ProfileCtrl($scope) {
-  console.log('Profile Ctrl created!');
+  highLight('profile');
 }
 ProfileCtrl.$inject = ['$scope'];
 
 function HomeCtrl($scope) {
-  console.log('Home Ctrl created!');
+  highLight('home');
 }
 
 function BetCtrl($scope) {
-  debugger;
+  highLight('bet');
 }
 
 function CommunityCtrl($scope) {
-  console.log('Community Ctrl created!');
+  highLight('community');
 }
 
 function FAQCtrl($scope) {
-  console.log('FAQ Ctrl created!');
+  highLight('faq');
 }
 
