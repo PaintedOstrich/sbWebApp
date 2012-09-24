@@ -2,7 +2,7 @@
 
 /* App Module */
 
-angular.module('phonecat', ['phonecatFilters', 'phonecatServices']).
+angular.module('sportsbet', ['phonecatFilters', 'phonecatServices']).
   config(['$routeProvider', function($routeProvider) {
   $routeProvider.
       when('/phones', {templateUrl: 'app/partials/phone-list.html',   controller: PhoneListCtrl}).

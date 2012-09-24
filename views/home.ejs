@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="phonecat">
+<html lang="en" ng-app="sportsbet">
 <head>
   <meta charset="utf-8">
-  <title>Google Phone Gallery</title>
+  <title>Sports Bet</title>
   <link rel="stylesheet" href="app/css/app.css">
   <link rel="stylesheet" href="app/css/bootstrap.css">
   <script src="app/lib/angular/angular.js"></script>
@@ -13,8 +13,16 @@
   <script src="app/lib/angular/angular-resource.js"></script>
 </head>
 <body>
-  <%= user.name %>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <a class="brand" href="#">Title</a>
+        <ul class="nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">Link</a></li>
+          <li><a href="#">Link</a></li>
+        </ul>
+      </div>
+    </div>
   <div ng-view></div>
-
 </body>
 </html>
