@@ -25,7 +25,7 @@ function HomeCtrl($scope) {
 }
 
 function BetCtrl($scope) {
-  console.log('Bet Ctrl created!');
+  debugger;
 }
 
 function CommunityCtrl($scope) {

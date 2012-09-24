@@ -5,18 +5,12 @@
   <title>Sports Bet</title>
   <link rel="stylesheet" href="app/css/app.css">
   <link rel="stylesheet" href="app/css/bootstrap.css">
-  <script src="app/lib/angular/angular.js"></script>
-  <script src="app/js/app.js"></script>
-  <script src="app/js/controllers.js"></script>
-  <script src="app/js/filters.js"></script>
-  <script src="app/js/services.js"></script>
-  <script src="app/lib/angular/angular-resource.js"></script>
 </head>
 <body>
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <a class="brand" href="/home">Sports Bet</a>
-        <ul class="nav">
+        <ul class="nav" id="mainNav">
           <li class="active"><a href="/home">Home</a></li>
           <li><a href="/profile">Profile</a></li>
           <li><a href="/bet">Bet</a></li>
@@ -26,5 +20,13 @@
       </div>
     </div>
   <div ng-view></div>
+
+  <script src="app/lib/jquery/jquery-1.8.2.min.js"></script>
+  <script src="app/lib/angular/angular.js"></script>
+  <script src="app/js/app.js"></script>
+  <script src="app/js/controllers.js"></script>
+  <script src="app/js/filters.js"></script>
+  <script src="app/js/services.js"></script>
+  <script src="app/lib/angular/angular-resource.js"></script>
 </body>
 </html>
