@@ -1,11 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes" />
-    <title>Home</title>
-  </head>
-  <body>
-    <h1>You are on home page!</h1>
-  </body>
+<html lang="en" ng-app="phonecat">
+<head>
+  <meta charset="utf-8">
+  <title>Google Phone Gallery</title>
+  <link rel="stylesheet" href="app/css/app.css">
+  <link rel="stylesheet" href="app/css/bootstrap.css">
+  <script src="app/lib/angular/angular.js"></script>
+  <script src="app/js/app.js"></script>
+  <script src="app/js/controllers.js"></script>
+  <script src="app/js/filters.js"></script>
+  <script src="app/js/services.js"></script>
+  <script src="app/lib/angular/angular-resource.js"></script>
+</head>
+<body>
+  <%= req.body %>
+  <%= JSON.stringify(app) %>
+  <div ng-view></div>
+
+</body>
 </html>
