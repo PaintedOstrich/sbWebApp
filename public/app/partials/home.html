@@ -1,1 +1,5 @@
-<h1>This is the home page</h1>
+<h1 ng-show="userId">This is the home page for logged in user</h1>
+
+<div class="visitor" ng-hide="userId">
+  <h1 >This is the home page for visitor</h1>
+</div>

@@ -26,24 +26,36 @@ function highLight(className) {
   navBar.find('li.' + className).addClass('active');
 }
 
+/**
+ * Fetch global variables (user id and etc.) into current scope.
+ */
+function fetchGlobals(scope) {
+  scope.userId = $('#userid').attr('data');
+}
+
 function ProfileCtrl($scope) {
   highLight('profile');
+  fetchGlobals($scope);
 }
 ProfileCtrl.$inject = ['$scope'];
 
 function HomeCtrl($scope) {
   highLight('home');
+  fetchGlobals($scope);
 }
 
 function BetCtrl($scope) {
   highLight('bet');
+  fetchGlobals($scope);
 }
 
 function CommunityCtrl($scope) {
   highLight('community');
+  fetchGlobals($scope);
 }
 
 function FAQCtrl($scope) {
   highLight('faq');
+  fetchGlobals($scope);
 }
 
