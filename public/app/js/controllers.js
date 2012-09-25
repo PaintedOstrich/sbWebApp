@@ -34,7 +34,7 @@ function LandingCtrl($scope, $location, fb) {
     var permissions = {scope: 'email,user_likes'};
     var promise = fb.login($scope, permissions);
     promise.then(function(response) {
-      $location.path('/profile');
+      $location.path('/bettype');
     });
   }
 }
@@ -44,3 +44,8 @@ function ProfileCtrl() {
   console.log('profile');
 }
 
+
+function BetTypeCtrl($scope, $location, fb) {
+  console.log('choose social or vegas');
+}
+BetTypeCtrl.$inject = ['$scope', '$location', 'fb']
