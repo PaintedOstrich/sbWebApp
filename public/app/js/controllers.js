@@ -25,7 +25,9 @@ function LandingCtrl($scope, $location, fb) {
     var permissions = {scope: 'email,user_likes'};
     var promise = fb.login($scope, permissions);
     promise.then(function(response) {
-      $location.path('/bettype');
+      if (response.authResponse) {
+        $location.path('/bettype');
+      }
     });
   }
 }
