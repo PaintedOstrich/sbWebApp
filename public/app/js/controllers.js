@@ -18,14 +18,22 @@
 
 // The very first controller to be reached that routes traffic to 
 // landing page for visitors and profile page for returning user.
-function RouteCtrl($scope, loggedIn) {
+function RouteCtrl($scope, $location, loggedIn) {
   // TODO(Di) We need to figure out how to incorporate FB sdk into this flow.
   if (loggedIn) {
-    console.log('loggedIn');
+    $location.path('/profile');
   } else {
-    
+    $location.path('/login');
   }
 }
-RouteCtrl.$inject = ['$scope', 'loggedIn'];
+RouteCtrl.$inject = ['$scope', '$location', 'loggedIn'];
 
+
+function LandingCtrl() {
+  console.log('landing');
+}
+
+function ProfileCtrl() {
+  console.log('profile');
+}
 
