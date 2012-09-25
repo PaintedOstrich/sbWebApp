@@ -7,46 +7,31 @@
   <link rel="stylesheet" href="app/css/bootstrap.css">
 </head>
 <body>
-    <!-- store global variables -->
-    <div style="display:none;" 
-        id="userid" data="<%= user ? user.id : '' %>"></div>
-
-    <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <a class="brand" href="/home">Sports Bet</a>
-        <ul class="nav" id="mainNav">
-          <li class="active home"><a href="/home">Home</a></li>
-          <li class="profile"><a href="/profile">Profile</a></li>
-          <li class="bet"><a href="/bet">Bet</a></li>
-          <li class="community"><a href="/community">Community</a></li>
-          <li class="faq"><a href="/faq">FAQ</a></li>
-        </ul>
-      </div>
-    </div>
-  <div ng-view></div>
+  <ng-view></ng-view>
 
   <div id="fb-root"></div>
-  <script type="text/javascript">
+  <script>
     window.fbAsyncInit = function() {
+      console.log('fb inited');
       FB.init({
-        appId      : '<%= app.id %>', // App ID
-        //channelUrl : '<%= url_no_scheme('/channel.html') %>', // Channel File
+        appId      : '403763966344588', // App ID
+        channelUrl : '//'+window.location.hostname+'/channel', // Channel File
         status     : true, // check login status
         cookie     : true, // enable cookies to allow the server to access the session
-        xfbml      : true // parse XFBML
+        xfbml      : true  // parse XFBML
       });
 
-      FB.Canvas.setAutoGrow();
+      // Additional initialization code here
     };
 
     // Load the SDK Asynchronously
-    (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/all.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+    (function(d){
+       var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement('script'); js.id = id; js.async = true;
+       js.src = "//connect.facebook.net/en_US/all.js";
+       ref.parentNode.insertBefore(js, ref);
+     }(document));
   </script>
   <script src="app/lib/jquery/jquery-1.8.2.min.js"></script>
   <script src="app/lib/angular/angular.js"></script>
@@ -55,5 +40,6 @@
   <script src="app/js/filters.js"></script>
   <script src="app/js/services.js"></script>
   <script src="app/lib/angular/angular-resource.js"></script>
+  <script>console.log('hello!!!')</script>
 </body>
 </html>
