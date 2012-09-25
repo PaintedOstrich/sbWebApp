@@ -36,12 +36,17 @@ LandingCtrl.$inject = ['$scope', '$location', 'fb'];
 
 // Controller for user profile screen
 function ProfileCtrl($scope, $location, fb) {
+  $scope.user = {};
   $scope.newBet = function() {
     $location.path('bettype');
   }
 
   fb.api($scope, '/me').then(function(response) {
-    console.log(response);
+    if (response.username) {
+      $scope.user = response;
+    } else {
+     console.error('Failed to load the current user!'); 
+    }
   });
 }
 ProfileCtrl.$inject = ['$scope', '$location', 'fb'];
