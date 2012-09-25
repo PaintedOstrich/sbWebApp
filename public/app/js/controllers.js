@@ -18,15 +18,16 @@
 
 // The very first controller to be reached that routes traffic to 
 // landing page for visitors and profile page for returning user.
-function RouteCtrl($scope, $location, fbSdk) {
-  console.log(fbSdk);
-  if (fbSdk) {
+function RouteCtrl($scope, $location, fb) {
+  var promise = fb.getLoginStatus($scope);
+  promise.then(function(uid, accessToken) {
+    console.log('user logged in');
     $location.path('/profile');
-  } else {
-    $location.path('/login');
-  }
+  }, function(reason) {
+    console.log(reason);
+  });
 }
-RouteCtrl.$inject = ['$scope', '$location', 'fbSdk'];
+RouteCtrl.$inject = ['$scope', '$location', 'fb'];
 
 
 function LandingCtrl() {
