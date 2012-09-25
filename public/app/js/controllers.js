@@ -31,7 +31,7 @@ function ProfileCtrl($scope, $location) {
     $location.path('bettype');
   }
 }
-LandingCtrl.$inject = ['$scope', '$location'];
+ProfileCtrl.$inject = ['$scope', '$location'];
 
 
 function BetTypeCtrl($scope, $location, fb) {

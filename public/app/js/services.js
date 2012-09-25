@@ -9,7 +9,7 @@
 //   });
 // });
 
-angular.module('facebookService', ['ng']).factory('fb', function($q) {
+angular.module('facebookService', ['ng']).factory('fb', function($q, $timeout) {
   if (!FB) {
     throw new Error('FB is not available!');
   }
@@ -21,7 +21,7 @@ angular.module('facebookService', ['ng']).factory('fb', function($q) {
     var deferred = $q.defer();
     // Force everythig to be async. Because FB calls callback syncrhonously
     // sometimes and this may break scope.$apply(or really does it?)
-    setTimeout(function() {
+    $timeout(function() {
       FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
           var uid = response.authResponse.userID;
@@ -51,7 +51,7 @@ angular.module('facebookService', ['ng']).factory('fb', function($q) {
     var permissions = perms || {};
     var deferred = $q.defer();
 
-    setTimeout(function() {
+    $timeout(function() {
       FB.login(function(response) {
         if (response.authResponse) {
           scope.$apply(function() {
