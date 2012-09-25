@@ -12,6 +12,10 @@ describe('SportsBet controllers', function() {
         mockFb.promises.getLoginStatus = $q.defer();
         return mockFb.promises.getLoginStatus.promise;
     }
+    mockFb.api = function() {
+        mockFb.promises.api = $q.defer();
+        return mockFb.promises.api.promise;
+    }
   }));
 
   describe('RouteCtrl', function() {
@@ -45,6 +49,28 @@ describe('SportsBet controllers', function() {
         mockFb.promises.getLoginStatus.resolve({status: 'not connected'});
       });
       expect(location.path).toHaveBeenCalledWith('/login');
+    });
+  });
+
+
+  describe('ProfileCtrl', function() {
+    var scope, ctrl, mockLocation;
+
+    beforeEach(inject(function($rootScope, $controller) {
+      mockLocation = {
+        path: jasmine.createSpy('location')
+      }
+      scope = $rootScope.$new();
+      ctrl = $controller(ProfileCtrl,
+          {$scope: scope, fb: mockFb, $location: mockLocation});
+    }));
+
+    it('should set user obj if fb.api request succeed', function() {
+      expect(scope.user).toEqual({});
+      scope.$apply(function() {
+        mockFb.promises.api.resolve({username: 'abc'});
+      });
+      expect(scope.user).toEqual({username: 'abc'});
     });
   });
 });
