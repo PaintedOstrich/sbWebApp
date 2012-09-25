@@ -10,7 +10,7 @@ describe('SportsBet controllers', function() {
 
     beforeEach(inject(function($rootScope, $controller) {
       scope = $rootScope.$new();
-      ctrl = $controller(RouteCtrl, {$scope: scope});
+      ctrl = $controller(RouteCtrl, {$scope: scope, loggedIn: true});
     }));
     
     it('should pass', function() {
