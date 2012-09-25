@@ -47,6 +47,4 @@ server.listen(app.get('port'), function(){
 
 // Home becomes the only point of entry.
 app.get('/', routes.home);
-app.get('/*', function(req, res) {
-  res.redirect('/');
-});
+app.post('/', routes.home);
