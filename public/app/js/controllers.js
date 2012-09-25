@@ -39,6 +39,10 @@ function ProfileCtrl($scope, $location, fb) {
   $scope.newBet = function() {
     $location.path('bettype');
   }
+
+  fb.api($scope, '/me').then(function(response) {
+    console.log(response);
+  });
 }
 ProfileCtrl.$inject = ['$scope', '$location', 'fb'];
 

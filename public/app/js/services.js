@@ -39,5 +39,29 @@ angular.module('facebookService', ['ng']).factory('fb', function($q, $timeout) {
     return deferred.promise;
   }
 
+
+  qFB.api = function(scope, a, b, c, d, e) {
+    var deferred = $q.defer();
+    var callback = function(response) {
+      scope.$apply(function() {
+        deferred.resolve(response);
+      });
+    }
+    $timeout(function() {
+      if (b == undefined) {
+        FB.api(a, callback);
+      } else if (c == undefined) {
+        FB.api(a, b, callback);
+      } else if (d == undefined) {
+        FB.api(a, b, c, callback);
+      } else if (e == undefined){
+        FB.api(a, b, c, d, callback);
+      } else {
+        throw new Error('fb proxy cannot handle so many params!');
+      }
+    }, 1);
+    return deferred.promise;
+  }
+
   return qFB;
 });
