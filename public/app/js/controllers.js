@@ -14,6 +14,7 @@ function RouteCtrl($scope, $location, fb) {
 }
 RouteCtrl.$inject = ['$scope', '$location', 'fb'];
 
+
 // Controller for landing screen for visitor
 function LandingCtrl($scope, $location, fb) {
   $scope.login = function() {
@@ -26,6 +27,7 @@ function LandingCtrl($scope, $location, fb) {
 }
 LandingCtrl.$inject = ['$scope', '$location', 'fb'];
 
+
 // Controller for user profile screen
 function ProfileCtrl($scope, $location) {
   $scope.newBet = function() {
@@ -33,6 +35,7 @@ function ProfileCtrl($scope, $location) {
   }
 }
 ProfileCtrl.$inject = ['$scope', '$location'];
+
 
 // Controller for bet type screen
 function BetTypeCtrl($scope, $location, fb) {
