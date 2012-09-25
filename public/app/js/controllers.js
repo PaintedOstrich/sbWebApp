@@ -29,16 +29,16 @@ function RouteCtrl($scope, $location, fb) {
 RouteCtrl.$inject = ['$scope', '$location', 'fb'];
 
 
-function LandingCtrl($scope, fb) {
+function LandingCtrl($scope, $location, fb) {
   $scope.login = function() {
     var permissions = {scope: 'email,user_likes'};
     var promise = fb.login($scope, permissions);
     promise.then(function(response) {
-      console.log(response);
+      $location.path('/profile');
     });
   }
 }
-LandingCtrl.$inject = ['$scope', 'fb'];
+LandingCtrl.$inject = ['$scope', '$location', 'fb'];
 
 function ProfileCtrl() {
   console.log('profile');
