@@ -29,12 +29,12 @@ LandingCtrl.$inject = ['$scope', '$location', 'fb'];
 
 
 // Controller for user profile screen
-function ProfileCtrl($scope, $location) {
+function ProfileCtrl($scope, $location, fb) {
   $scope.newBet = function() {
     $location.path('bettype');
   }
 }
-ProfileCtrl.$inject = ['$scope', '$location'];
+ProfileCtrl.$inject = ['$scope', '$location', 'fb'];
 
 
 // Controller for bet type screen
