@@ -3,7 +3,16 @@
 /* jasmine specs for controllers go here */
 describe('SportsBet controllers', function() {
 
-  beforeEach(function(){});
+  var mockFb;
+  beforeEach(inject(function($q){
+    mockFb = {
+      promises: {}
+    }
+    mockFb.getLoginStatus = function() {
+        mockFb.promises.getLoginStatus = $q.defer();
+        return mockFb.promises.getLoginStatus.promise;
+    }
+  }));
 
   describe('RouteCtrl', function() {
     var scope, $ctrl;
@@ -18,16 +27,23 @@ describe('SportsBet controllers', function() {
         path: jasmine.createSpy('location')
       }
       var ctrl = $ctrl(RouteCtrl,
-          {$scope: scope, loggedIn: true, $location: location});
+          {$scope: scope, fb: mockFb, $location: location});
+
+      scope.$apply(function() {
+        mockFb.promises.getLoginStatus.resolve('uid', 'token');
+      });
       expect(location.path).toHaveBeenCalledWith('/profile');
     });
 
-    it('should redirect to profile', function() {
+    it('should redirect to login page', function() {
       var location = {
         path: jasmine.createSpy('location')
       }
       var ctrl = $ctrl(RouteCtrl,
-          {$scope: scope, loggedIn: false, $location: location});
+          {$scope: scope, fb: mockFb, $location: location});
+      scope.$apply(function() {
+        mockFb.promises.getLoginStatus.reject('not logged in');
+      });
       expect(location.path).toHaveBeenCalledWith('/login');
     });
   });

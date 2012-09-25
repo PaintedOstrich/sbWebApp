@@ -21,10 +21,9 @@
 function RouteCtrl($scope, $location, fb) {
   var promise = fb.getLoginStatus($scope);
   promise.then(function(uid, accessToken) {
-    console.log('user logged in');
     $location.path('/profile');
   }, function(reason) {
-    console.log(reason);
+    $location.path('/login');
   });
 }
 RouteCtrl.$inject = ['$scope', '$location', 'fb'];

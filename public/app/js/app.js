@@ -9,6 +9,6 @@ angular.module('sportsbet', ['phonecatFilters', 'facebookService']).
       when('/login', {templateUrl: 'app/partials/home.html',   controller: LandingCtrl}).
       when('/profile', {templateUrl: 'app/partials/profile.html',   controller: ProfileCtrl}).
       otherwise({redirectTo: '/'});
-}]).constant('fbSdk', FB);
+}]);
 
 
