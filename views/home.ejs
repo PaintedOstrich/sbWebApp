@@ -11,6 +11,19 @@
   <div id="fb-root"></div>
 
   <script src="app/lib/jquery/jquery-1.8.2.min.js"></script>
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '403763966344588', // App ID
+        channelUrl : '//'+window.location.hostname+'/channel', // Channel File
+        status     : true, // check login status
+        cookie     : true, // enable cookies to allow the server to access the session
+        xfbml      : true  // parse XFBML
+      });
+    };
+  </script>
+  <script src="//connect.facebook.net/en_US/all.js"></script>
+
   <script src="app/lib/angular/angular.js"></script>
   <script src="app/js/app.js"></script>
   <script src="app/js/controllers.js"></script>
