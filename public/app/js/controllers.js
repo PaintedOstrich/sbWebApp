@@ -40,9 +40,12 @@ function LandingCtrl($scope, $location, fb) {
 }
 LandingCtrl.$inject = ['$scope', '$location', 'fb'];
 
-function ProfileCtrl() {
-  console.log('profile');
+function ProfileCtrl($scope, $location) {
+  $scope.newBet = function() {
+    $location.path('bettype');
+  }
 }
+LandingCtrl.$inject = ['$scope', '$location'];
 
 
 function BetTypeCtrl($scope, $location, fb) {
