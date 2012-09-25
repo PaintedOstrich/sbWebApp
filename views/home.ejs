@@ -8,31 +8,8 @@
 </head>
 <body>
   <ng-view></ng-view>
-
   <div id="fb-root"></div>
-  <script>
-    window.fbAsyncInit = function() {
-      console.log('fb inited');
-      FB.init({
-        appId      : '403763966344588', // App ID
-        channelUrl : '//'+window.location.hostname+'/channel', // Channel File
-        status     : true, // check login status
-        cookie     : true, // enable cookies to allow the server to access the session
-        xfbml      : true  // parse XFBML
-      });
 
-      // Additional initialization code here
-    };
-
-    // Load the SDK Asynchronously
-    (function(d){
-       var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-       if (d.getElementById(id)) {return;}
-       js = d.createElement('script'); js.id = id; js.async = true;
-       js.src = "//connect.facebook.net/en_US/all.js";
-       ref.parentNode.insertBefore(js, ref);
-     }(document));
-  </script>
   <script src="app/lib/jquery/jquery-1.8.2.min.js"></script>
   <script src="app/lib/angular/angular.js"></script>
   <script src="app/js/app.js"></script>
@@ -40,6 +17,5 @@
   <script src="app/js/filters.js"></script>
   <script src="app/js/services.js"></script>
   <script src="app/lib/angular/angular-resource.js"></script>
-  <script>console.log('hello!!!')</script>
 </body>
 </html>

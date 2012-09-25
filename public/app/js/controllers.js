@@ -16,46 +16,17 @@
 //PhoneDetailCtrl.$inject = ['$scope', '$routeParams', 'Phone'];
 
 
-/**
- * Highlight the focused tab.
- * @param {String} className The class name of the li dom node to highlight.
- */
-function highLight(className) {
-  var navBar = $('#mainNav');
-  navBar.find('li.active').removeClass('active');
-  navBar.find('li.' + className).addClass('active');
+// The very first controller to be reached that routes traffic to 
+// landing page for visitors and profile page for returning user.
+function RouteCtrl($scope) {
+  // TODO(Di) We need to figure out how to incorporate FB sdk into this flow.
+  var loggedIn = true;
+  if (loggedIn) {
+    
+  } else {
+    
+  }
 }
+RouteCtrl.$inject = ['$scope'];
 
-/**
- * Fetch global variables (user id and etc.) into current scope.
- */
-function fetchGlobals(scope) {
-  scope.userId = $('#userid').attr('data');
-}
-
-function ProfileCtrl($scope) {
-  highLight('profile');
-  fetchGlobals($scope);
-}
-ProfileCtrl.$inject = ['$scope'];
-
-function HomeCtrl($scope) {
-  highLight('home');
-  fetchGlobals($scope);
-}
-
-function BetCtrl($scope) {
-  highLight('bet');
-  fetchGlobals($scope);
-}
-
-function CommunityCtrl($scope) {
-  highLight('community');
-  fetchGlobals($scope);
-}
-
-function FAQCtrl($scope) {
-  highLight('faq');
-  fetchGlobals($scope);
-}
 
