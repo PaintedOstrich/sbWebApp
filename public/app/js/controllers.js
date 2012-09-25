@@ -29,9 +29,12 @@ function RouteCtrl($scope, $location, fb) {
 RouteCtrl.$inject = ['$scope', '$location', 'fb'];
 
 
-function LandingCtrl() {
-  console.log('landing');
+function LandingCtrl($scope) {
+  $scope.login = function() {
+    console.log('loggin in!!');
+  }
 }
+LandingCtrl.$inject = ['$scope'];
 
 function ProfileCtrl() {
   console.log('profile');
