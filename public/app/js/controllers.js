@@ -7,7 +7,7 @@
 //   $scope.phone = Phone.get({phoneId: $routeParams.phoneId}, function(phone) {
 //     $scope.mainImageUrl = 'app/' + phone.images[0];
 //   });
-// 
+//
 //   $scope.setImage = function(imageUrl) {
 //     $scope.mainImageUrl = imageUrl;
 //   }
@@ -16,7 +16,7 @@
 //PhoneDetailCtrl.$inject = ['$scope', '$routeParams', 'Phone'];
 
 
-// The very first controller to be reached that routes traffic to 
+// The very first controller to be reached that routes traffic to
 // landing page for visitors and profile page for returning user.
 function RouteCtrl($scope, $location, fb) {
   var promise = fb.getLoginStatus($scope);
@@ -46,6 +46,12 @@ function ProfileCtrl() {
 
 
 function BetTypeCtrl($scope, $location, fb) {
-  console.log('choose social or vegas');
+  $scope.socialBtnPressed = function() {
+    $location.path('/socialbet');
+  }
+
+  $scope.vegasBtnPressed = function() {
+    $location.path('vegasbet');
+  }
 }
 BetTypeCtrl.$inject = ['$scope', '$location', 'fb']

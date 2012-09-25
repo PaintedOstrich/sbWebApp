@@ -7,8 +7,11 @@ angular.module('sportsbet', ['phonecatFilters', 'facebookService']).
   $routeProvider.
       when('/', {templateUrl: 'app/partials/loading.html',   controller: RouteCtrl}).
       when('/login', {templateUrl: 'app/partials/landing.html',   controller: LandingCtrl}).
-      when('/bettype', {templateUrl: 'app/partials/bettype.html',   controller: BetTypeCtrl}).
       when('/profile', {templateUrl: 'app/partials/profile.html',   controller: ProfileCtrl}).
+      // Betting routes
+      when('/bettype', {templateUrl: 'app/partials/bettype.html',   controller: BetTypeCtrl}).
+      when('/socialbet', {templateUrl: 'app/partials/faq.html',   controller: BetTypeCtrl}).
+      when('/vegasbet', {templateUrl: 'app/partials/community.html',   controller: BetTypeCtrl}).
       otherwise({redirectTo: '/'});
 }]);
 

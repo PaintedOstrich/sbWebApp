@@ -8,3 +8,9 @@ body {
   top: 50%;
   left: 50%;
 }
+
+.betTypes {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
