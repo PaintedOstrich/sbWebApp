@@ -16,26 +16,11 @@ angular.module('facebookService', ['ng']).factory('fb', function($q, $timeout) {
     // sometimes and this may break scope.$apply(or really does it?)
     $timeout(function() {
       FB.getLoginStatus(function(response) {
-        if (response.status === 'connected') {
-          var uid = response.authResponse.userID;
-          var accessToken = response.authResponse.accessToken;
-          scope.$apply(function() {
-            deferred.resolve(uid, accessToken);
-          });
-        } else if (response.status === 'not_authorized') {
-          // the user is logged in to Facebook,
-          // but has not authenticated your app
-          scope.$apply(function() {
-            deferred.reject('Not Authorized!');
-          });
-        } else {
-          scope.$apply(function() {
-            deferred.reject('Not Logged In');
-          })
-        }
-       });
+        scope.$apply(function() {
+          deferred.resolve(response);
+        });
+      });
     }, 1);
-
     return deferred.promise;
   }
 

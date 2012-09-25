@@ -30,7 +30,7 @@ describe('SportsBet controllers', function() {
           {$scope: scope, fb: mockFb, $location: location});
 
       scope.$apply(function() {
-        mockFb.promises.getLoginStatus.resolve('uid', 'token');
+        mockFb.promises.getLoginStatus.resolve({status: 'connected'});
       });
       expect(location.path).toHaveBeenCalledWith('/profile');
     });
@@ -42,7 +42,7 @@ describe('SportsBet controllers', function() {
       var ctrl = $ctrl(RouteCtrl,
           {$scope: scope, fb: mockFb, $location: location});
       scope.$apply(function() {
-        mockFb.promises.getLoginStatus.reject('not logged in');
+        mockFb.promises.getLoginStatus.resolve({status: 'not connected'});
       });
       expect(location.path).toHaveBeenCalledWith('/login');
     });

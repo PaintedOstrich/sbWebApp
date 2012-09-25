@@ -6,10 +6,14 @@
 // landing page for visitors and profile page for returning user.
 function RouteCtrl($scope, $location, fb) {
   var promise = fb.getLoginStatus($scope);
-  promise.then(function(uid, accessToken) {
-    $location.path('/profile');
-  }, function(reason) {
-    $location.path('/login');
+  promise.then(function(response) {
+    if (response.status === 'connected') {
+      $location.path('/profile');
+    } else {
+      // the user is not logged in to Facebook
+      // or has not authenticated your app
+      $location.path('/login');
+    }
   });
 }
 RouteCtrl.$inject = ['$scope', '$location', 'fb'];
