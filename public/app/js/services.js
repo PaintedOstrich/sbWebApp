@@ -46,5 +46,27 @@ angular.module('facebookService', ['ng']).factory('fb', function($q) {
     return deferred.promise;
   }
 
+
+  qFB.login = function(scope, perms) {
+    var permissions = perms || {};
+    var deferred = $q.defer();
+
+    setTimeout(function() {
+      FB.login(function(response) {
+        if (response.authResponse) {
+          scope.$apply(function() {
+            deferred.resolve(response);
+          });
+        } else {
+          console.log('User cancelled login or did not fully authorize.');
+          scope.$apply(function() {
+            deferred.reject('Not Logged In');
+          })
+        }
+      }, permissions);
+    }, 1);
+    return deferred.promise;
+  }
+
   return qFB;
 });
