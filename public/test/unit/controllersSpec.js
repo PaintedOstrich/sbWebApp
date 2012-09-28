@@ -75,4 +75,40 @@ describe('SportsBet controllers', function() {
       expect(scope.user).toEqual({username: 'abc'});
     });
   });
+
+
+  describe('SocialBetCtrl', function() {
+    var scope, ctrl;
+
+    beforeEach(inject(function($rootScope, $controller) {
+      scope = $rootScope.$new();
+      ctrl = $controller(SocialBetCtrl,
+          {$scope: scope});
+    }));
+
+    it('should add friend', function() {
+      expect(scope.selectedFriends.length).toBe(0);
+      scope.addFriend();
+      expect(scope.selectedFriends.length).toBe(1);
+    });
+
+    it('should remove friend', function() {
+      var oldArr = ['a', 'b', 'c'];
+      var newArr = ['a', 'c'];
+      scope.selectedFriends = oldArr;
+      scope.removeFriend(1);
+      expect(scope.selectedFriends).toEqual(newArr);
+      
+      oldArr = [];
+      scope.selectedFriends = oldArr;
+      scope.removeFriend(1);
+      expect(scope.selectedFriends).toEqual([]);
+      
+      var oldArr = ['a', 'b'];
+      var newArr = ['a', 'b'];
+      scope.selectedFriends = oldArr;
+      scope.removeFriend(-5);
+      expect(scope.selectedFriends).toEqual(newArr);
+    });
+  });
 });

@@ -45,7 +45,7 @@ function ProfileCtrl($scope, $location, fb) {
     if (response.username) {
       $scope.user = response;
     } else {
-     console.error('Failed to load the current user!'); 
+     console.error('Failed to load the current user!');
     }
   });
 }
@@ -63,3 +63,23 @@ function BetTypeCtrl($scope, $location, fb) {
   }
 }
 BetTypeCtrl.$inject = ['$scope', '$location', 'fb']
+
+
+// Controller for social bet screen
+function SocialBetCtrl($scope) {
+  $scope.selectedFriends = [];
+
+  $scope.addFriend = function() {
+    $scope.selectedFriends.push({});
+  }
+
+  $scope.removeFriend = function(index) {
+    // We only accept positive number here as
+    // negative number will do rever splice which we don't want.
+    if (index < 0) {
+      index *= -1;
+    }
+    $scope.selectedFriends.splice(index, 1);
+  }
+}
+SocialBetCtrl.$inject = ['$scope'];

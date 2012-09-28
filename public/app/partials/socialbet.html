@@ -1,7 +1,11 @@
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span6" style="border:5px;border-style:solid;">
-      Choose some friends.
+      <button ng-click="addFriend()">Add Friend</button>
+      <div ng-repeat="friend in selectedFriends">
+       <input type="text" ng-model="friend.name" />
+       <span ng-click="removeFriend($index)" style="cursor:pointer;"> X </span>
+      </div>
     </div>
     <div class="span6" style="border:5px;border-style:solid;">
       Choose something to bet on.
