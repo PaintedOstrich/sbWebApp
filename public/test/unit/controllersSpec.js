@@ -3,6 +3,8 @@
 /* jasmine specs for controllers go here */
 describe('SportsBet controllers', function() {
 
+  // The fb service mock that does nothing but returning a promise,
+  // imitating the api of actual fb service in services.js.
   var mockFb;
   beforeEach(inject(function($q){
     mockFb = {
