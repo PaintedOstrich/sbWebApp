@@ -18,10 +18,14 @@ body {
 /* Style for SocialBet.html */
 .friendsPanel {
   min-height: 300px !important;
+  border:5px;
+  border-style:solid;
 }
 
 .eventsPanel {
   min-height: 300px !important;
+  border:5px;
+  border-style:solid;
 }
 
 .sportsListing {
