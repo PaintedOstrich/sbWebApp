@@ -77,6 +77,40 @@ function SocialBetCtrl($scope) {
     {id: 'e5', name: 'Football Final'}
   ];
 
+  $scope.currentPanel = 'friendsPanel';
+  $scope.panels = [
+    'friendsPanel',
+    'eventsPanel',
+    'configurePanel'
+  ]
+
+  // Figure out if the left arrow should be enabled.
+  $scope.leftArrowEnabled = function() {
+    var index = $scope.panels.indexOf($scope.currentPanel);
+    return index > 0;
+  }
+
+  // Figure out if the left arrow should be visible.
+  $scope.leftArrowVisible = function() {
+    var index = $scope.panels.indexOf($scope.currentPanel);
+    return index > 0;
+  }
+
+  // Figure out if the right arrow should be enabled.
+  $scope.rightArrowEnabled = function() {
+    var index = $scope.panels.indexOf($scope.currentPanel);
+    if ($scope.currentPanel == 'friendsPanel') {
+      return $scope.selectedFriends.length > 0;
+    }
+    return false;
+  }
+
+  // Figure out if the right arrow should be visible.
+  $scope.rightArrowVisible = function() {
+    var index = $scope.panels.indexOf($scope.currentPanel);
+    return index < ($scope.panels.length - 1);
+  }
+
   $scope.addFriend = function() {
     $scope.selectedFriends.push({});
   }

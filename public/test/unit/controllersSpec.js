@@ -121,6 +121,32 @@ describe('SportsBet controllers', function() {
 
       scope.eventSelected(eventB);
       expect(scope.selectedEvent).toBe(eventB);
-    })
+    });
+    
+    it('should enable and disable left/right arrow', function() {
+      scope.currentPanel = 'friendsPanel';
+      expect(scope.leftArrowEnabled()).toBe(false);
+      expect(scope.rightArrowEnabled()).toBe(false);
+      expect(scope.leftArrowVisible()).toBe(false);
+      expect(scope.rightArrowVisible()).toBe(true);
+      
+      scope.selectedFriends = [{}];
+      expect(scope.leftArrowEnabled()).toBe(false);
+      expect(scope.rightArrowEnabled()).toBe(true);
+      expect(scope.leftArrowVisible()).toBe(false);
+      expect(scope.rightArrowVisible()).toBe(true);
+      
+      scope.currentPanel = 'eventsPanel';
+      expect(scope.leftArrowEnabled()).toBe(true);
+      expect(scope.rightArrowEnabled()).toBe(false);
+      expect(scope.leftArrowVisible()).toBe(true);
+      expect(scope.rightArrowVisible()).toBe(true);
+      
+      scope.currentPanel = 'configurePanel';
+      expect(scope.leftArrowEnabled()).toBe(true);
+      expect(scope.rightArrowEnabled()).toBe(false);
+      expect(scope.leftArrowVisible()).toBe(true);
+      expect(scope.rightArrowVisible()).toBe(false);
+    });
   });
 });

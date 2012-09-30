@@ -1,22 +1,31 @@
-<div class="container-fluid socialBet">
-  <div class="row-fluid">
-    <div class="span6 friendsPanel">
-      <button ng-click="addFriend()">Add Friend</button>
-      <div ng-repeat="friend in selectedFriends">
-       <input type="text" ng-model="friend.name" />
-       <span ng-click="removeFriend($index)" style="cursor:pointer;"> X </span>
+<div id="myCarousel" class="carousel slide" data-interval="false">
+  <!-- Carousel items -->
+  <div class="carousel-inner">
+    <div class="active item">
+      <div class="container friendsPanel">
+        <button ng-click="addFriend()">Add Friend</button>
+        <div ng-repeat="friend in selectedFriends">
+         <input type="text" ng-model="friend.name" />
+         <span ng-click="removeFriend($index)" style="cursor:pointer;"> X </span>
+        </div>
       </div>
     </div>
-    <div class="span6 eventsPanel">
-      Search: <input ng-model="query">
-      </select>
-      <ul class="sportsListing">
-        <li ng-repeat="event in events | filter:query" class="event">
-          <div ng-click="eventSelected(event)">
-            {{event.name}}
-          </div>
-        </li>
-      </ul>
+    <div class="item">
+      <div class="container eventsPanel">
+        Search: <input ng-model="query">
+        </select>
+        <ul class="sportsListing">
+          <li ng-repeat="event in events | filter:query" class="event">
+            <div ng-click="eventSelected(event)">
+              {{event.name}}
+            </div>
+          </li>
+        </ul>
+      </div>  
     </div>
+    <div class="item">Configure Bet</div>
   </div>
+  <!-- Carousel nav -->
+  <div class="carousel-control left" data-target="#myCarousel" data-slide="prev">&lsaquo;</div>
+  <div class="carousel-control right" data-target="#myCarousel" data-slide="next">&rsaquo;</div>
 </div>

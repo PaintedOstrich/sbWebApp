@@ -17,12 +17,14 @@ body {
 
 /* Style for SocialBet.html */
 .friendsPanel {
+  max-width: 450px;
   min-height: 300px !important;
   border:5px;
   border-style:solid;
 }
 
 .eventsPanel {
+  max-width: 450px;
   min-height: 300px !important;
   border:5px;
   border-style:solid;
