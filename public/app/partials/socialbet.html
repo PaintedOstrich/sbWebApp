@@ -1,14 +1,22 @@
-<div class="container-fluid">
+<div class="container-fluid socialBet">
   <div class="row-fluid">
-    <div class="span6" style="border:5px;border-style:solid;">
+    <div class="span6 friendsPanel" style="border:5px;border-style:solid;">
       <button ng-click="addFriend()">Add Friend</button>
       <div ng-repeat="friend in selectedFriends">
        <input type="text" ng-model="friend.name" />
        <span ng-click="removeFriend($index)" style="cursor:pointer;"> X </span>
       </div>
     </div>
-    <div class="span6" style="border:5px;border-style:solid;">
-      Choose something to bet on.
+    <div class="span6 eventsPanel" style="border:5px;border-style:solid;">
+      Search: <input ng-model="query">
+      </select>
+      <ul class="sportsListing">
+        <li ng-repeat="event in events | filter:query" class="event">
+          <div ng-click="eventSelected(event)">
+            {{event.name}}
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </div>

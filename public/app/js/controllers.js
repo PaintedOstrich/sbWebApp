@@ -68,6 +68,14 @@ BetTypeCtrl.$inject = ['$scope', '$location', 'fb']
 // Controller for social bet screen
 function SocialBetCtrl($scope) {
   $scope.selectedFriends = [];
+  // TODO(Di) Make this laod dynamically.
+  $scope.events = [
+    {id: 'e1', name: 'League Final'},
+    {id: 'e2', name: 'Pingpong Semi-Final'},
+    {id: 'e3', name: 'Pingpong Qualifying'},
+    {id: 'e4', name: 'Soccer Final'},
+    {id: 'e5', name: 'Football Final'}
+  ];
 
   $scope.addFriend = function() {
     $scope.selectedFriends.push({});
@@ -80,6 +88,16 @@ function SocialBetCtrl($scope) {
       index *= -1;
     }
     $scope.selectedFriends.splice(index, 1);
+  }
+
+  // Allow user to configure how much to bet on each friend
+  // selected
+  $scope.configureBet = function() {
+
+  }
+
+  $scope.eventSelected = function(event) {
+
   }
 }
 SocialBetCtrl.$inject = ['$scope'];
