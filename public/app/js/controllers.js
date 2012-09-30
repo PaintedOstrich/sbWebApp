@@ -111,6 +111,22 @@ function SocialBetCtrl($scope) {
     return index < ($scope.panels.length - 1);
   }
 
+  $scope.prevPanel = function(isEnabled) {
+    if (isEnabled) {
+      var index = $scope.panels.indexOf($scope.currentPanel);
+      $scope.currentPanel = $scope.panels[index - 1];
+      $('.carousel').carousel('prev');
+    }
+  }
+
+  $scope.nextPanel = function(isEnabled) {
+    if (isEnabled) {
+      var index = $scope.panels.indexOf($scope.currentPanel);
+      $scope.currentPanel = $scope.panels[index + 1];
+      $('.carousel').carousel('next');
+    }
+  }
+
   $scope.addFriend = function() {
     $scope.selectedFriends.push({});
   }
