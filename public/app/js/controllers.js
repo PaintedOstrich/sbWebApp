@@ -97,7 +97,8 @@ function SocialBetCtrl($scope) {
   }
 
   $scope.eventSelected = function(event) {
-
+    $scope.selectedEvent = event;
+    //$scope.configureBet();
   }
 }
 SocialBetCtrl.$inject = ['$scope'];

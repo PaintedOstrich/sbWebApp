@@ -98,17 +98,29 @@ describe('SportsBet controllers', function() {
       scope.selectedFriends = oldArr;
       scope.removeFriend(1);
       expect(scope.selectedFriends).toEqual(newArr);
-      
+
       oldArr = [];
       scope.selectedFriends = oldArr;
       scope.removeFriend(1);
       expect(scope.selectedFriends).toEqual([]);
-      
+
       var oldArr = ['a', 'b'];
       var newArr = ['a', 'b'];
       scope.selectedFriends = oldArr;
       scope.removeFriend(-5);
       expect(scope.selectedFriends).toEqual(newArr);
     });
+
+    it('should update selected event', function() {
+      var eventA = {name: 'e1'};
+      var eventB = {name: 'e2'};
+      expect(scope.selectedEvent).toBeUndefined();
+
+      scope.eventSelected(eventA);
+      expect(scope.selectedEvent).toBe(eventA);
+
+      scope.eventSelected(eventB);
+      expect(scope.selectedEvent).toBe(eventB);
+    })
   });
 });
