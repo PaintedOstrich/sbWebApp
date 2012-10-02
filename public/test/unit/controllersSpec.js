@@ -147,5 +147,13 @@ describe('SportsBet controllers', function() {
       scope.prevPanel();
       expect(scope.currentPanel).toBe(scope.panels[0]);
     });
+
+    it('should allow selecting event', function() {
+      var myEvent = {};
+      spyOn(scope, 'nextPanel');
+      scope.eventSelected(myEvent);
+      expect(scope.selectedEvent).toBe(myEvent);
+      expect(scope.nextPanel).toHaveBeenCalled();
+    });
   });
 });
