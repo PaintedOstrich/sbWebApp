@@ -29,10 +29,17 @@ body {
 
 
 .friendsPanel {
+  position: relative;
   max-width: 450px;
   min-height: 300px !important;
   border:5px;
   border-style:solid;
+}
+
+.friendsPanel .nextBtn{
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 
 .eventsPanel {

@@ -96,13 +96,14 @@ function SocialBetCtrl($scope) {
     return index > 0;
   }
 
-  // Figure out if the right arrow should be enabled.
-  $scope.rightArrowEnabled = function() {
-    var index = $scope.panels.indexOf($scope.currentPanel);
-    if ($scope.currentPanel == 'friendsPanel') {
-      return $scope.selectedFriends.length > 0;
-    }
-    return false;
+  // Validate the user input in friends panel.
+  $scope.validateFriendsPanel = function() {
+    var count = $scope.selectedFriends.length > 0;
+    var allFilled = true;
+    $scope.selectedFriends.forEach(function(friend) {
+      allFilled = allFilled && (!!friend.name);
+    });
+    return count > 0 && allFilled;
   }
 
   // Figure out if the right arrow should be visible.
@@ -111,18 +112,20 @@ function SocialBetCtrl($scope) {
     return index < ($scope.panels.length - 1);
   }
 
-  $scope.prevPanel = function(isEnabled) {
-    if (isEnabled) {
-      var index = $scope.panels.indexOf($scope.currentPanel);
-      $scope.currentPanel = $scope.panels[index - 1];
+  $scope.prevPanel = function() {
+    var index = $scope.panels.indexOf($scope.currentPanel);
+    $scope.currentPanel = $scope.panels[index - 1];
+    // In unit test, jquery is not present.
+    if (typeof $ == 'function') {
       $('.carousel').carousel('prev');
     }
   }
 
-  $scope.nextPanel = function(isEnabled) {
-    if (isEnabled) {
-      var index = $scope.panels.indexOf($scope.currentPanel);
-      $scope.currentPanel = $scope.panels[index + 1];
+  $scope.nextPanel = function() {
+    var index = $scope.panels.indexOf($scope.currentPanel);
+    $scope.currentPanel = $scope.panels[index + 1];
+    // In unit test, jquery is not present.
+    if (typeof $ == 'function') {
       $('.carousel').carousel('next');
     }
   }

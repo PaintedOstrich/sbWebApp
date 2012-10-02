@@ -122,29 +122,50 @@ describe('SportsBet controllers', function() {
       scope.eventSelected(eventB);
       expect(scope.selectedEvent).toBe(eventB);
     });
-    
+
+    it('should show/hide next btn on friends panel', function() {
+      expect(scope.validateFriendsPanel()).toBe(false);
+
+      scope.selectedFriends = [{}, {}];
+      expect(scope.validateFriendsPanel()).toBe(false);
+
+      scope.selectedFriends[0].name = 'Di Peng';
+      expect(scope.validateFriendsPanel()).toBe(false);
+      scope.selectedFriends[1].name = 'Parker';
+      expect(scope.validateFriendsPanel()).toBe(true);
+
+    });
+
+    it('should navigate between panels', function() {
+      var panelsCount = scope.panels;
+      expect(panelsCount) > 0;
+      expect(scope.currentPanel).toBe(scope.panels[0]);
+
+      scope.nextPanel();
+      expect(scope.currentPanel).toBe(scope.panels[1]);
+
+      scope.prevPanel();
+      expect(scope.currentPanel).toBe(scope.panels[0]);
+    });
+
     it('should enable and disable left/right arrow', function() {
       scope.currentPanel = 'friendsPanel';
       expect(scope.leftArrowEnabled()).toBe(false);
-      expect(scope.rightArrowEnabled()).toBe(false);
       expect(scope.leftArrowVisible()).toBe(false);
       expect(scope.rightArrowVisible()).toBe(true);
-      
+
       scope.selectedFriends = [{}];
       expect(scope.leftArrowEnabled()).toBe(false);
-      expect(scope.rightArrowEnabled()).toBe(true);
       expect(scope.leftArrowVisible()).toBe(false);
       expect(scope.rightArrowVisible()).toBe(true);
-      
+
       scope.currentPanel = 'eventsPanel';
       expect(scope.leftArrowEnabled()).toBe(true);
-      expect(scope.rightArrowEnabled()).toBe(false);
       expect(scope.leftArrowVisible()).toBe(true);
       expect(scope.rightArrowVisible()).toBe(true);
-      
+
       scope.currentPanel = 'configurePanel';
       expect(scope.leftArrowEnabled()).toBe(true);
-      expect(scope.rightArrowEnabled()).toBe(false);
       expect(scope.leftArrowVisible()).toBe(true);
       expect(scope.rightArrowVisible()).toBe(false);
     });

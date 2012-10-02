@@ -3,11 +3,17 @@
   <div class="carousel-inner">
     <div class="active item">
       <div class="container friendsPanel">
-        <button ng-click="addFriend()">Add Friend</button>
+        <button ng-click="addFriend()" class="btn">
+          Add Friend
+        </button>
         <div ng-repeat="friend in selectedFriends">
          <input type="text" ng-model="friend.name" />
          <span ng-click="removeFriend($index)" style="cursor:pointer;"> X </span>
         </div>
+        <button class="btn btn-success nextBtn"
+            ng-show="validateFriendsPanel()" ng-click="nextPanel()">
+          Next
+        </button>
       </div>
     </div>
     <div class="item">
@@ -25,12 +31,4 @@
     </div>
     <div class="item">Configure Bet</div>
   </div>
-  <!-- Carousel nav -->
-
-  <div class="carousel-control left"
-      data-slide="prev" ng-show="leftArrowVisible()"
-      ng-click="prevPanel(leftArrowEnabled())" ng-class="{enabled: leftArrowEnabled()}">&lsaquo;</div>
-  <div class="carousel-control right"
-      data-slide="next" ng-show="rightArrowVisible()"
-      ng-click="nextPanel(rightArrowEnabled())" ng-class="{enabled: rightArrowEnabled()}">&rsaquo;</div>
 </div>
