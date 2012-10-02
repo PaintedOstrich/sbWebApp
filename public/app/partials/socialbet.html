@@ -35,7 +35,26 @@
     </div>
     <div class="item">
       <div class="container betPanel">
-        Configure Bet
+        <div>
+          <h1>{{selectedEvent.name}}</h1>
+          <div class="row-fluid">
+            <div class="span6">
+              teamA
+              <div class="predictionChip">
+                win/lose?
+              </div>
+            </div>
+            <div class="span6">
+              teamB
+              <div class="predictionChip">
+                win/lose?
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          Betting configure
+        </div>
         <button class="btn btn-inverse prevBtn" ng-click="prevPanel()">
           Back
         </button>

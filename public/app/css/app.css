@@ -67,4 +67,29 @@ body {
   /* light gray */
   background-color: #6495ED;
 }
+
+.betPanel .predictionChip {
+  cursor: pointer;
+  position: relative;
+  width: 80px;
+  height: 30px;
+  font-size: 14px;
+  font-weight: bold;
+  padding-top: 10px;
+  text-align: center;
+  border: 1px solid #DDD;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.betPanel .predictionChip:hover {
+  /* light gray */
+  background-color: #F2F2F2;
+}
+
+.betPanel .predictionChip.selected {
+  /* green */
+  background-color: #5BB75B;
+}
 /* End of style for SocialBet.html */

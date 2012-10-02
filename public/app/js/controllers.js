@@ -84,6 +84,18 @@ function SocialBetCtrl($scope) {
     'configurePanel'
   ]
 
+  $scope.betPlaced = false;
+  // $scope.currentBet = {
+  //   event: undefined,
+  //   bet: {
+  //     winner: {}
+  //   }
+  //
+  //    [
+  //     {friend: {}, amount: 12}
+  //   ]
+  // }
+
   // Validate the user input in friends panel.
   $scope.validateFriendsPanel = function() {
     var count = $scope.selectedFriends.length > 0;
