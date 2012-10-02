@@ -155,5 +155,17 @@ describe('SportsBet controllers', function() {
       expect(scope.selectedEvent).toBe(myEvent);
       expect(scope.nextPanel).toHaveBeenCalled();
     });
+    
+    it('should be able to place a bet on a team', function() {
+      scope.selectedFriends = [{name: 'a'}, {name: 'b'}];
+      var mockTeam = {};
+      expect(scope.betPlaced).toBe(false);
+      scope.betOnTeam(mockTeam);
+      expect(scope.betPlaced).toBe(true);
+      expect(scope.currentBet.winner).toBe(mockTeam);
+      expect(scope.currentBet.bets.length).toBe(scope.selectedFriends.length);
+      expect(scope.currentBet.bets[0].friend).toBe(scope.selectedFriends[0]);
+      expect(scope.currentBet.bets[0].amount).toBe(0);
+    });
   });
 });

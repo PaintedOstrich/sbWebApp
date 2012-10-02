@@ -39,24 +39,51 @@
           <h1>{{selectedEvent.name}}</h1>
           <div class="row-fluid">
             <div class="span6">
-              teamA
-              <div class="predictionChip">
-                win/lose?
+              {{selectedEvent.firstTeam.name}}
+              <div class="predictionChip"
+                  ng-class="{winner: isPredictedWinner(selectedEvent.firstTeam)}"
+                  ng-click="betOnTeam(selectedEvent.firstTeam)">
+                <span ng-hide="betPlaced">win/lose?</span>
+                <span ng-show="betPlaced">
+                  <span ng-show="isPredictedWinner(selectedEvent.firstTeam)">
+                    winner
+                  </span>
+                  <span ng-hide="isPredictedWinner(selectedEvent.firstTeam)">
+                    loser
+                  </span>
+                </span>
               </div>
             </div>
             <div class="span6">
-              teamB
-              <div class="predictionChip">
-                win/lose?
+              {{selectedEvent.secTeam.name}}
+              <div class="predictionChip"
+                  ng-class="{winner: isPredictedWinner(selectedEvent.secTeam)}"
+                  ng-click="betOnTeam(selectedEvent.secTeam)">
+                  <span ng-hide="betPlaced">win/lose?</span>
+                  <span ng-show="betPlaced">
+                    <span ng-show="isPredictedWinner(selectedEvent.secTeam)">
+                      winner
+                    </span>
+                    <span ng-hide="isPredictedWinner(selectedEvent.secTeam)">
+                      loser
+                    </span>
+                  </span>
               </div>
             </div>
           </div>
         </div>
-        <div>
-          Betting configure
+        <div ng-show="betPlaced">
+          <div ng-repeat="bet in currentBet.bets">
+           Your bet with {{bet.friend.name}}:<br>
+           Amount: <input type="number" ng-model="bet.amount" />
+          </div>
         </div>
         <button class="btn btn-inverse prevBtn" ng-click="prevPanel()">
           Back
+        </button>
+        <button class="btn btn-danger"
+            ng-show="betPlaced" ng-click="placeBet()">
+          Place Bet!
         </button>
       </div>
     </div>

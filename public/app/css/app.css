@@ -88,7 +88,7 @@ body {
   background-color: #F2F2F2;
 }
 
-.betPanel .predictionChip.selected {
+.betPanel .predictionChip.winner {
   /* green */
   background-color: #5BB75B;
 }

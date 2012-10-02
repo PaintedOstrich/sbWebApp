@@ -70,11 +70,22 @@ function SocialBetCtrl($scope) {
   $scope.selectedFriends = [];
   // TODO(Di) Make this laod dynamically.
   $scope.events = [
-    {id: 'e1', name: 'League Final'},
-    {id: 'e2', name: 'Pingpong Semi-Final'},
-    {id: 'e3', name: 'Pingpong Qualifying'},
-    {id: 'e4', name: 'Soccer Final'},
-    {id: 'e5', name: 'Football Final'}
+    {
+      id: 'e1', name: 'League Final',
+      firstTeam: {name: 'teamA'}, secTeam: {name: 'teamB'}
+    },
+    {
+      id: 'e2', name: 'Pingpong Semi-Final',
+      firstTeam: {name: 'Titan'}, secTeam: {name: 'China'}
+    },
+    {
+      id: 'e3', name: 'Pingpong Qualifying',
+      firstTeam: {name: 'teamA'}, secTeam: {name: 'teamB'}
+    },
+    {
+      id: 'e4', name: 'Soccer Final',
+      firstTeam: {name: 'teamA'}, secTeam: {name: 'teamB'}
+    },
   ];
 
   $scope.currentPanel = 'friendsPanel';
@@ -85,16 +96,6 @@ function SocialBetCtrl($scope) {
   ]
 
   $scope.betPlaced = false;
-  // $scope.currentBet = {
-  //   event: undefined,
-  //   bet: {
-  //     winner: {}
-  //   }
-  //
-  //    [
-  //     {friend: {}, amount: 12}
-  //   ]
-  // }
 
   // Validate the user input in friends panel.
   $scope.validateFriendsPanel = function() {
@@ -137,15 +138,46 @@ function SocialBetCtrl($scope) {
     $scope.selectedFriends.splice(index, 1);
   }
 
-  // Allow user to configure how much to bet on each friend
-  // selected
-  $scope.configureBet = function() {
 
+  $scope.currentBet = {
+    initialized: false,
+    event: undefined,
+    winner: undefined,
+    bets: []
+  }
+  // User betting on the victory of a particular team
+  $scope.betOnTeam = function(team) {
+    $scope.betPlaced = true;
+    $scope.currentBet.winner = team;
+    if (!$scope.currentBet.initialized) {
+      initializeBets(); 
+    }
+  }
+
+  // Initialize all bet amount to be zero.
+  function initializeBets() {
+    $scope.selectedFriends.forEach(function(friend) {
+      var bet = {
+        friend: friend,
+        amount: 0
+      }
+      $scope.currentBet.bets.push(bet);
+    });
+    $scope.currentBet.initialized = true;
+  }
+
+  $scope.isPredictedWinner = function(team) {
+    return team == $scope.currentBet.winner;
   }
 
   $scope.eventSelected = function(event) {
     $scope.selectedEvent = event;
     $scope.nextPanel();
+  }
+
+  // Finally place the bet after all confuguration is done.
+  $scope.placeBet = function() {
+    alert('bet is placed');
   }
 }
 SocialBetCtrl.$inject = ['$scope'];
