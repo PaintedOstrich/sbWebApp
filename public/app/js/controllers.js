@@ -84,18 +84,6 @@ function SocialBetCtrl($scope) {
     'configurePanel'
   ]
 
-  // Figure out if the left arrow should be enabled.
-  $scope.leftArrowEnabled = function() {
-    var index = $scope.panels.indexOf($scope.currentPanel);
-    return index > 0;
-  }
-
-  // Figure out if the left arrow should be visible.
-  $scope.leftArrowVisible = function() {
-    var index = $scope.panels.indexOf($scope.currentPanel);
-    return index > 0;
-  }
-
   // Validate the user input in friends panel.
   $scope.validateFriendsPanel = function() {
     var count = $scope.selectedFriends.length > 0;
@@ -104,12 +92,6 @@ function SocialBetCtrl($scope) {
       allFilled = allFilled && (!!friend.name);
     });
     return count > 0 && allFilled;
-  }
-
-  // Figure out if the right arrow should be visible.
-  $scope.rightArrowVisible = function() {
-    var index = $scope.panels.indexOf($scope.currentPanel);
-    return index < ($scope.panels.length - 1);
   }
 
   $scope.prevPanel = function() {
