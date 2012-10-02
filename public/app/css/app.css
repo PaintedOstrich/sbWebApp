@@ -16,13 +16,15 @@ body {
 }
 
 /* Style for SocialBet.html */
-
-.friendsPanel {
+.socialBetPage .container {
   position: relative;
   max-width: 450px;
   min-height: 300px !important;
   border:5px;
   border-style:solid;
+}
+
+.friendsPanel {
 }
 
 .friendsPanel .nextBtn{
@@ -32,10 +34,6 @@ body {
 }
 
 .eventsPanel {
-  max-width: 450px;
-  min-height: 300px !important;
-  border:5px;
-  border-style:solid;
 }
 
 .sportsListing {
