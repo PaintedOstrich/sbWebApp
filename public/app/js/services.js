@@ -3,8 +3,36 @@
 /* Services */
 
 angular.module('facebookService', ['ng'])
-    .service('fb', FBSdk);
+    .service('fb', FBSdk)
+    .service('loadMask', LoadMask);
 
+/**
+ * A load mask singleton class that is used to show and hide a loading mask
+ */
+function LoadMask() {
+  if($) {
+    console.log($);
+  }
+  console.log('initializing loading mask');
+  // The mask jquery element.
+  this.maskEl;
+
+  this.createMaskEl = function() {
+    var el = $('<div class="loadMask"></div>');
+    
+    $(document.body).append(el);
+    setTimeout(function() {
+      el.addClass('fade');
+    }, 1);
+    return el;
+  }
+
+  this.show = function() {
+    if (!this.maskEl) {
+      this.maskEl = this.createMaskEl();
+    }
+  }
+}
 
 /**
  * Facebook SDK service (the Angular way!)
