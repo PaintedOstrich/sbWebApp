@@ -10,16 +10,11 @@ angular.module('facebookService', ['ng'])
  * A load mask singleton class that is used to show and hide a loading mask
  */
 function LoadMask($timeout) {
-  if($) {
-    console.log($);
-  }
-  console.log('initializing loading mask');
   // The mask jquery element.
   this.maskEl;
 
   this.createMaskEl = function() {
     var el = $('<div class="loadMask"></div>');
-
     $(document.body).append(el);
     $timeout(function() {
       el.addClass('fade');
@@ -34,6 +29,8 @@ function LoadMask($timeout) {
   this.hide = function() {
     var tmp = this.maskEl;
     tmp.removeClass('fade');
+    // Wait for CSS3 transition to finish (not too long so older brwoser user
+    // will not be affected much).
     $timeout(function() {
       tmp.remove();
     }, 200);
