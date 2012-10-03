@@ -41,12 +41,8 @@ function ProfileCtrl($scope, $location, fb) {
     $location.path('bettype');
   }
 
-  fb.api($scope, '/me').then(function(response) {
-    if (response.username) {
-      $scope.user = response;
-    } else {
-     console.error('Failed to load the current user!');
-    }
+  fb.getMe($scope).then(function(me) {
+      $scope.user = me;
   });
 }
 ProfileCtrl.$inject = ['$scope', '$location', 'fb'];
