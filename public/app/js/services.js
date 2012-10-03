@@ -2,7 +2,8 @@
 
 /* Services */
 
-angular.module('facebookService', ['ng']).service('fb', FBSdk);
+angular.module('facebookService', ['ng'])
+    .service('fb', FBSdk);
 
 
 /**
