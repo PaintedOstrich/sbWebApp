@@ -2,15 +2,18 @@
 
 /* Services */
 
-angular.module('facebookService', ['ng']).factory('fb', function($q, $timeout) {
+angular.module('facebookService', ['ng']).service('fb', FBSdk);
+
+
+/**
+ * Facebook SDK service (the Angular way!)
+ */
+function FBSdk($q, $timeout) {
   if (!FB) {
     throw new Error('FB is not available!');
   }
 
-  // The wrapped FB sdk service to be returned.
-  var qFB = {};
-
-  qFB.getLoginStatus = function(scope) {
+  this.getLoginStatus = function(scope) {
     var deferred = $q.defer();
     // Force everythig to be async. Because FB calls callback syncrhonously
     // sometimes and this may break scope.$apply(or really does it?)
@@ -25,7 +28,7 @@ angular.module('facebookService', ['ng']).factory('fb', function($q, $timeout) {
   }
 
 
-  qFB.login = function(scope, perms) {
+  this.login = function(scope, perms) {
     var permissions = perms || {};
     var deferred = $q.defer();
 
@@ -40,7 +43,7 @@ angular.module('facebookService', ['ng']).factory('fb', function($q, $timeout) {
   }
 
 
-  qFB.api = function(scope, a, b, c, d, e) {
+  this.api = function(scope, a, b, c, d, e) {
     var deferred = $q.defer();
     var callback = function(response) {
       scope.$apply(function() {
@@ -62,6 +65,4 @@ angular.module('facebookService', ['ng']).factory('fb', function($q, $timeout) {
     }, 1);
     return deferred.promise;
   }
-
-  return qFB;
-});
+}
