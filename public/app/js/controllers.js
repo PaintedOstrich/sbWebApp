@@ -139,18 +139,20 @@ function SocialBetCtrl($scope) {
   }
 
 
-  $scope.currentBet = {
+  var betTemplate = {
     initialized: false,
     event: undefined,
     winner: undefined,
     bets: []
-  }
+  };
+
+  $scope.currentBet = angular.copy(betTemplate);
   // User betting on the victory of a particular team
   $scope.betOnTeam = function(team) {
     $scope.betPlaced = true;
     $scope.currentBet.winner = team;
     if (!$scope.currentBet.initialized) {
-      initializeBets(); 
+      initializeBets();
     }
   }
 
@@ -173,6 +175,14 @@ function SocialBetCtrl($scope) {
   $scope.eventSelected = function(event) {
     $scope.selectedEvent = event;
     $scope.nextPanel();
+  }
+
+  // May be used when user navigate back to event page, so we want to clear
+  // the current bets.
+  $scope.clearCurrentBet = function() {
+     $scope.prevPanel();
+     $scope.currentBet = angular.copy(betTemplate);
+     $scope.betPlaced = false;
   }
 
   // Finally place the bet after all confuguration is done.
