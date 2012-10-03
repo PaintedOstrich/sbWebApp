@@ -9,7 +9,7 @@ angular.module('facebookService', ['ng'])
 /**
  * A load mask singleton class that is used to show and hide a loading mask
  */
-function LoadMask() {
+function LoadMask($timeout) {
   if($) {
     console.log($);
   }
@@ -19,18 +19,24 @@ function LoadMask() {
 
   this.createMaskEl = function() {
     var el = $('<div class="loadMask"></div>');
-    
+
     $(document.body).append(el);
-    setTimeout(function() {
+    $timeout(function() {
       el.addClass('fade');
     }, 1);
     return el;
   }
 
   this.show = function() {
-    if (!this.maskEl) {
-      this.maskEl = this.createMaskEl();
-    }
+    this.maskEl = this.createMaskEl();
+  }
+
+  this.hide = function() {
+    var tmp = this.maskEl;
+    tmp.removeClass('fade');
+    $timeout(function() {
+      tmp.remove();
+    }, 200);
   }
 }
 
