@@ -6,12 +6,12 @@ body {
 /* CSS for loading mask */
 .loadMask {
   position: absolute;
-  left: 0;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   z-index: 99999;
-  background-color: black;
+  background-color: transparent;
   opacity: 0.0;
   -moz-transition-property: opacity;
   -moz-transition-duration: .6s;
@@ -21,14 +21,34 @@ body {
   -o-transition-duration: .6s;
 }
 
-.loadMask.fade {
+.loadMask .backDrop {
   opacity: 0.4;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+}
+
+.loadMask.fade {
+  opacity: 1;
   -moz-transition-property: opacity;
   -moz-transition-duration: .6s;
   -webkit-transition-property: opacity;
   -webkit-transition-duration: .6s;
   -o-transition-property: opacity;
   -o-transition-duration: .6s;
+}
+
+.loadMask .spinnerBg {
+  position: absolute;
+  left: 45%;
+  top: 35%;
+  width: 100px;
+  height: 100px;
+  background-color: black;
+  opacity: .7;
 }
 
 

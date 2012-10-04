@@ -15,6 +15,8 @@ function LoadMask($timeout) {
 
   this.createMaskEl = function() {
     var el = $('<div class="loadMask"></div>');
+    el.append('<div class="backDrop"></div>');
+    el.append('<div class="spinnerBg"></div>');
     $(document.body).append(el);
     $timeout(function() {
       el.addClass('fade');
