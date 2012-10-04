@@ -8,18 +8,9 @@
         <select ui-select2="{minimumInputLength:3}" ng-model="select2" 
             style="width:100px;"  data-placeholder="Pick a number">
           <option value=""></option>
-          <option value="one">First</option>
-          <option value="two">Second</option>
-          <option value="three">Third</option>
-          <option value="1">First</option>
-          <option value="2">Second</option>
-          <option value="3">Third</option>
-          <option value="4">First</option>
-          <option value="5">Second</option>
-          <option value="6">Third</option>
-          <option value="7">First</option>
-          <option value="8">Second</option>
-          <option value="9">Third</option>
+          <option ng-repeat="friend in friends" value="{{friend.id}}">
+            {{friend.name}}
+          </option>
         </select>
 
 

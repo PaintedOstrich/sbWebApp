@@ -123,6 +123,14 @@ function SocialBetCtrl($scope, fb, loadMask) {
 
   $scope.displayFriends = function(friendsArr) {
     // Display friends with pagitation.
+    $scope.friends = [
+      {name: 'Di Peng', id: 1},
+      {name: 'Parker Spielman', id: 2},
+      {name: 'JiaKun Zhao', id: 3},
+      {name: 'Die Pengk', id: 4},
+      {name: 'Parker Peng', id: 5},
+      {name: 'Jason Spielman', id: 6}
+    ]
   }
 
   // Validate the user input in friends panel.
