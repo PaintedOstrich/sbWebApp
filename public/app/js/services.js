@@ -8,6 +8,8 @@ angular.module('facebookService', ['ng'])
 
 /**
  * A load mask singleton class that is used to show and hide a loading mask
+ * Note: This service has implicit dependency on jQuery, Spin.js and jQuery.spin.js.
+ * TODO (Di) We probably can have different sizes.
  */
 function LoadMask($timeout) {
   // The mask jquery element.
@@ -57,6 +59,7 @@ function LoadMask($timeout) {
     }, 200);
   }
 }
+
 
 /**
  * Facebook SDK service (the Angular way!)
