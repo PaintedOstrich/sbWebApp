@@ -49,7 +49,7 @@ ProfileCtrl.$inject = ['$scope', '$location', 'fb'];
 
 
 // Controller for bet type screen
-function BetTypeCtrl($scope, $location, fb) {
+function BetTypeCtrl($scope, $location) {
   $scope.socialBtnPressed = function() {
     $location.path('/socialbet');
   }
@@ -58,11 +58,11 @@ function BetTypeCtrl($scope, $location, fb) {
     $location.path('vegasbet');
   }
 }
-BetTypeCtrl.$inject = ['$scope', '$location', 'fb']
+BetTypeCtrl.$inject = ['$scope', '$location']
 
 
 // Controller for social bet screen
-function SocialBetCtrl($scope) {
+function SocialBetCtrl($scope, fb, loadMask) {
   $scope.selectedFriends = [];
   // TODO(Di) Make this laod dynamically.
   $scope.events = [
@@ -92,6 +92,21 @@ function SocialBetCtrl($scope) {
   ]
 
   $scope.betPlaced = false;
+
+  // Load friends of current user.
+  // This function is run everytime we navigate to social bet page.
+  $scope.loadFriends = function() {
+    loadMask.show({text: 'Loading Friends...'});
+    fb.api($scope, '/me/friends').then(function(allFriends) {
+      $scope.displayFriends(allFriends);
+      loadMask.hide();
+    });
+  }
+  $scope.loadFriends();
+  
+  $scope.displayFriends = function(friendsArr) {
+    // Display friends with pagitation.
+  }
 
   // Validate the user input in friends panel.
   $scope.validateFriendsPanel = function() {
@@ -186,4 +201,4 @@ function SocialBetCtrl($scope) {
     alert('bet is placed');
   }
 }
-SocialBetCtrl.$inject = ['$scope'];
+SocialBetCtrl.$inject = ['$scope',  'fb', 'loadMask'];
