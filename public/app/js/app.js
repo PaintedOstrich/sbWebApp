@@ -2,7 +2,7 @@
 
 /* App Module */
 
-angular.module('sportsbet', ['phonecatFilters', 'facebookService']).
+angular.module('sportsbet', ['phonecatFilters', 'facebookService', 'ui']).
   config(['$routeProvider', function($routeProvider) {
   $routeProvider.
       when('/', {templateUrl: 'app/partials/loading.html',   controller: RouteCtrl}).
