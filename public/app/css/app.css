@@ -45,10 +45,30 @@ body {
   position: absolute;
   left: 45%;
   top: 35%;
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   background-color: black;
   opacity: .7;
+  border-radius: 10px;
+}
+
+.loadMask .innerMask {
+  position: relative;
+  left: 45%;
+  top: 35%;
+  width: 150px;
+  height: 150px;
+  background-color: transparent;
+}
+
+.loadMask .innerMask .text{
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  bottom: 10%;
+  font-weight: bold;
+  color: white;
+  font-size: 15px;
 }
 
 

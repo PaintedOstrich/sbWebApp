@@ -11,30 +11,49 @@ angular.module('facebookService', ['ng'])
  */
 function LoadMask($timeout) {
   // The mask jquery element.
-  this.maskEl;
+  var maskEl;
+  var spinnerConfig = {
+    color: 'white',
+    top: '40%'
+  };
 
+  // Creating a spinner component with default configurations.
   this.createMaskEl = function() {
-    var el = $('<div class="loadMask"></div>');
-    el.append('<div class="backDrop"></div>');
-    el.append('<div class="spinnerBg"></div>');
+    var dom = '<div class="loadMask">' +
+                '<div class="backDrop"></div>' +
+                '<div class="spinnerBg"></div>' +
+                '<div class="innerMask">' +
+                  '<div class="text">Loading...</div>' +
+                '</div>' +
+              '</div>';
+
+   var el = $(dom);
+   var innerMask = el.children('.innerMask');
+
     $(document.body).append(el);
     $timeout(function() {
       el.addClass('fade');
+      innerMask.spin(spinnerConfig);
     }, 1);
     return el;
   }
 
-  this.show = function() {
-    this.maskEl = this.createMaskEl();
+  this.show = function(opt) {
+    maskEl = this.createMaskEl();
+    if (opt) {
+      if (opt.text) {
+        maskEl.find('.text').html(opt.text);
+      }
+    }
   }
 
   this.hide = function() {
-    var tmp = this.maskEl;
-    tmp.removeClass('fade');
+    maskEl.removeClass('fade');
     // Wait for CSS3 transition to finish (not too long so older brwoser user
     // will not be affected much).
     $timeout(function() {
-      tmp.remove();
+      maskEl.remove();
+      maskEl = undefined;
     }, 200);
   }
 }
