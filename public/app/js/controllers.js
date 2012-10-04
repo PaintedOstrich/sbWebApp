@@ -35,17 +35,34 @@ LandingCtrl.$inject = ['$scope', '$location', 'fb'];
 
 
 // Controller for user profile screen
-function ProfileCtrl($scope, $location, fb) {
+function ProfileCtrl($scope, $location, fb, loadMask, $q) {
   $scope.user = {};
   $scope.newBet = function() {
     $location.path('bettype');
   }
 
-  fb.getMe($scope).then(function(me) {
-      $scope.user = me;
-  });
+  $scope.init = function() {
+    loadMask.show({text: 'Loading User Profile...'});
+    var promise1 = fb.api($scope, '/me');
+    var promise2 = fb.api($scope, '/me/picture?type=large');
+    $q.all([promise1, promise2]).then(function(res) {
+        if (res[0].error) {
+          console.error('Failed to load user!');
+        } else {
+          $scope.user = res[0];
+        }
+
+        if (res[1].error) {
+          console.error('Failed to load user image');
+        } else {
+          $scope.imgUrl = res[1].data.url;
+        }
+        loadMask.hide();
+    });
+  }
+  $scope.init();
 }
-ProfileCtrl.$inject = ['$scope', '$location', 'fb'];
+ProfileCtrl.$inject = ['$scope', '$location', 'fb', 'loadMask', '$q'];
 
 
 // Controller for bet type screen
@@ -103,7 +120,7 @@ function SocialBetCtrl($scope, fb, loadMask) {
     });
   }
   $scope.loadFriends();
-  
+
   $scope.displayFriends = function(friendsArr) {
     // Display friends with pagitation.
   }

@@ -125,26 +125,26 @@ function FBSdk($q, $timeout) {
   /*--------- NOTE: following are custom apis  ---------- */
 
   // Return the current user.
-  this.getMe = function(scope) {
-    var deferred = $q.defer();
-    var self = this;
-
-    if (self.me) {
-      $timeout(function() {
-        scope.$apply(function() {
-          deferred.resolve(self.me);
-        });
-      }, 1);
-    } else {
-      this.api(scope, '/me').then(function(response) {
-        if (response.username) {
-          self.me = response;
-          deferred.resolve(response);
-        } else {
-         console.error('Failed to load the current user!');
-        }
-      });
-    }
-    return deferred.promise;
-  }
+  // this.getMe = function(scope) {
+  //   var deferred = $q.defer();
+  //   var self = this;
+  // 
+  //   if (self.me) {
+  //     $timeout(function() {
+  //       scope.$apply(function() {
+  //         deferred.resolve(self.me);
+  //       });
+  //     }, 1);
+  //   } else {
+  //     this.api(scope, '/me').then(function(response) {
+  //       if (response.username) {
+  //         self.me = response;
+  //         deferred.resolve(response);
+  //       } else {
+  //        console.error('Failed to load the current user!');
+  //       }
+  //     });
+  //   }
+  //   return deferred.promise;
+  // }
 }
