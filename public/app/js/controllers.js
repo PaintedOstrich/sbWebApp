@@ -74,7 +74,10 @@ BetTypeCtrl.$inject = ['$scope', '$location']
 
 // Controller for social bet screen
 function SocialBetCtrl($scope, fb, loadMask) {
+  // Friends selected to place bet on.
   $scope.selectedFriends = [];
+  // An id to Friend obj mapping storing all user's fb friends.
+  $scope.allFriends = {};
   // TODO(Di) Make this laod dynamically.
   $scope.events = [
     {
@@ -108,28 +111,32 @@ function SocialBetCtrl($scope, fb, loadMask) {
   // This function is run everytime we navigate to social bet page.
   $scope.loadFriends = function() {
     loadMask.show({text: 'Loading Friends...'});
-    fb.api($scope, '/me/friends').then(function(allFriends) {
-      $scope.parseFriends(allFriends.data);
+    fb.api($scope, '/me/friends').then(function(res) {
+      if (res.error) {
+        alert('Sorry, failed to load friends. Please try again.');
+      } else {
+        $scope.allFriends = {};
+        res.data.forEach(function(friend) {
+          $scope.allFriends[friend.id] = friend;
+        });
+        $scope.initSelectWidget(res.data);
+      }
       loadMask.hide();
     });
   }
   $scope.loadFriends();
 
-  // Parse the friends array returned from fb.
-  $scope.parseFriends = function(friendsArr) {
-    // An id to friend obj map.
-    $scope.allFriends = {};
-    friendsArr.forEach(function(friend) {
-      // This is just to let select2 lib know how to display.
-      friend.text = friend.name;
-      $scope.allFriends[friend.id] = friend;
-    });
-
-    // Used to format drop down menu item.
-    function format(friend) {
-      return "<img class='flag' src='http://graph.facebook.com/"
-          + friend.id + "/picture/'>" + friend.name;
-    }
+  // Used to format drop down menu item.
+  function format(friend) {
+    return "<img class='friendEntry' src='http://graph.facebook.com/"
+        + friend.id + "/picture/'>" + friend.name;
+  }
+  // Initialize the select2 widget.
+  $scope.initSelectWidget = function(friendsArr) {
+     friendsArr.forEach(function(friend) {
+       // This is just to let select2 lib know how to display.
+       friend.text = friend.name;
+     });
 
     $scope.friendInput = $('.friendInput').select2({
       data: friendsArr,

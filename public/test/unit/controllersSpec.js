@@ -95,6 +95,15 @@ describe('SportsBet controllers', function() {
           {$scope: scope, fb: mockFb, loadMask: mockLoadMask});
     }));
 
+    it('should have variables initialized and functions called' , function() {
+      expect(scope.selectedFriends).toEqual([]);
+      expect(scope.allFriends).toEqual({});
+      expect(scope.events).toBeDefined();
+      expect(scope.panels.length > 0).toBe(true);
+      expect(scope.currentPanel).toEqual(scope.panels[0]);
+      expect(scope.betPlaced).toBe(false);
+    });
+
     it('should update selected event', function() {
       var eventA = {name: 'e1'};
       var eventB = {name: 'e2'};
@@ -133,7 +142,7 @@ describe('SportsBet controllers', function() {
       expect(scope.selectedEvent).toBe(myEvent);
       expect(scope.nextPanel).toHaveBeenCalled();
     });
-    
+
     it('should be able to place a bet on a team', function() {
       scope.selectedFriends = [{name: 'a'}, {name: 'b'}];
       var mockTeam = {};
