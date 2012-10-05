@@ -115,32 +115,52 @@ function SocialBetCtrl($scope, fb, loadMask) {
   $scope.loadFriends = function() {
     loadMask.show({text: 'Loading Friends...'});
     fb.api($scope, '/me/friends').then(function(allFriends) {
-      $scope.displayFriends(allFriends);
+      $scope.parseFriends(allFriends.data);
       loadMask.hide();
     });
   }
   $scope.loadFriends();
 
-  $scope.displayFriends = function(friendsArr) {
-    // Display friends with pagitation.
-    $scope.friends = [
-      {name: 'Di Peng', id: 1},
-      {name: 'Parker Spielman', id: 2},
-      {name: 'JiaKun Zhao', id: 3},
-      {name: 'Die Pengk', id: 4},
-      {name: 'Parker Peng', id: 5},
-      {name: 'Jason Spielman', id: 6}
-    ]
+  // Parse the friends array returned from fb.
+  $scope.parseFriends = function(friendsArr) {
+    // An id to friend obj map.
+    $scope.allFriends = {};
+    friendsArr.forEach(function(friend) {
+      // This is just to let select2 lib know how to display.
+      friend.text = friend.name;
+      $scope.allFriends[friend.id] = friend;
+    });
+
+    // Used to format drop down menu item.
+    function format(friend) {
+      return "<img class='flag' src='http://graph.facebook.com/"
+          + friend.id + "/picture/'>" + friend.name;
+    }
+
+    $scope.friendInput = $('.friendInput').select2({
+      data: friendsArr,
+      multiple: true,
+      minimumInputLength:2,
+      formatResult: format
+    });
+
+    $scope.friendInput.on('change', function(e) {
+      $scope.$apply(function() {
+        var tmp = [];
+        e.val.forEach(function(friendId) {
+          var friend = $scope.allFriends[friendId];
+          if (friend) {
+            tmp.push(friend);
+          }
+        });
+        $scope.selectedFriends = tmp;
+      });
+    });
   }
 
   // Validate the user input in friends panel.
   $scope.validateFriendsPanel = function() {
-    var count = $scope.selectedFriends.length > 0;
-    var allFilled = true;
-    $scope.selectedFriends.forEach(function(friend) {
-      allFilled = allFilled && (!!friend.name);
-    });
-    return count > 0 && allFilled;
+    return $scope.selectedFriends.length > 0;
   }
 
   $scope.prevPanel = function() {
@@ -160,20 +180,6 @@ function SocialBetCtrl($scope, fb, loadMask) {
       $('.carousel').carousel('next');
     }
   }
-
-  $scope.addFriend = function() {
-    $scope.selectedFriends.push({});
-  }
-
-  $scope.removeFriend = function(index) {
-    // We only accept positive number here as
-    // negative number will do rever splice which we don't want.
-    if (index < 0) {
-      index *= -1;
-    }
-    $scope.selectedFriends.splice(index, 1);
-  }
-
 
   var betTemplate = {
     initialized: false,

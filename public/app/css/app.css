@@ -88,12 +88,15 @@ body {
 .socialBetPage .container {
   position: relative;
   max-width: 450px;
-  min-height: 300px !important;
+  min-height: 400px !important;
   border:5px;
   border-style:solid;
 }
 
-.friendsPanel {
+.panelOne {}
+.panelOne .friendInput {
+  width: 90%;
+  margin: 10px;
 }
 
 .friendsPanel .nextBtn{

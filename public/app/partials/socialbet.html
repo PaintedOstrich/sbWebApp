@@ -2,29 +2,12 @@
   <!-- Carousel items -->
   <div class="carousel-inner">
     <div class="active item">
-      <div class="container friendsPanel">
-
-        <p>Value is: {{select2}} <a ng-click="select2='two'">(choose second)</a></p>
-        <select ui-select2="{minimumInputLength:3}" ng-model="select2" 
-            style="width:100px;"  data-placeholder="Pick a number">
-          <option value=""></option>
-          <option ng-repeat="friend in friends" value="{{friend.id}}">
-            {{friend.name}}
-          </option>
-        </select>
-
-
-
-        <button ng-click="addFriend()" class="btn">
-          Add Friend
-        </button>
-        <div ng-repeat="friend in selectedFriends">
-         <input type="text" ng-model="friend.name" />
-         <span ng-click="removeFriend($index)" style="cursor:pointer;"> X </span>
-        </div>
+      <div class="container panelOne">
+        <h4>Pick some friends:</h4>
+        <input type="text" class="friendInput"/>
         <button class="btn btn-success nextBtn"
             ng-show="validateFriendsPanel()" ng-click="nextPanel()">
-          Next
+          Done
         </button>
       </div>
     </div>
