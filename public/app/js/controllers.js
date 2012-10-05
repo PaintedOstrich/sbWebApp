@@ -43,21 +43,15 @@ function ProfileCtrl($scope, $location, fb, loadMask, $q) {
 
   $scope.init = function() {
     loadMask.show({text: 'Loading User Profile...'});
-    var promise1 = fb.api($scope, '/me');
-    var promise2 = fb.api($scope, '/me/picture?type=large');
-    $q.all([promise1, promise2]).then(function(res) {
-        if (res[0].error) {
-          console.error('Failed to load user!');
-        } else {
-          $scope.user = res[0];
-        }
-
-        if (res[1].error) {
-          console.error('Failed to load user image');
-        } else {
-          $scope.imgUrl = res[1].data.url;
-        }
-        loadMask.hide();
+    fb.api($scope, '/me').then(function(res) {
+      if (res.error) {
+        console.error('Failed to load user!');
+      } else {
+        $scope.user = res;
+        $scope.imgUrl = "http://graph.facebook.com/"
+            + $scope.user.id + "/picture?type=large";
+      }
+      loadMask.hide();
     });
   }
   $scope.init();

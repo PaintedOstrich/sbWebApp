@@ -5,7 +5,7 @@ describe('SportsBet controllers', function() {
 
   // The fb service mock that does nothing but returning a promise,
   // imitating the api of actual fb service in services.js.
-  var mockFb;
+  var mockFb, mockLoadMask;
   beforeEach(inject(function($q){
     mockFb = {
       promises: {}
@@ -18,6 +18,11 @@ describe('SportsBet controllers', function() {
         mockFb.promises.api = $q.defer();
         return mockFb.promises.api.promise;
     }
+
+    mockLoadMask = {
+      show: jasmine.createSpy('showMask'),
+      hide: jasmine.createSpy('hideMask')
+    };
   }));
 
   describe('RouteCtrl', function() {
@@ -61,18 +66,22 @@ describe('SportsBet controllers', function() {
     beforeEach(inject(function($rootScope, $controller) {
       mockLocation = {
         path: jasmine.createSpy('location')
-      }
+      };
+
       scope = $rootScope.$new();
       ctrl = $controller(ProfileCtrl,
-          {$scope: scope, fb: mockFb, $location: mockLocation});
+          {$scope: scope, fb: mockFb, $location: mockLocation,
+              loadMask: mockLoadMask});
     }));
 
     it('should set user obj if fb.api request succeed', function() {
       expect(scope.user).toEqual({});
+      var mockUser = {username: 'abc', id: 123};
       scope.$apply(function() {
-        mockFb.promises.api.resolve({username: 'abc'});
+        mockFb.promises.api.resolve(mockUser);
       });
-      expect(scope.user).toEqual({username: 'abc'});
+      expect(scope.user).toBe(mockUser);
+      expect(scope.imgUrl).toBeDefined();
     });
   });
 
@@ -83,33 +92,8 @@ describe('SportsBet controllers', function() {
     beforeEach(inject(function($rootScope, $controller) {
       scope = $rootScope.$new();
       ctrl = $controller(SocialBetCtrl,
-          {$scope: scope});
+          {$scope: scope, fb: mockFb, loadMask: mockLoadMask});
     }));
-
-    it('should add friend', function() {
-      expect(scope.selectedFriends.length).toBe(0);
-      scope.addFriend();
-      expect(scope.selectedFriends.length).toBe(1);
-    });
-
-    it('should remove friend', function() {
-      var oldArr = ['a', 'b', 'c'];
-      var newArr = ['a', 'c'];
-      scope.selectedFriends = oldArr;
-      scope.removeFriend(1);
-      expect(scope.selectedFriends).toEqual(newArr);
-
-      oldArr = [];
-      scope.selectedFriends = oldArr;
-      scope.removeFriend(1);
-      expect(scope.selectedFriends).toEqual([]);
-
-      var oldArr = ['a', 'b'];
-      var newArr = ['a', 'b'];
-      scope.selectedFriends = oldArr;
-      scope.removeFriend(-5);
-      expect(scope.selectedFriends).toEqual(newArr);
-    });
 
     it('should update selected event', function() {
       var eventA = {name: 'e1'};
@@ -127,13 +111,7 @@ describe('SportsBet controllers', function() {
       expect(scope.validateFriendsPanel()).toBe(false);
 
       scope.selectedFriends = [{}, {}];
-      expect(scope.validateFriendsPanel()).toBe(false);
-
-      scope.selectedFriends[0].name = 'Di Peng';
-      expect(scope.validateFriendsPanel()).toBe(false);
-      scope.selectedFriends[1].name = 'Parker';
       expect(scope.validateFriendsPanel()).toBe(true);
-
     });
 
     it('should navigate between panels', function() {
