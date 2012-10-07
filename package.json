@@ -9,7 +9,8 @@
     "ejs":       "0.8.x",
     "express":   "3.0.x",
     "faceplate": "0.0.4",
-    "jasmine-node": "1.0.x"
+    "jasmine-node": "1.0.x",
+    "less-middleware": "0.1.x"
   },
 
   "engines": {
