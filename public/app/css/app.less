@@ -4,6 +4,17 @@ body {
 }
 
 /* CSS for loading mask */
+
+// --- Useful mixins ------//
+.transition(@property, @duration) {
+  -moz-transition-property: @property;
+  -moz-transition-duration: @duration;
+  -webkit-transition-property: @property;
+  -webkit-transition-duration: @duration;
+  -o-transition-property: @property;
+  -o-transition-duration: @duration;
+}
+// ---- End of mixins ------//
 .loadMask {
   position: absolute;
   top: 0;
@@ -13,64 +24,54 @@ body {
   z-index: 99999;
   background-color: transparent;
   opacity: 0.0;
-  -moz-transition-property: opacity;
-  -moz-transition-duration: .6s;
-  -webkit-transition-property: opacity;
-  -webkit-transition-duration: .6s;
-  -o-transition-property: opacity;
-  -o-transition-duration: .6s;
+  .transition(opacity, .6s);
+
+  .backDrop {
+    opacity: 0.4;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+  }
+
+  .spinnerBg {
+    position: absolute;
+    left: 45%;
+    top: 35%;
+    width: 150px;
+    height: 150px;
+    background-color: black;
+    opacity: .7;
+    border-radius: 10px;
+  }
+
+  .innerMask {
+    position: relative;
+    left: 45%;
+    top: 35%;
+    width: 150px;
+    height: 150px;
+    background-color: transparent;
+
+    .text{
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      bottom: 10%;
+      font-weight: bold;
+      color: white;
+      font-size: 15px;
+    }
+  }
 }
 
-.loadMask .backDrop {
-  opacity: 0.4;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-}
 
 .loadMask.fade {
   opacity: 1;
-  -moz-transition-property: opacity;
-  -moz-transition-duration: .6s;
-  -webkit-transition-property: opacity;
-  -webkit-transition-duration: .6s;
-  -o-transition-property: opacity;
-  -o-transition-duration: .6s;
+  .transition(opacity, .6s);
 }
-
-.loadMask .spinnerBg {
-  position: absolute;
-  left: 45%;
-  top: 35%;
-  width: 150px;
-  height: 150px;
-  background-color: black;
-  opacity: .7;
-  border-radius: 10px;
-}
-
-.loadMask .innerMask {
-  position: relative;
-  left: 45%;
-  top: 35%;
-  width: 150px;
-  height: 150px;
-  background-color: transparent;
-}
-
-.loadMask .innerMask .text{
-  position: absolute;
-  width: 100%;
-  text-align: center;
-  bottom: 10%;
-  font-weight: bold;
-  color: white;
-  font-size: 15px;
-}
-
 
 .callForActionPanel {
   position: absolute;
