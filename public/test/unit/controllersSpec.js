@@ -25,6 +25,18 @@ describe('SportsBet controllers', function() {
     };
   }));
 
+  describe('MainCtrl', function() {
+    var scope, ctrl;
+    beforeEach(inject(function($rootScope, $controller) {
+      scope = $rootScope.$new();
+      ctrl = $controller(MainCtrl, {$scope: scope});
+    }));
+
+    it('should have initial variables', function() {
+      expect(scope.activeTab).toBe(0);
+    });
+  });
+
   describe('RouteCtrl', function() {
     var scope, $ctrl;
 

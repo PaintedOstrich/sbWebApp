@@ -2,6 +2,22 @@
 
 /* Controllers */
 
+// The top most controller, mainly in charge of navigations.
+function MainCtrl($scope) {
+  // Keep track of which tab is active.
+  $scope.activeTab = 0;
+
+  $scope.isActiveTab = function(index) {
+    return $scope.activeTab == index;
+  }
+
+  $scope.setActiveTab = function(index) {
+    $scope.activeTab = index;
+  }
+}
+MainCtrl.$inject = ['$scope'];
+
+
 // The very first controller to be reached that routes traffic to
 // landing page for visitors and profile page for returning user.
 function RouteCtrl($scope, $location, fb) {
