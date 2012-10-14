@@ -5,14 +5,24 @@
 // The top most controller, mainly in charge of navigations.
 function MainCtrl($scope) {
   // Keep track of which tab is active.
-  $scope.activeTab = 0;
+  $scope.activeTab = 1;
+  $scope.tabNames = ['home', 'profile', 'betpage', 'faq'];
 
   $scope.isActiveTab = function(index) {
     return $scope.activeTab == index;
   }
 
+  // This setter can take either a string or a number.
   $scope.setActiveTab = function(index) {
-    $scope.activeTab = index;
+    if (typeof index == 'string') {
+      var tabIndex = $scope.tabNames.indexOf(index);
+      if (tabIndex < 0) {
+        console.error('The tab name passed in is not found!');
+      }
+      $scope.activeTab = tabIndex;
+    } else {
+     $scope.activeTab = index;
+    }
   }
 }
 MainCtrl.$inject = ['$scope'];
@@ -52,6 +62,9 @@ LandingCtrl.$inject = ['$scope', '$location', 'fb'];
 
 // Controller for user profile screen
 function ProfileCtrl($scope, $location, fb, loadMask, $q) {
+  // parent scope should be MainCtrl.
+  $scope.$parent.setActiveTab('profile');
+
   $scope.user = {};
   $scope.newBet = function() {
     $location.path('bettype');
@@ -77,6 +90,9 @@ ProfileCtrl.$inject = ['$scope', '$location', 'fb', 'loadMask', '$q'];
 
 // Controller for bet type screen
 function BetTypeCtrl($scope, $location) {
+  // parent scope should be MainCtrl.
+  $scope.$parent.setActiveTab('betpage');
+
   $scope.socialBtnPressed = function() {
     $location.path('/socialbet');
   }
