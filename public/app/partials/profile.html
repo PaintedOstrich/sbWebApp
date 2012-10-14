@@ -1,9 +1,12 @@
 <div class="container-fluid">
-  <h3 ng-show="user.name">Profile</h3>
+  <h2 ng-show="user.name">Profile</h2>
   <div class="profileHeader">
     <img class="profileImg" ng-src="{{imgUrl}}"/>
     <div class="profileInfo">
-      Di Peng
+      <div class="username">{{user.name}}</div>
+      <div>Member since: ???</div>
+      <div>Higheset balance: ??? </div>
+      <div>Social wins: ??? </div>
     </div>
   </div>
  <!-- <button class="btn btn-danger btn-large" ng-click="newBet()">Creat a new bet</button> -->
