@@ -5,6 +5,12 @@ body {
 /* CSS for loading mask */
 
 // --- Useful mixins ------//
+.rounded-corners (@radius: 5px) {
+  border-radius: @radius;
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+}
+
 .transition(@property, @duration) {
   -moz-transition-property: @property;
   -moz-transition-duration: @duration;
@@ -12,6 +18,12 @@ body {
   -webkit-transition-duration: @duration;
   -o-transition-property: @property;
   -o-transition-duration: @duration;
+}
+
+.box-shadow (@x: 0, @y: 0, @blur: 1px, @color: #000) {
+  box-shadow: @arguments;
+  -moz-box-shadow: @arguments;
+  -webkit-box-shadow: @arguments;
 }
 // ---- End of mixins ------//
 .loadMask {
@@ -72,10 +84,23 @@ body {
   .transition(opacity, .6s);
 }
 
-.callForActionPanel {
-  position: absolute;
-  top: 20%;
-  left: 30%;
+/* Style for Profile.html */
+.profileHeader {
+  width: 100%;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  .box-shadow(4px, 4px, 6px, #ccc);
+  .rounded-corners (8px);
+
+  .profileImg {
+    display: inline-block;
+    border: 2px blue solid;
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    .rounded-corners (5px);
+  }
 }
 
 .betTypes {
