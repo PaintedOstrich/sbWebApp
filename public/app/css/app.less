@@ -1,5 +1,6 @@
 /* app css stylesheet */
 body {
+  background-image:url('../img/background.jpg');
 }
 
 /* CSS for loading mask */
@@ -82,6 +83,31 @@ body {
 .loadMask.fade {
   opacity: 1;
   .transition(opacity, .6s);
+}
+
+.navbar {
+  margin-top: 10px;
+  min-height: 50px;
+  .navitem {
+    display: inline-block;
+    min-width: 100px;
+    padding-left: 20px;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    &:hover {
+      color: gray;
+    }
+  }
+  .appname {
+    background-image: url('../img/appname.png');
+    width: 190px;
+    height: 50px;
+    background-origin: 11;
+    margin-left: 30px;
+  }
 }
 
 /* Style for Profile.html */

@@ -10,23 +10,10 @@
 <body>
   <div class="container-fluid" ng-controller="MainCtrl">
     <div class="navbar">
-      <div class="navbar-inner">
-        <a class="brand" href="#">Football with friends</a>
-        <ul class="nav">
-          <li ng-class="{active: isActiveTab(0)}">
-            <a href="#" ng-click="setActiveTab(0)">Home</a>
-          </li>
-          <li ng-class="{active: isActiveTab(1)}">
-            <a href="#/profile" ng-click="setActiveTab(1)">Profile</a>
-          </li>
-          <li ng-class="{active: isActiveTab(2)}">
-            <a href="#/bettype" ng-click="setActiveTab(2)">Make a bet</a>
-          </li>
-          <li ng-class="{active: isActiveTab(3)}">
-            <a href="#" ng-click="setActiveTab(3)">FAQ</a>
-          </li>
-        </ul>
-      </div>
+	    <div class="navitem">My Bets</div>
+	    <div class="navitem">Make a bet</div>
+	    <div class="navitem appname"></div>
+	    <div class="navitem">FAQ</div>
     </div>
     <ng-view></ng-view>
   </div>
