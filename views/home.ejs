@@ -9,11 +9,11 @@
 </head>
 <body>
   <div class="container-fluid" ng-controller="MainCtrl">
-    <div class="navbar">
-	    <div class="navitem">My Bets</div>
-	    <div class="navitem">Make a bet</div>
-	    <div class="navitem appname"></div>
-	    <div class="navitem">FAQ</div>
+    <div class="navbar" ng-hide="hideNavBar">
+      <div class="navitem">My Bets</div>
+      <div class="navitem">Make a bet</div>
+      <div class="navitem appname"></div>
+      <div class="navitem">FAQ</div>
     </div>
     <ng-view></ng-view>
   </div>

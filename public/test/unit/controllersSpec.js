@@ -51,6 +51,28 @@ describe('SportsBet controllers', function() {
     });
   });
 
+  describe('LandingCtrl', function() {
+    var scope, ctrl, mockLocation;
+
+    beforeEach(inject(function($rootScope, $controller) {
+      mockLocation = {
+        path: jasmine.createSpy('location')
+      };
+
+      var mainScope = $rootScope.$new();
+      var mainCtrl = $controller(MainCtrl, {$scope: mainScope});
+      scope = mainScope.$new();
+      ctrl = $controller(LandingCtrl,
+          {$scope: scope, $location: mockLocation, fb: mockFb});
+    }));
+
+    it('should hide nav on initiation but show it before exiting', function() {
+      expect(scope.$parent.hideNavBar).toBe(true);
+      scope.$destroy();
+      expect(scope.$parent.hideNavBar).toBe(false);
+    });
+  });
+
   describe('RouteCtrl', function() {
     var scope, $ctrl;
 
