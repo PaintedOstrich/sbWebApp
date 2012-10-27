@@ -1,8 +1,34 @@
 <div class="socialBet">
   <div class="infoBackground"></div>
   <div class="socialBetContent">
+    <br>
+    <div class="gameTypeSelect">
+      Sport to bet on:
+      <select ng-model="gameType"
+          ng-options="g.name for g in gameTypes">
+      </select>
+    </div>
+
+    <div class="gamesPanel">
+
+    </div>
+    <div class="betOptionsPanel">
+
+    </div>
+    <div class="betControls">
+      <div class="friendSelection">
+        <h4>Pick some friends:</h4>
+        <input type="text" class="friendInput"/>
+      </div>
+      <div class="betBtn btn btn-success btn-large">
+        Place Bets!
+        <i class="icon icon-credit"></i>
+      </div>
+    </div>
   </div>
 </div>
+
+
 
 <!-- <div class="carousel slide socialBetPage" data-interval="false" -->
   <!-- Carousel items -->

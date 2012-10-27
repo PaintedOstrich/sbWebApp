@@ -24,6 +24,16 @@
   -moz-box-shadow: @string;
   -webkit-box-shadow: @string;
 }
+
+.round-block(@width: 90%, @corner: 8px, @margin: 20px auto 0 auto) {
+  width: @width;
+  margin: 20px auto 0 auto;
+  border-style: solid;
+  border-color: darkgray;
+  border-width: 2px;
+  .box-shadow(0px 2px 2px 1px grey);
+  .rounded-corners (@corner);
+}
 // ---- End of mixins ------//
 
 body {
@@ -180,13 +190,7 @@ body {
   }
   .profileHeader {
     position: relative;
-    width: @panelWidth;
-    margin: 20px auto 0 auto;
-    border-style: solid;
-    border-color: darkgray;
-    border-width: 2px;
-    .box-shadow(0px 3px 4px 1px grey);
-    .rounded-corners (8px);
+    .round-block(@panelWidth);
 
     .profileImg {
       display: inline-block;
@@ -234,11 +238,9 @@ body {
     }
 
     .tabContent {
-      border-style: solid;
-      border-color: darkGray;
-      border-width: 1 px;
-      min-height: 200px;
-      .rounded-corners(4px);
+      .round-block(100%, 4px);
+       min-height: 200px;
+/*      .rounded-corners(4px);*/
     }
   }
 }
@@ -276,11 +278,42 @@ body {
   }
   .socialBetContent {
     position: relative;
-    width: @panelWidth;
+    .gameTypeSelect {
+      margin-top: 20px;
+      margin-left: 20px;
+    }
+    .gamesPanel {
+      .round-block(@panelWidth, 8px, 10px auto 0 auto);
+      height: 260px;
+    }
+    .betOptionsPanel {
+      .round-block(@panelWidth, 8px, 10px auto 0 auto);
+      height: 80px;
+    }
+    .betControls {
+      margin: 15px auto 0 auto;
+      width: @panelWidth;
+      .friendInput {
+        float: left;
+        width: 400px;
+      }
+      .betBtn {
+        float: right;
+        height: 70px;
+        width: 150px;
+        font-weight: bold;
+        font-size: 1.5em;
+        .icon-credit {
+          width: 50px;
+          height: 85px;
+          background-image: url(../img/credit.png);
+        }
+      }
+    }
   }
 }
 
-.panelOne {}
+/*.panelOne {}
 .panelOne .friendInput {
   width: 90%;
   margin: 10px;
@@ -312,16 +345,14 @@ body {
   border: 1px solid #DDD;
   .rounded-corners(4px);
 }
-
-.sportsListing li.event:hover {
+*/
+/*.sportsListing li.event:hover {
   font-size: 15px;
-  /* light gray */
   background-color: #F2F2F2;
-}
+}*/
 
-.sportsListing li.event .selectedEvent {
+/*.sportsListing li.event .selectedEvent {
   font-size: 15px;
-  /* light gray */
   background-color: #6495ED;
 }
 
@@ -339,12 +370,10 @@ body {
 }
 
 .betPanel .predictionChip:hover {
-  /* light gray */
   background-color: #F2F2F2;
 }
 
 .betPanel .predictionChip.winner {
-  /* green */
   background-color: #5BB75B;
-}
+}*/
 /* End of style for SocialBet.html */

@@ -162,6 +162,11 @@ function SocialBetCtrl($scope, fb, loadMask) {
       firstTeam: {name: 'teamA'}, secTeam: {name: 'teamB'}
     },
   ];
+  $scope.gameTypes = [
+    {name: 'NFL', value: 'nfl'}
+  ]
+  // Deafult to choose the first value
+  $scope.gameType = $scope.gameTypes[0];
 
   $scope.currentPanel = 'friendsPanel';
   $scope.panels = [
