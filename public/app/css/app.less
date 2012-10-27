@@ -1,10 +1,7 @@
 /* app css stylesheet */
-body {
-  background-image:url('../img/background.jpg');
-  color: #F8F8F8 !important;
-}
 
-/* CSS for loading mask */
+/* Global variables */
+@panelWidth: 90%;
 
 // --- Useful mixins ------//
 .rounded-corners (@radius: 5px) {
@@ -28,6 +25,13 @@ body {
   -webkit-box-shadow: @string;
 }
 // ---- End of mixins ------//
+
+body {
+  background-image:url('../img/background.jpg');
+  color: #F8F8F8 !important;
+}
+
+/* CSS for loading mask */
 .loadMask {
   position: absolute;
   top: 0;
@@ -170,7 +174,6 @@ body {
 
 /* Style for Profile.html */
 .profilePagePanel {
-  @panelWidth: 90%;
   position: relative;
   .infoBackground {
     top: 20px !important;
@@ -249,7 +252,7 @@ body {
     top: 20px !important;
   }
   .betTypeBtnGroup {
-    width: 90%;
+    width: @panelWidth;
     padding-top: 10%;
     h2 {
       text-align:center;
@@ -264,12 +267,17 @@ body {
 }
 
 /* Style for SocialBet.html */
-.socialBetPage .container {
+.socialBet  {
   position: relative;
-  max-width: 450px;
-  min-height: 400px !important;
-  border:5px;
-  border-style:solid;
+  height: 600px;
+  .infoBackground {
+    position:absolute;
+    top: 20px !important;
+  }
+  .socialBetContent {
+    position: relative;
+    width: @panelWidth;
+  }
 }
 
 .panelOne {}
