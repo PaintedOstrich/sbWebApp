@@ -3,10 +3,17 @@
 /* Controllers */
 
 // The top most controller, mainly in charge of navigations.
-function MainCtrl($scope) {
+function MainCtrl($scope, $location) {
   // Keep track of which tab is active.
-  $scope.activeTab = 1;
-  $scope.tabNames = ['home', 'profile', 'betpage', 'faq'];
+  $scope.activeTab = -1;
+  $scope.tabNames = ['profile', 'betpage', 'faq', 'contact'];
+  // Private variable to this parent controller.
+  var pathMap = {
+    profile: 'profile',
+    betpage: 'bettype',
+    faq: 'faq',
+    contact: 'contact'
+  }
 
   $scope.isActiveTab = function(index) {
     return $scope.activeTab == index;
@@ -23,9 +30,12 @@ function MainCtrl($scope) {
     } else {
      $scope.activeTab = index;
     }
+    // Route the app to the right partial.
+    var tabName = $scope.tabNames[$scope.activeTab];
+    $location.path(pathMap[tabName]);
   }
 }
-MainCtrl.$inject = ['$scope'];
+MainCtrl.$inject = ['$scope', '$location'];
 
 
 // The very first controller to be reached that routes traffic to
@@ -274,3 +284,17 @@ function SocialBetCtrl($scope, fb, loadMask) {
   }
 }
 SocialBetCtrl.$inject = ['$scope',  'fb', 'loadMask'];
+
+
+// For the faq.html page
+function FaqCtrl($scope) {
+
+}
+FaqCtrl.$inject = ['$scope'];
+
+
+// For the contact.html page
+function ContactCtrl($scope) {
+
+}
+ContactCtrl.$inject = ['$scope'];
