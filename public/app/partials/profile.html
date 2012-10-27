@@ -1,5 +1,6 @@
-<div class="container-fluid">
-  <h2 ng-show="user.name">Profile</h2>
+<div class="profilePagePanel">
+  <div class="infoBackground"></div>
+  <br/>
   <div class="profileHeader">
     <img class="profileImg" ng-src="{{imgUrl}}"/>
     <div class="profileInfo">
@@ -7,7 +8,9 @@
       <div>Member since: ???</div>
       <div>Higheset balance: ??? </div>
       <div>Social wins: ??? </div>
-      <button class="btn" ng-click="newBet()">New Bet!</button>
+      <a class="btn btn-success betBtn" ng-click="newBet()">
+        New Bet <i class="icon-hand-right"></i>
+      </a>
     </div>
   </div>
   <div class="ongoingBets">

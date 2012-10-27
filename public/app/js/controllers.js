@@ -4,6 +4,7 @@
 
 // The top most controller, mainly in charge of navigations.
 function MainCtrl($scope, $location) {
+  $scope.hideNavBar = true;
   // Keep track of which tab is active.
   $scope.activeTab = -1;
   $scope.tabNames = ['profile', 'betpage', 'faq', 'contact'];
@@ -80,6 +81,8 @@ LandingCtrl.$inject = ['$scope', '$location', 'fb'];
 
 // Controller for user profile screen
 function ProfileCtrl($scope, $location, fb, loadMask, $q) {
+  // show the nav bar on landing screen.
+  $scope.$parent.hideNavBar = false;
   // parent scope should be MainCtrl.
   $scope.$parent.setActiveTab('profile');
 
