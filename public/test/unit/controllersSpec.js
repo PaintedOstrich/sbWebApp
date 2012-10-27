@@ -33,7 +33,7 @@ describe('SportsBet controllers', function() {
     }));
 
     it('should have initial variables', function() {
-      expect(scope.activeTab).toBe(1);
+      expect(scope.activeTab).toBe(-1);
     });
 
     describe('setActiveTab', function() {
