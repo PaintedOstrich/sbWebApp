@@ -57,7 +57,7 @@ body {
     height: 150px;
     background-color: black;
     opacity: .7;
-    border-radius: 10px;
+    .rounded-corners(10px);
   }
 
   .innerMask {
@@ -211,7 +211,7 @@ body {
   }
 
   .controlTabs {
-    width: @panelWidth;
+    width: 60%;
     margin: 30px auto 0 auto;
     min-height: 200px;
     @lightBlack: #555;
@@ -228,6 +228,14 @@ body {
         color: #F8F8F8;
         text-shadow: 0px 1px 1px black;
       }
+    }
+
+    .tabContent {
+      border-style: solid;
+      border-color: darkGray;
+      border-width: 1 px;
+      min-height: 200px;
+      .rounded-corners(4px);
     }
   }
 }
@@ -278,9 +286,7 @@ body {
   line-height: 43px;
   text-align: center;
   border: 1px solid #DDD;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
+  .rounded-corners(4px);
 }
 
 .sportsListing li.event:hover {
@@ -305,9 +311,7 @@ body {
   padding-top: 10px;
   text-align: center;
   border: 1px solid #DDD;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
+  .rounded-corners(4px);
 }
 
 .betPanel .predictionChip:hover {
