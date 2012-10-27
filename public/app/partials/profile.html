@@ -15,13 +15,18 @@
   </div>
   <div class="controlTabs">
     <ul class="nav nav-tabs">
-      <li class="active">
-        <a href="#">Active bets</a>
+      <li ng-class="{active: isActiveTab(0)}">
+        <a href ng-click="setActiveTab(0)">
+          Active bets
+        </a>
       </li>
-      <li>
-        <a href="#">Bet invites</a>
+      <li ng-class="{active: isActiveTab(1)}">
+        <a href ng-click="setActiveTab(1)">Bet invites</a>
       </li>
     </ul>
+    <div class="tabContent">
+      <div ng-include src="template.url">lalala</div>
+    </div>
   </div>
  <!-- <button class="btn btn-danger btn-large" ng-click="newBet()">Creat a new bet</button> -->
 </div>

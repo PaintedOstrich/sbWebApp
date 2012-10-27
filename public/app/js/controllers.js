@@ -86,6 +86,11 @@ function ProfileCtrl($scope, $location, fb, loadMask, $q) {
   // parent scope should be MainCtrl.
   $scope.$parent.setActiveTab('profile');
 
+  $scope.templates =
+     [ { name: 'template1.html', url: 'app/partials/profile/activebets.html'}
+     , { name: 'template2.html', url: 'app/partials/profile/betinvites.html'} ];
+   $scope.template = $scope.templates[0];
+
   $scope.user = {};
   $scope.newBet = function() {
     $location.path('bettype');
@@ -105,6 +110,13 @@ function ProfileCtrl($scope, $location, fb, loadMask, $q) {
     });
   }
   $scope.init();
+
+  $scope.setActiveTab = function(index) {
+    $scope.template = $scope.templates[index];
+  }
+  $scope.isActiveTab = function(index) {
+    return $scope.template == $scope.templates[index];
+  }
 }
 ProfileCtrl.$inject = ['$scope', '$location', 'fb', 'loadMask', '$q'];
 
