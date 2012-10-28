@@ -1,5 +1,5 @@
 // Controller for social bet screen
-function SocialBetCtrl($scope, fb, loadMask) {
+function SocialBetCtrl($scope, fb, loadMask, betAPI) {
   // Friends selected to place bet on.
   $scope.selectedFriends = [];
   // An id to Friend obj mapping storing all user's fb friends.
@@ -28,6 +28,8 @@ function SocialBetCtrl($scope, fb, loadMask) {
   ]
   // Deafult to choose the first value
   $scope.gameType = $scope.gameTypes[0];
+
+  betAPI.getGames('NFL');
 
   $scope.currentPanel = 'friendsPanel';
   $scope.panels = [
@@ -164,4 +166,4 @@ function SocialBetCtrl($scope, fb, loadMask) {
     alert('bet is placed');
   }
 }
-SocialBetCtrl.$inject = ['$scope',  'fb', 'loadMask'];
+SocialBetCtrl.$inject = ['$scope',  'fb', 'loadMask', 'betAPI'];

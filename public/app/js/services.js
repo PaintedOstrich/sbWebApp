@@ -2,9 +2,41 @@
 
 /* Services */
 
-angular.module('facebookService', ['ng'])
+angular.module('services', ['ng', 'ngResource'])
     .service('fb', FBSdk)
-    .service('loadMask', LoadMask);
+    .service('loadMask', LoadMask)
+    .service('betAPI', BetAPI)
+    .service('userAPI', UserAPI);
+
+
+/**
+ * A service to talk to bet API server.
+ */
+function BetAPI($resource) {
+  var url = 'http://sportsbetsservice.herokuapp.com/api/games';
+
+  // // Define CreditCard class
+  // var CreditCard = $resource('/user/:userId/card/:cardId',
+  //  {userId:123, cardId:'@id'}, {
+  //   charge: {method:'POST', params:{charge:true}}
+  //  });
+
+  var Game = $resource(url + '/:gameType', {gameType: '@gameType'}, {});
+
+  this.getGames = function(gameType) {
+    var games = Game.query({gameType: gameType}, function() {
+       debugger;
+    });
+  }
+}
+
+/**
+ * A service to talk to user API server.
+ */
+function UserAPI() {
+
+}
+
 
 /**
  * A load mask singleton class that is used to show and hide a loading mask
@@ -128,7 +160,7 @@ function FBSdk($q, $timeout) {
   // this.getMe = function(scope) {
   //   var deferred = $q.defer();
   //   var self = this;
-  // 
+  //
   //   if (self.me) {
   //     $timeout(function() {
   //       scope.$apply(function() {
