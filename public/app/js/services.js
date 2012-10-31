@@ -12,23 +12,24 @@ angular.module('services', ['ng', 'ngResource'])
 /**
  * A service to talk to bet API server.
  */
-function BetAPI($resource) {
-  var url = 'http://sportsbetsservice.herokuapp.com/api/games';
+function BetAPI($resource, $q) {
 
-  // // Define CreditCard class
-  // var CreditCard = $resource('/user/:userId/card/:cardId',
-  //  {userId:123, cardId:'@id'}, {
-  //   charge: {method:'POST', params:{charge:true}}
-  //  });
+  // The API server url.
+  this.url = 'http://127.0.0.1:port/app/testData'
 
-  var Game = $resource(url + '/:gameType', {gameType: '@gameType'}, {});
-
-  this.getGames = function(gameType) {
+  var Game = $resource(this.url + '/:gameType', {port: ':5000', gameType: '@gameType'}, {});
+  this.loadGames = function(gameType) {
+    var deferred = $q.defer();
     var games = Game.query({gameType: gameType}, function() {
-       debugger;
+      deferred.resolve(games);
+    }, function() {
+      console.error('Failed to load games');
     });
+    return deferred.promise;
   }
 }
+
+
 
 /**
  * A service to talk to user API server.
