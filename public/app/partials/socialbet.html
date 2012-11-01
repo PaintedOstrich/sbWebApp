@@ -10,6 +10,28 @@
     </div>
 
     <div class="gamesPanel">
+      <div ng-repeat = "game in games">
+        <div class="gameChip">
+          <!-- {{game.header}}
+           {{game.date}}
+           {{game.team1}}
+           {{game.team2}} -->
+          <div class="block">
+            <img src="app/img/helmut1.png" class="teamLogo">
+            {{game.team1}}
+          </div>
+          <div class="block">
+            <div class="vsText">
+               VS
+            </div>
+            {{game.date}}
+          </div>
+          <div class="block">
+            <img src="app/img/helmut2.png" class="teamLogo">
+            {{game.team2}}
+          </div>
+        </div>
+      </div>
 
     </div>
     <div class="betOptionsPanel">

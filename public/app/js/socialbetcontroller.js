@@ -35,6 +35,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
 
   $scope.processGameData = function(res) {
     // TODO add error handling.
+    debugger;
     $scope.games = res;
   }
 
