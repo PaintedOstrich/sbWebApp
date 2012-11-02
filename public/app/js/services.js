@@ -15,9 +15,9 @@ angular.module('services', ['ng', 'ngResource'])
 function BetAPI($resource, $q) {
 
   // The API server url.
-  this.url = 'http://127.0.0.1:port/app/testData'
+  this.url = 'app/testData'
 
-  var Game = $resource(this.url + '/:gameType', {port: ':5000', gameType: '@gameType'}, {});
+  var Game = $resource(this.url + '/:gameType', {gameType: '@gameType'}, {});
   this.loadGames = function(gameType) {
     var deferred = $q.defer();
     var games = Game.query({gameType: gameType}, function() {
