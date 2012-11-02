@@ -17,6 +17,11 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
 
   // The bet to be placed.
   $scope.bet = undefined;
+  // TODO This should be a singleton
+  $scope.user = {
+    balance: 100,
+    currentBalance: 100
+  }
   // ---------------------------------------------------------
 
   // ----------------- Initializing funciton ----------------
@@ -94,13 +99,28 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
      });
    });
  }
+
+ $scope.recalcBalance = function() {
+   if ($scope.bet) {
+     var numFriendsBeted = $scope.selectedFriends.length;
+     var betAmount = numFriendsBeted * ($scope.bet.betOnTeam1 + $scope.bet.betOnTeam2);
+     $scope.user.currentBalance = $scope.user.balance - betAmount;
+   }
+ }
+
+ $scope.$watch('selectedFriends', $scope.recalcBalance);
+ $scope.$watch('bet.betOnTeam1', $scope.recalcBalance);
+ $scope.$watch('bet.betOnTeam2', $scope.recalcBalance);
+
  // -------------------------------------------------------
 
  // Initialize a bet
  $scope.initBet = function(game) {
    // Should use a resource class. but it is fine for now!
    $scope.bet = {
-     game: game
+     game: game,
+     betOnTeam1: 0,
+     betOnTeam2: 0
    };
  }
 }

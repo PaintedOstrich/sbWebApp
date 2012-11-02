@@ -75,11 +75,11 @@ describe('SocialBetCtrl', function() {
       };
       mockData = [game1, game2];
     });
-    
+
     it('should be function', function() {
       expect(typeof scope.processGameData).toEqual('function');
     });
-    
+
     it('should process raw resource objects passed in', function() {
       expect(scope.games).toEqual([]);
       scope.processGameData(mockData);
@@ -98,6 +98,35 @@ describe('SocialBetCtrl', function() {
       expect(scope.bet).toBeUndefined();
       scope.initBet();
       expect(scope.bet).toBeDefined()
+    });
+  });
+
+
+  describe('SocialBetCtrl.recalcBalance', function() {
+    it('should be a function', function() {
+      expect(typeof scope.recalcBalance).toEqual('function');
+    });
+
+    it('should calculate balance', function() {
+      scope.user.balance = scope.user.currentBalance = 100;
+      var mockGame = {};
+      scope.initBet(mockGame);
+      expect(scope.selectedFriends).toEqual([]);
+      expect(scope.bet.betOnTeam1).toBe(0);
+      expect(scope.bet.betOnTeam2).toBe(0);
+
+       scope.selectedFriends = [{}, {}];
+       scope.$digest();
+       expect(scope.user.currentBalance).toBe(100);
+
+       scope.bet.betOnTeam1 = 2;
+       scope.bet.betOnTeam2 = 1;
+       scope.$digest();
+       expect(scope.user.currentBalance).toBe(94);
+
+       scope.selectedFriends = [];
+       scope.$digest();
+       expect(scope.user.currentBalance).toBe(100);
     });
   });
 });
