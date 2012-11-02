@@ -94,7 +94,6 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
  // Initialize a bet
  $scope.initBet = function(game) {
    // Should use a resource class. but it is fine for now!
-   debugger;
    $scope.bet = {
      game: game
    };

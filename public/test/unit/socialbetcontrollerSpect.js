@@ -50,7 +50,7 @@ describe('SocialBetCtrl', function() {
       var f2 = {id: '456'};
       var friends = {data:[f1, f2]};
       expect(scope.allFriends).toEqual({});
-      
+
       spyOn(scope, 'initSelectWidget');
       scope.processFriendsData(friends);
       expect(scope.allFriends).toEqual({
@@ -60,13 +60,13 @@ describe('SocialBetCtrl', function() {
       expect(scope.initSelectWidget).toHaveBeenCalled();
     });
   });
-  
-  
+
+
   describe('SocialBetCtrl.initBet', function() {
     it('should be a function', function() {
       expect(typeof scope.initBet).toEqual('function');
     });
-    
+
     it('should init bet', function() {
       expect(scope.bet).toBeUndefined();
       scope.initBet();
