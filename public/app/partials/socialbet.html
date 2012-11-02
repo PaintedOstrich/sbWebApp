@@ -11,7 +11,7 @@
 
     <div class="gamesPanel">
       <div ng-repeat = "game in games">
-        <div class="gameChip">
+        <div class="gameChip" ng-click="initBet(game)">
           <!-- {{game.header}}
            {{game.date}}
            {{game.team1}}
@@ -32,11 +32,52 @@
           </div>
         </div>
       </div>
-
     </div>
+
     <div class="betOptionsPanel">
-
+      <div class="betOptionsInner" ng-show="bet.game">
+        <div class="block">
+          {{bet.game.date}}
+        </div>
+        <div class="block">
+          <div>
+            <p>{{bet.game.team1}}</p>
+          </div>
+          <div>
+            <p>{{bet.game.team2}}</p>
+          </div>
+        </div>
+        <div class="block">
+          <div>
+            <p>{{bet.game.spreadPoints}}({{bet.game.totalOver}})</p>
+          </div>
+          <div>
+            <p>{{bet.game.spreadPoints}}({{bet.game.totalOver}})</p>
+          </div>
+        </div>
+        <div class="block">
+          <div>
+            <p>{{bet.game.totalPoints}}({{bet.game.spreadTeam1}})</p>
+          </div>
+          <div>
+            <p>{{bet.game.totalPoints}}({{bet.game.spreadTeam2}})</p>
+          </div>
+        </div>
+        <div class="block">
+          <div>
+            <p>{{bet.game.moneyTeam1}}</p>
+          </div>
+          <div>
+            <p>{{bet.game.moneyTeam2}}</p>
+          </div>
+        </div>
+        <div class="block">
+          <input type="number" ng-model="bet.betOnTeam1" />
+          <input type="number" ng-model="bet.betOnTeam2" />
+        </div>
+      </div>
     </div>
+
     <div class="betControls">
       <div class="friendSelection">
         <h4 style="margin-bottom: 5px;">Remaining Credit: $100 cents</h4>

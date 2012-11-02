@@ -14,6 +14,9 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
   $scope.gameType = $scope.gameTypes[0];
   // A list of games to be displayed in the grid.
   $scope.games = [];
+
+  // The bet to be placed.
+  $scope.bet = undefined;
   // ---------------------------------------------------------
 
   // ----------------- Initializing funciton ----------------
@@ -53,7 +56,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
 
   // Caling loadData to initialize the page.
   $scope.loadData();
-  
+
   // Used to format drop down menu item.
   function format(friend) {
    return "<img class='friendEntry' src='http://graph.facebook.com/"
@@ -72,7 +75,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
      minimumInputLength:2,
      formatResult: format
    });
-  
+
    $scope.friendInput.on('change', function(e) {
       $scope.$apply(function() {
        var tmp = [];
@@ -87,6 +90,15 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
    });
  }
  // -------------------------------------------------------
+
+ // Initialize a bet
+ $scope.initBet = function(game) {
+   // Should use a resource class. but it is fine for now!
+   debugger;
+   $scope.bet = {
+     game: game
+   };
+ }
 }
 SocialBetCtrl.$inject = ['$scope',  'fb', 'loadMask', 'betAPI', '$q'];
 

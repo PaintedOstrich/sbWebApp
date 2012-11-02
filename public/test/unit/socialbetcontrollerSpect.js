@@ -60,5 +60,18 @@ describe('SocialBetCtrl', function() {
       expect(scope.initSelectWidget).toHaveBeenCalled();
     });
   });
+  
+  
+  describe('SocialBetCtrl.initBet', function() {
+    it('should be a function', function() {
+      expect(typeof scope.initBet).toEqual('function');
+    });
+    
+    it('should init bet', function() {
+      expect(scope.bet).toBeUndefined();
+      scope.initBet();
+      expect(scope.bet).toBeDefined()
+    });
+  });
 });
 
