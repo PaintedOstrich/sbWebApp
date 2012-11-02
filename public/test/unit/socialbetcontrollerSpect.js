@@ -62,6 +62,33 @@ describe('SocialBetCtrl', function() {
   });
 
 
+  describe('SocialBetCtrl.processGameData', function() {
+    var mockData, game1, game2;
+    beforeEach(function() {
+      game1 = {
+        date: '2012-10-28 20:30:00',
+        id: '1234'
+      };
+      game2 = {
+        date: '2011-10-28 20:30:00',
+        id: '5678'
+      };
+      mockData = [game1, game2];
+    });
+    
+    it('should be function', function() {
+      expect(typeof scope.processGameData).toEqual('function');
+    });
+    
+    it('should process raw resource objects passed in', function() {
+      expect(scope.games).toEqual([]);
+      scope.processGameData(mockData);
+      expect(scope.games).toEqual(mockData);
+      expect(mockData[0].date instanceof Date).toBe(true);
+    });
+  });
+
+
   describe('SocialBetCtrl.initBet', function() {
     it('should be a function', function() {
       expect(typeof scope.initBet).toEqual('function');

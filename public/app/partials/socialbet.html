@@ -12,10 +12,6 @@
     <div class="gamesPanel">
       <div ng-repeat = "game in games">
         <div class="gameChip" ng-click="initBet(game)">
-          <!-- {{game.header}}
-           {{game.date}}
-           {{game.team1}}
-           {{game.team2}} -->
           <div class="block">
             <img src="app/img/helmut1.png" class="teamLogo">
             {{game.team1}}
@@ -24,7 +20,7 @@
             <div class="vsText">
                VS
             </div>
-            {{game.date}}
+            {{game.date | date: 'mediumDate'}}
           </div>
           <div class="block">
             <img src="app/img/helmut2.png" class="teamLogo">
@@ -37,7 +33,7 @@
     <div class="betOptionsPanel">
       <div class="betOptionsInner" ng-show="bet.game">
         <div class="block">
-          {{bet.game.date}}
+          {{bet.game.date | date: 'medium'}}
         </div>
         <div class="block">
           <div>

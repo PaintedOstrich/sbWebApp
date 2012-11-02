@@ -38,8 +38,13 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
 
   $scope.processGameData = function(res) {
     // TODO add error handling.
-    debugger;
     $scope.games = res;
+    $scope.games.forEach(function(game) {
+      // date should still be a raw string.
+      if (game.date) {
+        game.date = new Date(game.date);
+      }
+    });
   }
 
   $scope.processFriendsData = function(res) {
