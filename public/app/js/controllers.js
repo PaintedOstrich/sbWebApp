@@ -106,6 +106,7 @@ function ProfileCtrl($scope, $location, fb, loadMask) {
         $scope.imgUrl = "http://graph.facebook.com/"
             + $scope.user.id + "/picture?type=large";
       }
+      console.log($scope.user.id )
       loadMask.hide();
     });
   }

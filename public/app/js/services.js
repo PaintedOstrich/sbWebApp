@@ -6,7 +6,7 @@ angular.module('services', ['ng', 'ngResource'])
     .service('fb', FBSdk)
     .service('loadMask', LoadMask)
     .service('betAPI', BetAPI)
-    .service('userAPI', UserAPI);
+    .service('User', User);
 
 
 /**
@@ -32,10 +32,61 @@ function BetAPI($resource, $q) {
 
 
 /**
- * A service to talk to user API server.
+ * The user singleton to be shared among all controllers.
  */
-function UserAPI() {
+function User($resource, $q, $timeout) {
+  var userResource, user;
+  this.isLoaded = function() {
+    return !!user;
+  }
 
+  // private function
+  var processUserData = function() {
+    if (userResource) {
+      user = {};
+      for(prop in userResource) {
+        if (typeof userResource[prop] != 'function') {
+          user[prop] = userResource[prop]
+        }
+      }
+      user.imgUrl = "http://graph.facebook.com/"
+          + user.id + "/picture?type=large";
+    }
+  }
+
+  // The User server url.
+  var url = 'app/testData/User';
+  var User = $resource(url, {}, {});
+  this.getUser = function() {
+    var deferred = $q.defer();
+    if (this.isLoaded()) {
+      $timeout(function() {
+        deferred.resolve(user);
+      }, 10);
+    } else {
+      userResource = User.get({}, function() {
+        processUserData();
+        deferred.resolve(user);
+      }, function() {
+        console.error('Failed to load user');
+      });
+    }
+    return deferred.promise;
+  }
+  
+  
+  // Old logic to load me from fb. Should we load everything from user server now????
+  // fb.api($scope, '/me').then(function(res) {
+  //   if (res.error) {
+  //     console.error('Failed to load user!');
+  //   } else {
+  //     $scope.user = res;
+  //     $scope.imgUrl = "http://graph.facebook.com/"
+  //         + $scope.user.id + "/picture?type=large";
+  //   }
+  //   console.log($scope.user.id )
+  //   loadMask.hide();
+  // });
 }
 
 
@@ -154,30 +205,4 @@ function FBSdk($q, $timeout) {
     }, 1);
     return deferred.promise;
   }
-
-  /*--------- NOTE: following are custom apis  ---------- */
-
-  // Return the current user.
-  // this.getMe = function(scope) {
-  //   var deferred = $q.defer();
-  //   var self = this;
-  //
-  //   if (self.me) {
-  //     $timeout(function() {
-  //       scope.$apply(function() {
-  //         deferred.resolve(self.me);
-  //       });
-  //     }, 1);
-  //   } else {
-  //     this.api(scope, '/me').then(function(response) {
-  //       if (response.username) {
-  //         self.me = response;
-  //         deferred.resolve(response);
-  //       } else {
-  //        console.error('Failed to load the current user!');
-  //       }
-  //     });
-  //   }
-  //   return deferred.promise;
-  // }
 }
