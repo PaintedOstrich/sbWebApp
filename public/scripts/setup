@@ -1,0 +1,53 @@
+#!/bin/sh -
+
+if [ $# -ne 1 ]; then
+    PATHDIR=`pwd`
+else
+    PATHDIR=$1
+fi
+/usr/bin/osascript <<-EOF
+activate application "Terminal"
+tell application "Terminal"
+  do script "mate ." in window 1
+end tell
+set x to 4
+repeat while x > 0
+  set x to x - 1
+  tell application "System Events"
+      keystroke "t" using {command down}
+  end tell
+  tell application "Terminal"
+      repeat with win in windows
+          try
+            do script "cd $PATHDIR; clear" in (selected tab of win)
+            do script  "cd public/" in (selected tab of win)
+                  if x is 3
+                    do script "cd .." in (selected tab of win)
+                    do script "foreman start" in (selected tab of win)
+                  end if
+                  if x is 2
+                    do script "./scripts/test-server.sh" in (selected tab of win)
+                  end if
+                  if x is 1
+                    do script "./scripts/watchr.rb" in (selected tab of win)
+                  end if
+                  if x is 0
+                    do script "tail -f logs/jstd.log" in (selected tab of win)
+                  end if
+          end try
+      end repeat
+  end tell
+end repeat
+
+delay 1
+tell application "Google Chrome"
+  reopen
+  activate
+  tell window 1 to make new tab with properties {URL:"localhost:9876"}
+  tell window 1 to make new tab with properties {URL:"http://apps.facebook.com/403763966344588/"}
+end tell
+tell application "GitHub"
+  activate
+end tell
+
+EOF
