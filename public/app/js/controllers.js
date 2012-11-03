@@ -80,7 +80,7 @@ LandingCtrl.$inject = ['$scope', '$location', 'fb'];
 
 
 // Controller for user profile screen
-function ProfileCtrl($scope, $location, fb, loadMask, $q) {
+function ProfileCtrl($scope, $location, fb, loadMask) {
   // show the nav bar on landing screen.
   $scope.$parent.hideNavBar = false;
   // parent scope should be MainCtrl.
@@ -111,6 +111,7 @@ function ProfileCtrl($scope, $location, fb, loadMask, $q) {
   }
   $scope.init();
 
+  // note: this set/is ActiveTab methods override the methods on its parent scope.
   $scope.setActiveTab = function(index) {
     $scope.template = $scope.templates[index];
   }
@@ -118,7 +119,7 @@ function ProfileCtrl($scope, $location, fb, loadMask, $q) {
     return $scope.template == $scope.templates[index];
   }
 }
-ProfileCtrl.$inject = ['$scope', '$location', 'fb', 'loadMask', '$q'];
+ProfileCtrl.$inject = ['$scope', '$location', 'fb', 'loadMask'];
 
 
 // Controller for bet type screen
