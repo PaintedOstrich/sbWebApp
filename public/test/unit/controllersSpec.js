@@ -109,29 +109,27 @@ describe('SportsBet controllers', function() {
 
 
   describe('ProfileCtrl', function() {
-    var scope, ctrl, mockLocation;
+    var scope, ctrl, mockLocation, mockCurrentUser;
 
     beforeEach(inject(function($rootScope, $controller) {
       mockLocation = {
         path: jasmine.createSpy('location')
       };
 
+      mockCurrentUser = {
+        loadUser : jasmine.createSpy().andReturn({
+          then: function() {}
+        })
+      }
       var mainScope = $rootScope.$new();
       var mainCtrl = $controller(MainCtrl, {$scope: mainScope});
       scope = mainScope.$new();
       ctrl = $controller(ProfileCtrl,
           {$scope: scope, fb: mockFb, $location: mockLocation,
-              loadMask: mockLoadMask});
+              loadMask: mockLoadMask, currentUser: mockCurrentUser});
     }));
 
     it('should set user obj if fb.api request succeed', function() {
-      expect(scope.user).toEqual({});
-      var mockUser = {username: 'abc', id: 123};
-      scope.$apply(function() {
-        mockFb.promises.api.resolve(mockUser);
-      });
-      expect(scope.user).toBe(mockUser);
-      expect(scope.imgUrl).toBeDefined();
     });
   });
 });
