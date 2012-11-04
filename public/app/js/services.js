@@ -6,7 +6,7 @@ angular.module('services', ['ng', 'ngResource'])
     .service('fb', FBSdk)
     .service('loadMask', LoadMask)
     .service('betAPI', BetAPI)
-    .service('User', User);
+    .service('currentUser', User);
 
 
 /**
@@ -36,7 +36,6 @@ function BetAPI($resource, $q) {
  */
 function User($resource, $q, $timeout) {
   var user;
-  var scope = this;
   this.isLoaded = function() {
     return !!user;
   }
@@ -65,8 +64,14 @@ function User($resource, $q, $timeout) {
   var User = $resource(url, {}, {});
   this.loadUser = function() {
     var deferred = $q.defer();
+    var scope = this;
     user = User.get({}, function() {
       createSettersAndGetters(scope);
+      // create getter for profile url.
+      scope.getProfileUrl = function() {
+        return "http://graph.facebook.com/"
+          + user.id + "/picture?type=large";
+      }
       deferred.resolve();
     }, function() {
       console.error('Failed to load user');

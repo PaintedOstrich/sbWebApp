@@ -80,7 +80,7 @@ LandingCtrl.$inject = ['$scope', '$location', 'fb'];
 
 
 // Controller for user profile screen
-function ProfileCtrl($scope, $location, fb, loadMask) {
+function ProfileCtrl($scope, $location, fb, loadMask, currentUser) {
   // show the nav bar on landing screen.
   $scope.$parent.hideNavBar = false;
   // parent scope should be MainCtrl.
@@ -98,15 +98,10 @@ function ProfileCtrl($scope, $location, fb, loadMask) {
 
   $scope.init = function() {
     loadMask.show({text: 'Loading User Profile...'});
-    fb.api($scope, '/me').then(function(res) {
-      if (res.error) {
-        console.error('Failed to load user!');
-      } else {
-        $scope.user = res;
-        $scope.imgUrl = "http://graph.facebook.com/"
-            + $scope.user.id + "/picture?type=large";
-      }
-      console.log($scope.user.id )
+    currentUser.loadUser().then(function() {
+      $scope.user = currentUser;
+      loadMask.hide();
+    }, function() {
       loadMask.hide();
     });
   }
@@ -120,7 +115,7 @@ function ProfileCtrl($scope, $location, fb, loadMask) {
     return $scope.template == $scope.templates[index];
   }
 }
-ProfileCtrl.$inject = ['$scope', '$location', 'fb', 'loadMask'];
+ProfileCtrl.$inject = ['$scope', '$location', 'fb', 'loadMask', 'currentUser'];
 
 
 // Controller for bet type screen

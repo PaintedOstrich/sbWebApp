@@ -22,8 +22,8 @@ describe('service', function() {
 
   describe('User singleton', function() {
     var user, $mockHttp;
-    beforeEach(inject(function(User, $injector) {
-      user = User;
+    beforeEach(inject(function(currentUser, $injector) {
+      user = currentUser;
       $mockHttp = $injector.get('$httpBackend');
     }));
 
@@ -70,6 +70,8 @@ describe('service', function() {
          expect(user.getId).toBeFunction();
          expect(user.getBalance).toBeFunction();
          expect(user.setBalance).toBeFunction();
+         expect(user.getProfileUrl).toBeFunction();
+         expect(user.setProfileUrl).toBeUndefined();
 
          expect(user.getName()).toEqual('Di Peng');
          user.setName('abc')

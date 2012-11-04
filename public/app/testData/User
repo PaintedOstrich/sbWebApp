@@ -1,7 +1,7 @@
 {
-  id: '759868917',
-  name: 'Di Peng',
-  firstName: 'Di',
-  lastName: 'Peng',
-  balance: 77
+  "id": "759868917",
+  "name": "Di Peng",
+  "firstName": "Di",
+  "lastName": "Peng",
+  "balance": 77
 }
