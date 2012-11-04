@@ -35,46 +35,49 @@ function BetAPI($resource, $q) {
  * The user singleton to be shared among all controllers.
  */
 function User($resource, $q, $timeout) {
-  var userResource, user;
+  var user;
+  var scope = this;
   this.isLoaded = function() {
     return !!user;
   }
 
-  // private function
-  var processUserData = function() {
-    if (userResource) {
-      user = {};
-      for(prop in userResource) {
-        if (typeof userResource[prop] != 'function') {
-          user[prop] = userResource[prop]
-        }
+  // A private function to create setters and getters for User singleton.
+  // So controllers using this singleton can access necessary attributes of the private
+  // user variable.
+  var createSettersAndGetters = function(scope) {
+    var props = ['name', 'id', 'firstName', 'lastName', 'balance'];
+    var i;
+    for (i=0; i < props.length; i++) {
+      var property = props[i];
+
+      if (property) {
+        (function(prop) {
+          var tmp = prop.charAt(0).toUpperCase() + prop.slice(1);
+          scope['get' + tmp] = function() {return user[prop]};
+          scope['set' + tmp] = function(val) { user[prop] = val };
+        }(property));
       }
-      user.imgUrl = "http://graph.facebook.com/"
-          + user.id + "/picture?type=large";
     }
   }
 
   // The User server url.
   var url = 'app/testData/User';
   var User = $resource(url, {}, {});
-  this.getUser = function() {
+  this.loadUser = function() {
     var deferred = $q.defer();
-    if (this.isLoaded()) {
-      $timeout(function() {
-        deferred.resolve(user);
-      }, 10);
-    } else {
-      userResource = User.get({}, function() {
-        processUserData();
-        deferred.resolve(user);
-      }, function() {
-        console.error('Failed to load user');
-      });
-    }
+    user = User.get({}, function() {
+      createSettersAndGetters(scope);
+      deferred.resolve();
+    }, function() {
+      console.error('Failed to load user');
+    });
     return deferred.promise;
   }
-  
-  
+
+  this.getAPIUrl = function() {
+    return url;
+  }
+
   // Old logic to load me from fb. Should we load everything from user server now????
   // fb.api($scope, '/me').then(function(res) {
   //   if (res.error) {

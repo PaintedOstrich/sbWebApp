@@ -3,5 +3,5 @@
   name: 'Di Peng',
   firstName: 'Di',
   lastName: 'Peng',
-  balance: '77'
+  balance: 77
 }
