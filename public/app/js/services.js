@@ -59,6 +59,27 @@ function User($resource, $q, $timeout) {
     }
   }
 
+
+//---------------- Fake Data -----------------------
+
+  var activeBets = [
+    {
+      "initFBId": "1212",
+      "callFBId": "6668",
+      "betAmount": "123",
+      "type": "spread",
+      "gameId": "2",
+      "initTeamBet": "1",
+      "spreadTeam1": "100.3",
+      "spreadTeam2": "90",
+      "moneyDrawLine": "2",
+      "called": "false"
+    }
+  ]
+
+//  ------------------------------------------------
+
+
   // The User server url.
   var url = 'app/testData/User';
   var User = $resource(url, {}, {});
@@ -66,6 +87,12 @@ function User($resource, $q, $timeout) {
     var deferred = $q.defer();
     var scope = this;
     user = User.get({}, function() {
+      
+      //---------- Using fake data
+      scope.getActiveBets = function() {
+        return activeBets
+      }
+      // ----------------------
       createSettersAndGetters(scope);
       // create getter for profile url.
       scope.getProfileUrl = function() {

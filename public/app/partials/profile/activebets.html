@@ -1,1 +1,5 @@
-Active bets
+<div class="activeBetsPanel">
+  <div ng-repeat="bet in user.getActiveBets()" class="activeBet">
+    {{bet.initFBId}} against {{bet.callFBId}}, bet amount is {{bet.betAmount}}
+  </div>
+</div>
