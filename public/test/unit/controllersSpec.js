@@ -3,6 +3,17 @@
 /* jasmine specs for controllers go here */
 describe('SportsBet controllers', function() {
 
+  beforeEach(function() {
+      this.addMatchers({
+          toBeFunction: function(expected) {
+            this.message = function () {
+              return "Expected " + this.actual + " to be a function";
+            }
+            return typeof this.actual == 'function';
+          }
+      });
+  });
+
   // The fb service mock that does nothing but returning a promise,
   // imitating the api of actual fb service in services.js.
   var mockFb, mockLoadMask;
@@ -132,6 +143,12 @@ describe('SportsBet controllers', function() {
     }));
 
     it('should set user obj if fb.api request succeed', function() {
+    });
+
+    describe('ProfileCtrl.showBetInfo', function() {
+      it('should be a function', function() {
+        expect(scope.showBetInfo).toBeFunction();
+      });
     });
   });
 });

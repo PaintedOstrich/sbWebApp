@@ -1,5 +1,11 @@
 <div class="activeBetsPanel">
-  <div ng-repeat="bet in user.activeBets" class="activeBet">
+  <div ng-repeat="bet in user.activeBets" class="activeBet" 
+      ng-click="$parent.modalShown=true; $parent.focusedBet = bet;">
     {{bet.initFBId}} against {{bet.callFBId}}, bet amount is {{bet.betAmount}}
   </div>
+</div>
+
+<div ui-modal class="fade" ng-model="modalShown">
+  {{focusedBet.initFBId}} against {{focusedBet.callFBId}}
+  <a ng-click="modalShown=false">Close</a>
 </div>

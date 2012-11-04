@@ -2,7 +2,7 @@
 
 /* App Module */
 
-angular.module('sportsbet', ['serverApi', 'services']).
+angular.module('sportsbet', ['serverApi', 'services', 'ui.directives']).
   config(['$routeProvider', function($routeProvider) {
   $routeProvider.
       when('/', {templateUrl: 'app/partials/loading.html',   controller: RouteCtrl}).

@@ -92,9 +92,8 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser) {
    $scope.template = $scope.templates[0];
 
   $scope.user = {};
-  $scope.newBet = function() {
-    $location.path('bettype');
-  }
+  // The bet to be shown in bet info modal. Check out showBetInfo function below.
+  $scope.focusedBet = undefined;
 
   $scope.init = function() {
     loadMask.show({text: 'Loading User Profile...'});
@@ -114,12 +113,21 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser) {
   }
   $scope.init();
 
+  $scope.newBet = function() {
+    $location.path('bettype');
+  }
+
   // note: this set/is ActiveTab methods override the methods on its parent scope.
   $scope.setActiveTab = function(index) {
     $scope.template = $scope.templates[index];
   }
   $scope.isActiveTab = function(index) {
     return $scope.template == $scope.templates[index];
+  }
+
+  $scope.showBetInfo = function(bet) {
+    $scope.focusedBet = bet;
+    $scope.modalShown = true;
   }
 }
 ProfileCtrl.$inject = ['$scope', '$location', 'fb', 'loadMask', 'currentUser'];

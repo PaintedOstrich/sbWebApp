@@ -12,7 +12,6 @@ angular.module('services', ['ng', 'ngResource'])
  * A service to talk to bet API server.
  */
 function BetAPI($resource, $q) {
-
   // The API server url.
   this.url = 'app/testData'
 
