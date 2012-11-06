@@ -18,9 +18,7 @@ function User($q, $timeout, fb, $http) {
     var deferred = $q.defer();
     if (res.error) {
       console.error('Failed to load user!');
-      $scope.$apply(function() {
-        deferred.reject();
-      });
+      deferred.reject();
     } else {
       for(var prop in res) {
         if (this[prop]) {
@@ -31,9 +29,7 @@ function User($q, $timeout, fb, $http) {
       }
       this.imgUrl = "http://graph.facebook.com/"
           + this.id + "/picture?type=large";
-      $scope.$apply(function() {
-        deferred.resolve();
-      });
+      deferred.resolve();
     }
     return deferred.promise;
   }
@@ -52,13 +48,9 @@ function User($q, $timeout, fb, $http) {
             serviceScope[fieldName] = data[fieldName];
           }
         });
-        $scope.$apply(function() {
-          deferred.resolve();
-        });
+        deferred.resolve();
       } else {
-        $scope.$apply(function() {
-          deferred.reject();
-        });
+        deferred.reject();
       }
     });
     return deferred.promise;

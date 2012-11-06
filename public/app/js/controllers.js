@@ -99,8 +99,10 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser) {
   $scope.init = function() {
     loadMask.show({text: 'Loading User Profile...'});
     if (currentUser.isLoaded()) {
-      currentUser.queryBackend($scope)
-      
+      currentUser.queryBackend($scope).then(function() {
+        $scope.user = currentUser;
+        loadMask.hide();
+      });
     } else {
       currentUser.loadUser($scope).then(function() {
         $scope.user = currentUser;
