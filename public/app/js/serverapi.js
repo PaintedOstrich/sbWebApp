@@ -12,13 +12,20 @@ function User($q, $timeout, fb, $http) {
   this.isLoaded = function() {
     return !!this.id;
   }
-  // 
-  // // Private function to process loaded user data from facebook
-  // this.processDataFromFb = function(user) {
-  //   // $scope.imgUrl = "http://graph.facebook.com/"
-  //   //     + $scope.user.id + "/picture?type=large";
-  // }
-  // 
+  
+  // Private function to process loaded user data from facebook
+  this.processDataFromFb = function(res) {
+    for(var prop in res) {
+      if (this[prop]) {
+        console.error('Overriding ' + prop + ' in currentUsr singlton');
+      } else {
+        this[prop] = angular.copy(res[prop]);
+      }
+    }
+    this.imgUrl = "http://graph.facebook.com/"
+        + this.id + "/picture?type=large";
+  }
+ 
   // // The User server url.
   // var url = 'app/testData/User';
   // this.loadUser = function($scope) {

@@ -3,10 +3,11 @@
 /* jasmine specs for services go here */
 
 describe('serverApi', function() {
+  var mockFb;
   beforeEach(module('serverApi', function($provide) {
     // Override fb service using a mock one.
     $provide.service('fb', function() {
-      
+      api: jasmine.createSpy()
     });
   }));
 
@@ -21,11 +22,12 @@ describe('serverApi', function() {
       });
   });
 
-  describe('User singleton', function() {
+  describe('currentUser singleton', function() {
     var user, $mockHttp;
     beforeEach(inject(function(currentUser, $injector) {
       user = currentUser;
       $mockHttp = $injector.get('$httpBackend');
+      mockFb = $injector.get('fb');
     }));
 
     afterEach(function() {
@@ -40,6 +42,52 @@ describe('serverApi', function() {
     it('should not be loaded at first', function() {
       expect(user.isLoaded()).toBe(false);
     });
+
+    describe('currentUser.processDataFromFb', function() {
+      it('should processDataFromFb', function() {
+        var mockResFromFb = {
+          "id": "759868917",
+          "name": "Peng Di",
+          "first_name": "Peng",
+          "last_name": "Di",
+          "link": "http://www.facebook.com/peng.di2",
+          "username": "peng.di2",
+          "hometown": {
+            "id": "108161842545076",
+            "name": "Guiyang"
+          },
+          "location": {
+            "id": "111718848845755",
+            "name": "Saint Louis, Missouri"
+          },
+          "work": [],
+          "education": [],
+          "gender": "male",
+          "timezone": -6,
+          "locale": "en_US",
+          "languages": [],
+          "verified": true,
+          "updated_time": "2012-10-27T03:41:13+0000"
+        }
+
+        user.processDataFromFb(mockResFromFb);
+        expect(user.id).toEqual("759868917");
+        expect(user.name).toEqual("Peng Di");
+        expect(user.work).toEqual([]);
+        expect(user.imgUrl).toBeDefined();
+      });
+
+      it('should not allow overriding exiting property on user', function() {
+        var mockResFromFb = {
+          "id": "759868917",
+          "isLoaded": true
+        }
+
+        spyOn(window.console, 'error');
+        user.processDataFromFb(mockResFromFb);
+        expect(window.console.error).toHaveBeenCalled();
+      });
+    });
   });
-  
+
 });
