@@ -124,11 +124,6 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser) {
   $scope.isActiveTab = function(index) {
     return $scope.template == $scope.templates[index];
   }
-
-  $scope.showBetInfo = function(bet) {
-    $scope.focusedBet = bet;
-    $scope.modalShown = true;
-  }
 }
 ProfileCtrl.$inject = ['$scope', '$location', 'fb', 'loadMask', 'currentUser'];
 

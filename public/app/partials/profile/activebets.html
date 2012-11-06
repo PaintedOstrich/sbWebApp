@@ -5,7 +5,13 @@
   </div>
 </div>
 
-<div ui-modal class="fade" ng-model="modalShown">
-  {{focusedBet.initFBId}} against {{focusedBet.callFBId}}
-  <a ng-click="modalShown=false">Close</a>
+<div ui-modal class="fade betInfoModal modal" ng-model="modalShown">
+  <div class="header modal-header">
+    {{focusedBet.initFBId}} against {{focusedBet.callFBId}}
+  </div>
+  <div class="body modal-body">
+    <div style="min-height: 300px;">
+      More info about the bet here!!!
+    </div>
+  </div>
 </div>
