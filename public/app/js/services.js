@@ -5,8 +5,7 @@
 angular.module('services', ['ng', 'ngResource'])
     .service('fb', FBSdk)
     .service('loadMask', LoadMask)
-    .service('betAPI', BetAPI)
-    .service('currentUser', User);
+    .service('betAPI', BetAPI);
 
 
 /**

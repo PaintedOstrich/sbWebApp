@@ -7,7 +7,9 @@ describe('serverApi', function() {
   beforeEach(module('serverApi', function($provide) {
     // Override fb service using a mock one.
     $provide.service('fb', function() {
-      api: jasmine.createSpy()
+      this.api =  jasmine.createSpy().andReturn({
+        then: function() {}
+      });
     });
   }));
 
@@ -43,6 +45,7 @@ describe('serverApi', function() {
       expect(user.isLoaded()).toBe(false);
     });
 
+
     describe('currentUser.processDataFromFb', function() {
       it('should processDataFromFb', function() {
         var mockResFromFb = {
@@ -69,8 +72,11 @@ describe('serverApi', function() {
           "verified": true,
           "updated_time": "2012-10-27T03:41:13+0000"
         }
+        var mockScope = {
+          $apply: function() {}
+        }
 
-        user.processDataFromFb(mockResFromFb);
+        user.processDataFromFb(mockScope, mockResFromFb);
         expect(user.id).toEqual("759868917");
         expect(user.name).toEqual("Peng Di");
         expect(user.work).toEqual([]);
@@ -82,9 +88,12 @@ describe('serverApi', function() {
           "id": "759868917",
           "isLoaded": true
         }
+        var mockScope = {
+          $apply: function() {}
+        }
 
         spyOn(window.console, 'error');
-        user.processDataFromFb(mockResFromFb);
+        user.processDataFromFb(mockScope, mockResFromFb);
         expect(window.console.error).toHaveBeenCalled();
       });
     });

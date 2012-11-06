@@ -117,6 +117,8 @@ describe('SportsBet controllers', function() {
       };
 
       mockCurrentUser = {
+        isLoaded: jasmine.createSpy(),
+
         loadUser : jasmine.createSpy().andReturn({
           then: function() {}
         })
