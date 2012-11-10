@@ -2,14 +2,20 @@
   <div class="infoBackground"></div>
   <div class="socialBetContent">
     <br>
-    <div class="gameTypeSelect">
+    <!-- <div class="gameTypeSelect">
       Sport to bet on:
       <select ng-model="gameType"
           ng-options="g.name for g in gameTypes">
       </select>
-    </div>
+    </div> -->
 
+    <div class="titleText">
+      Pick a game:
+    </div>
     <div class="gamesPanel">
+      <div class="searchBox">
+        
+      </div>
       <div ng-repeat = "game in games">
         <div class="gameChip" ng-click="initBet(game)">
           <div class="block">
@@ -30,7 +36,7 @@
       </div>
     </div>
 
-    <div class="betOptionsPanel">
+    <!-- <div class="betOptionsPanel">
       <div class="betOptionsInner" ng-show="bet.game">
         <div class="block">
           {{bet.game.date | date: 'medium'}}
@@ -84,6 +90,6 @@
         Place Bets!
         <i class="icon icon-credit"></i>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>

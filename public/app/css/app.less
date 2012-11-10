@@ -42,6 +42,15 @@ body {
   color: #F8F8F8 !important;
 }
 
+// Css for text that is used as section titles in the app.
+.titleText {
+  color: white;
+  font-family: Zapf Chancery, cursive;
+  font-weight: bold;
+  font-size: 20px;
+  text-shadow: 1px 1px 2px black;
+}
+
 
 /* CSS for widgets that may be used in multiple views */
 
@@ -347,13 +356,17 @@ body {
   }
   .socialBetContent {
     position: relative;
+    .titleText {
+      margin-top: 20px;
+      margin-left: 20px;
+    }
     .gameTypeSelect {
       margin-top: 20px;
       margin-left: 20px;
     }
     .gamesPanel {
       .round-block(@panelWidth, 8px, 10px auto 0 auto);
-      height: 260px;
+      height: 450px;
       overflow: auto;
     }
     .betOptionsPanel {
