@@ -11,7 +11,7 @@ function MainCtrl($scope, $location) {
   // Private variable to this parent controller.
   var pathMap = {
     profile: 'profile',
-    betpage: 'bettype',
+    betpage: 'socialbet',
     faq: 'faq',
     contact: 'contact'
   }
@@ -66,7 +66,7 @@ function LandingCtrl($scope, $location, fb) {
     var promise = fb.login($scope, permissions);
     promise.then(function(response) {
       if (response.authResponse) {
-        $location.path('/bettype');
+        $location.path('/socialbet');
       }
     });
   }
@@ -114,7 +114,7 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser) {
   $scope.init();
 
   $scope.newBet = function() {
-    $location.path('bettype');
+    $location.path('socialbet');
   }
 
   // note: this set/is ActiveTab methods override the methods on its parent scope.
@@ -128,20 +128,20 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser) {
 ProfileCtrl.$inject = ['$scope', '$location', 'fb', 'loadMask', 'currentUser'];
 
 
-// Controller for bet type screen
-function BetTypeCtrl($scope, $location) {
-  // parent scope should be MainCtrl.
-  $scope.$parent.setActiveTab('betpage');
-
-  $scope.socialBtnPressed = function() {
-    $location.path('/socialbet');
-  }
-
-  $scope.vegasBtnPressed = function() {
-    $location.path('vegasbet');
-  }
-}
-BetTypeCtrl.$inject = ['$scope', '$location']
+// // Controller for bet type screen
+// function BetTypeCtrl($scope, $location) {
+//   // parent scope should be MainCtrl.
+//   $scope.$parent.setActiveTab('betpage');
+// 
+//   $scope.socialBtnPressed = function() {
+//     $location.path('/socialbet');
+//   }
+// 
+//   $scope.vegasBtnPressed = function() {
+//     $location.path('vegasbet');
+//   }
+// }
+// BetTypeCtrl.$inject = ['$scope', '$location']
 
 
 // For the faq.html page
