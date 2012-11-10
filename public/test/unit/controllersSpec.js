@@ -144,11 +144,5 @@ describe('SportsBet controllers', function() {
 
     it('should set user obj if fb.api request succeed', function() {
     });
-
-    describe('ProfileCtrl.showBetInfo', function() {
-      it('should be a function', function() {
-        expect(scope.showBetInfo).toBeFunction();
-      });
-    });
   });
 });
