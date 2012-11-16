@@ -7,27 +7,16 @@
   <link rel="stylesheet" href="app/lib/bootstrap/bootstrap.css">
   <link rel="stylesheet" href="app/lib/select2/select2.css">
 </head>
-<body>
-  <div class="container-fluid" ng-controller="MainCtrl">
-    <div class="navbar" ng-hide="hideNavBar">
-      <div class="navitem" ng-class="{activeItem: isActiveTab(0)}"
-          ng-click="setActiveTab(0)">
-        Profile
-      </div>
-      <div class="navitem" ng-class="{activeItem: isActiveTab(1)}"
-          ng-click="setActiveTab(1)">
-        Make a bet
-      </div>
-      <div class="navitem appname" ng-click="setActiveTab(2)"></div>
-      <div class="navitem" ng-class="{activeItem: isActiveTab(2)}"
-          ng-click="setActiveTab(2)">
-        FAQ
-      </div>
-      <div class="navitem" ng-class="{activeItem: isActiveTab(3)}"
-          ng-click="setActiveTab(3)">
-        Contact Us
+<body ng-controller="MainCtrl">
+  <div class="navbar navbar-inverse">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="brand" href="#">Swagger</a>
+        <button class="btn btn-danger betBtn">Make a bet</button>
       </div>
     </div>
+  </div>
+  <div class="container-fluid">
     <ng-view></ng-view>
   </div>
   <div id="fb-root"></div>

@@ -4,37 +4,7 @@
 
 // The top most controller, mainly in charge of navigations.
 function MainCtrl($scope, $location) {
-  $scope.hideNavBar = true;
-  // Keep track of which tab is active.
-  $scope.activeTab = -1;
-  $scope.tabNames = ['profile', 'betpage', 'faq', 'contact'];
-  // Private variable to this parent controller.
-  var pathMap = {
-    profile: 'profile',
-    betpage: 'socialbet',
-    faq: 'faq',
-    contact: 'contact'
-  }
 
-  $scope.isActiveTab = function(index) {
-    return $scope.activeTab == index;
-  }
-
-  // This setter can take either a string or a number.
-  $scope.setActiveTab = function(index) {
-    if (typeof index == 'string') {
-      var tabIndex = $scope.tabNames.indexOf(index);
-      if (tabIndex < 0) {
-        console.error('The tab name passed in is not found!');
-      }
-      $scope.activeTab = tabIndex;
-    } else {
-     $scope.activeTab = index;
-    }
-    // Route the app to the right partial.
-    var tabName = $scope.tabNames[$scope.activeTab];
-    $location.path(pathMap[tabName]);
-  }
 }
 MainCtrl.$inject = ['$scope', '$location'];
 
