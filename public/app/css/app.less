@@ -60,7 +60,7 @@ body {
   margin: 5px auto 5px auto;
   cursor: pointer;
   &:hover {
-    background-color: gray;
+    background-color: #F0F8FF;
   }
 
   .block {
@@ -75,6 +75,10 @@ body {
       height: 40px;
       display: block;
       margin: 2px auto;
+    }
+
+    &.teamBlock:hover {
+      background: gray;
     }
     .vsText {
       text-align: center;
@@ -167,7 +171,7 @@ body {
       width: 210px;
       height: 50px;
       margin-left: 30px;
-    } 
+    }
   }
 }
 
@@ -291,12 +295,12 @@ body {
 .modal {
   color: black;
   .header {
-    
+
   }
 }
 
 .betInfoModal {
-  
+
 }
 
 /* End of style for pop overs */
@@ -332,14 +336,10 @@ body {
     position:absolute;
     top: 20px !important;
   }
-  .socialBetContent {
+  .gameSelection {
     position: relative;
     .titleText {
-      margin-top: 20px;
-      margin-left: 20px;
-    }
-    .gameTypeSelect {
-      margin-top: 20px;
+      padding-top: 20px;
       margin-left: 20px;
     }
     .gamesPanel {
@@ -349,36 +349,18 @@ body {
     }
     .betOptionsPanel {
       .round-block(@panelWidth, 8px, 10px auto 0 auto);
-      height: 80px;
-      .block {
-        float:left;
-        width: 16.5%;
-        height: 100%;
-        input[type="number"] {
-          width: 80%;
-        }
-      }
-    }
-    .betControls {
-      margin: 15px auto 0 auto;
-      width: @panelWidth;
-      .friendSelection {
+      min-height: 100px;
+      position: relative;
+      .betOptionsInner {
         float: left;
-        .friendInput {
-          width: 400px;
-        }
       }
       .betBtn {
         float: right;
-        height: 70px;
-        width: 150px;
+        height: 50px;
+        width: 100px;
         font-weight: bold;
         font-size: 1.5em;
-        .icon-credit {
-          width: 50px;
-          height: 85px;
-          background-image: url(../img/credit.png);
-        }
+        margin-top: 20px;
       }
     }
   }

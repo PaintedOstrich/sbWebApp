@@ -1,13 +1,6 @@
 <div class="socialBet">
-  <div class="socialBetContent">
-    <br>
-    <!-- <div class="gameTypeSelect">
-      Sport to bet on:
-      <select ng-model="gameType"
-          ng-options="g.name for g in gameTypes">
-      </select>
-    </div> -->
-
+<!----------------------------------Game Selection Page---------------------------------->
+  <div class="gameSelection">
     <div class="titleText">
       Pick a game:
     </div>
@@ -15,7 +8,7 @@
       <div ng-repeat="columnNum in loop" class="span4">
         <div ng-repeat = "game in games">
           <div class="gameChip" ng-click="initBet(game)" ui-if="$index%3 == columnNum">
-            <div class="block">
+            <div class="block teamBlock">
               <img src="app/img/helmut1.png" class="teamLogo">
               {{game.team1}}
             </div>
@@ -25,7 +18,7 @@
               </div>
               {{game.date | date: 'mediumDate'}}
             </div>
-            <div class="block">
+            <div class="block teamBlock">
               <img src="app/img/helmut2.png" class="teamLogo">
               {{game.team2}}
             </div>
@@ -34,6 +27,36 @@
       </div>
     </div>
 
+    <div class="betOptionsPanel">
+      <div class="betOptionsInner" ng-show="bet.game">
+        <div class="gameChip">
+          <div class="block teamBlock">
+            <img src="app/img/helmut1.png" class="teamLogo">
+            {{bet.game.team1}}
+          </div>
+          <div class="block">
+            <div class="vsText">
+               VS
+            </div>
+            {{bet.game.date | date: 'mediumDate'}}
+          </div>
+          <div class="block teamBlock">
+            <img src="app/img/helmut2.png" class="teamLogo">
+            {{bet.game.team2}}
+          </div>
+        </div>
+      </div>
+      <div class="betBtn btn btn-success btn-large">
+        Continue
+      </div>
+    </div>
+
+  </div>
+<!---------------------------------Friend Selection Page-------------------------------->
+  <div class="friendSelection">
+    
+  </div>
+</div>
     <!-- <div class="betOptionsPanel">
       <div class="betOptionsInner" ng-show="bet.game">
         <div class="block">
@@ -89,5 +112,4 @@
         <i class="icon icon-credit"></i>
       </div>
     </div> -->
-  </div>
-</div>
+
