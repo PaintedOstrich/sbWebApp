@@ -51,11 +51,6 @@ LandingCtrl.$inject = ['$scope', '$location', 'fb'];
 
 // Controller for user profile screen
 function ProfileCtrl($scope, $location, fb, loadMask, currentUser) {
-  // show the nav bar on landing screen.
-  $scope.$parent.hideNavBar = false;
-  // parent scope should be MainCtrl.
-  $scope.$parent.setActiveTab('profile');
-
   $scope.templates =
      [ { name: 'template1.html', url: 'app/partials/profile/activebets.html'}
      , { name: 'template2.html', url: 'app/partials/profile/betinvites.html'} ];
@@ -97,21 +92,6 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser) {
 }
 ProfileCtrl.$inject = ['$scope', '$location', 'fb', 'loadMask', 'currentUser'];
 
-
-// // Controller for bet type screen
-// function BetTypeCtrl($scope, $location) {
-//   // parent scope should be MainCtrl.
-//   $scope.$parent.setActiveTab('betpage');
-// 
-//   $scope.socialBtnPressed = function() {
-//     $location.path('/socialbet');
-//   }
-// 
-//   $scope.vegasBtnPressed = function() {
-//     $location.path('vegasbet');
-//   }
-// }
-// BetTypeCtrl.$inject = ['$scope', '$location']
 
 
 // For the faq.html page
