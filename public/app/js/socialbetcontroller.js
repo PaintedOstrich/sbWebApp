@@ -1,7 +1,5 @@
 // Controller for social bet screen
 function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
-  // parent scope should be MainCtrl.
-  $scope.$parent.setActiveTab('betpage');
   // ------------------- Controller variables ----------------
   // Friends selected to place bet on.
   $scope.selectedFriends = [];

@@ -26,12 +26,6 @@ describe('SocialBetCtrl', function() {
           betAPI: mockBetAPI, $q: mockQ});
   }));
 
-  it('should have set itself as the active tab on the parent ctrl', function() {
-    expect(scope.$parent.isActiveTab).toBeDefined();
-    // 1 is hard coded tab index of this controller(Not the best testing idea....).
-    expect(scope.$parent.isActiveTab(1)).toBe(true);
-  });
-
 
   describe('SocialBetCtrl.loadData', function() {
     it('should be function', function() {

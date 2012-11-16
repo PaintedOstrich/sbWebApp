@@ -42,24 +42,6 @@ describe('SportsBet controllers', function() {
       scope = $rootScope.$new();
       ctrl = $controller(MainCtrl, {$scope: scope});
     }));
-
-    it('should have initial variables', function() {
-      expect(scope.activeTab).toBe(-1);
-    });
-
-    describe('setActiveTab', function() {
-      it('should be able to set active tab by passing number index', function() {
-        scope.setActiveTab(2);
-        expect(scope.activeTab).toBe(2);
-      });
-
-      it('should be able to set tab by passing name', function() {
-        // Override tabNameMap for testing.
-        scope.tabNames = ['home', 'profile', 'betpage'];
-        scope.setActiveTab('betpage');
-        expect(scope.activeTab).toBe(2);
-      });
-    });
   });
 
   describe('LandingCtrl', function() {
