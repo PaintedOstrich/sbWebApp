@@ -11,25 +11,24 @@
     <div class="titleText">
       Pick a game:
     </div>
-    <div class="gamesPanel">
-      <div class="searchBox">
-        
-      </div>
-      <div ng-repeat = "game in games">
-        <div class="gameChip" ng-click="initBet(game)">
-          <div class="block">
-            <img src="app/img/helmut1.png" class="teamLogo">
-            {{game.team1}}
-          </div>
-          <div class="block">
-            <div class="vsText">
-               VS
+    <div class="gamesPanel row-fluid" ng-init="loop=[0,1,2]">
+      <div ng-repeat="columnNum in loop" class="span4">
+        <div ng-repeat = "game in games">
+          <div class="gameChip" ng-click="initBet(game)" ui-if="$index%3 == columnNum">
+            <div class="block">
+              <img src="app/img/helmut1.png" class="teamLogo">
+              {{game.team1}}
             </div>
-            {{game.date | date: 'mediumDate'}}
-          </div>
-          <div class="block">
-            <img src="app/img/helmut2.png" class="teamLogo">
-            {{game.team2}}
+            <div class="block">
+              <div class="vsText">
+                 VS
+              </div>
+              {{game.date | date: 'mediumDate'}}
+            </div>
+            <div class="block">
+              <img src="app/img/helmut2.png" class="teamLogo">
+              {{game.team2}}
+            </div>
           </div>
         </div>
       </div>

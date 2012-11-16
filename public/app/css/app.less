@@ -53,10 +53,9 @@ body {
 /* CSS for widgets that may be used in multiple views */
 
 .gameChip {
-  width: 400px;
-  height: 100px;
+  height: 75px;
   border-style: solid;
-  border-width: 2px;
+  border-width: 1px;
   border-color: black;
   margin: 5px auto 5px auto;
   cursor: pointer;
@@ -69,15 +68,18 @@ body {
     width: 33.33%;
     height: 100%;
     text-align: center;
+    font-size: 0.9em;
+    line-height: 10px;
     .teamLogo {
-      width: 70px;
-      height: 70px;
+      width: 40px;
+      height: 40px;
       display: block;
-      margin: 5px auto;
+      margin: 2px auto;
     }
     .vsText {
       text-align: center;
-      font-size: 3em;
+      font-size: 2em;
+      font-weight: bold;
       height: 30%;
       margin-top: 20%;
       margin-bottom: 10%;
@@ -342,7 +344,7 @@ body {
     }
     .gamesPanel {
       .round-block(@panelWidth, 8px, 10px auto 0 auto);
-      height: 450px;
+      height: 350px;
       overflow: auto;
     }
     .betOptionsPanel {
