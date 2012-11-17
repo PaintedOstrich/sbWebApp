@@ -66,11 +66,10 @@
         <input type="text" class="searchBox"
             ng-model="queryFriend" placeholder="Search...">
       </div>
-      <div class="row-fluid allFriends" ng-init="loop=[0,1,2,3,4,5]">
-        <div ng-repeat="columnNum in loop" class="span2">
-          <div ng-repeat = "friend in allFriends">
-            <div class="friendChip" ui-if="$index%6 == columnNum"
-                ng-click="toggleSelect(friend)">
+      <div class="row-fluid allFriends">
+        <div ng-repeat="friendArr in friendsToDisplay" class="span2">
+          <div ng-repeat = "friend in friendArr">
+            <div class="friendChip" ng-click="toggleSelect(friend)">
               <div class="friendImage">
                 <img class="img" ng-src="http://graph.facebook.com/{{friend.id}}/picture/">
                 <img class="checkmark" src="app/img/checkmark.png"

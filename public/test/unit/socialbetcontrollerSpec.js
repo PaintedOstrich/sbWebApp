@@ -1,6 +1,17 @@
 describe('SocialBetCtrl', function() {
   var scope, ctrl, mockFb, mockLoadMask, mockQ;
 
+  beforeEach(function() {
+      this.addMatchers({
+          toBeFunction: function(expected) {
+            this.message = function () {
+              return "Expected " + this.actual + " to be a function";
+            }
+            return typeof this.actual == 'function';
+          }
+      });
+  });
+
   beforeEach(inject(function($rootScope, $controller, $q) {
     mockLoadMask = {
       show: jasmine.createSpy('showMask'),
@@ -125,6 +136,22 @@ describe('SocialBetCtrl', function() {
        scope.selectedFriends = [];
        scope.$digest();
        expect(scope.user.currentBalance).toBe(100);
+    });
+  });
+
+
+  describe('SocialBetCtrl.formatFriendData', function() {
+    it('Should be function', function() {
+      expect(scope.formatFriendData).toBeFunction();
+    });
+
+    it('should do format arrays into matrix', function() {
+      var sourceArr = [0, 1, 2, 3, 4, 5, 6, 7];
+      var answer = scope.formatFriendData(sourceArr, 3);
+      expect(answer.length).toBe(3);
+      expect(answer[0]).toEqual([0, 3, 6]);
+      expect(answer[1]).toEqual([1, 4, 7]);
+      expect(answer[2]).toEqual([2, 5]);
     });
   });
 });

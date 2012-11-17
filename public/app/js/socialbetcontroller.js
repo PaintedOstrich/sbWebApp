@@ -8,6 +8,10 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
 
   // The friends to display in friend panel
   $scope.friendsToDisplay = [];
+  // The number of columns to display friends.
+  $scope.friendColumn = 6;
+  // This correspond to the select box: all/selected.
+  $scope.friendFilter = "all";
 
   // TODO these varaibles should be loaded dynamically.
   $scope.gameTypes = [
@@ -73,6 +77,8 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
       alert('Sorry, failed to load friends. Please try again.');
     } else {
       $scope.allFriends = res.data;
+      $scope.friendsToDisplay =
+          $scope.formatFriendData($scope.allFriends, $scope.friendColumn);
     }
   }
 
@@ -80,8 +86,22 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
   $scope.loadData();
 
   // Format the input flat array to become nested array with colNum of arrays.
-  $scope.formatData = function(sourceArr, colNum) {
+  $scope.formatFriendData = function(sourceArr, colNum) {
+    var answer = []
+    var i = colNum;
+    while (i > 0) {
+      answer.push([]);
+      i--;
+    }
 
+    var j = 0;
+    while (j < sourceArr.length) {
+      var data = sourceArr[j];
+      var mod = j % colNum;
+      answer[mod].push(data);
+      j++;
+    }
+    return answer;
   }
 
  $scope.recalcBalance = function() {
