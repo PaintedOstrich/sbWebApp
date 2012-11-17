@@ -4,10 +4,9 @@
     <div class="titleText">
       Pick a game:
     </div>
-    <div class="gamesPanel row-fluid" ng-init="loop=[0,1,2]">
-      <div ng-repeat="columnNum in loop" class="span4">
+    <div class="gamesPanel row-fluid">
         <div ng-repeat = "game in games">
-          <div class="gameChip" ng-click="initBet(game)" ui-if="$index%3 == columnNum">
+          <div class="gameChip" ng-click="initBet(game)">
             <div class="block teamBlock">
               <img src="app/img/helmut1.png" class="teamLogo">
               {{game.team1}}
@@ -24,7 +23,6 @@
             </div>
           </div>
         </div>
-      </div>
     </div>
 
     <div class="betOptionsPanel">
@@ -46,7 +44,7 @@
           </div>
         </div>
       </div>
-      <div class="betBtn btn btn-success btn-large" ng-click="currentPage = 1">
+      <div class="btn btn-success btn-large" ng-click="currentPage = 1">
         Continue
       </div>
     </div>
@@ -67,23 +65,26 @@
             ng-model="queryFriend" ng-show="friendFilter == 'all'">
       </div>
       <div class="row-fluid allFriends">
-        <div ng-repeat="friendArr in friendsToDisplay" class="span2">
-          <div ng-repeat = "friend in friendArr">
-            <div class="friendChip" ng-click="toggleSelect(friend)">
-              <div class="friendImage">
-                <img class="img" ng-src="http://graph.facebook.com/{{friend.id}}/picture/">
-                <img class="checkmark" src="app/img/checkmark.png"
-                    ng-show="inSelectedFriends(friend)">
-              </div>
-              <div class="friendName">
-                  {{friend.name}}
-              </div>
+        <div ng-repeat="friend in friendsToDisplay | filter:queryFriend"
+            class="friendChip" ng-click="toggleSelect(friend)">
+          <div>
+            <div class="friendImage">
+              <img class="img" 
+                  ng-src="http://graph.facebook.com/{{friend.id}}/picture/">
+              <img class="checkmark" src="app/img/checkmark.png"
+                  ng-show="inSelectedFriends(friend)">
+            </div>
+            <div class="friendName">
+                {{friend.name}}
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="btn" ng-click="currentPage = 0;">Back</div>
+    <div class="btnGroup">
+       <div class="btn btn-success btn-large" ng-click="">Place Bet!</div>
+       <div class="btn btn-large" ng-click="currentPage = 0;">Back</div>
+    </div>
   </div>
 </div>
 

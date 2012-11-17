@@ -57,7 +57,6 @@ body {
   border-style: solid;
   border-width: 1px;
   border-color: black;
-  margin: 5px auto 5px auto;
   cursor: pointer;
   &:hover {
     background-color: #F0F8FF;
@@ -93,6 +92,9 @@ body {
 
 .friendChip {
   position: relative;
+  width: 15%;
+  margin-left: 10px;
+  float: left;
   &:hover {
     cursor: pointer;
     .friendImage {
@@ -113,6 +115,8 @@ body {
       border-color: #6D84B4;
       border-width: 3px;
       .rounded-corners(4px);
+      width: 56px;
+      height: 56px;
     }
     .checkmark {
       position: absolute;
@@ -386,6 +390,11 @@ body {
       .round-block(@panelWidth, 8px, 10px auto 0 auto);
       height: 350px;
       overflow: auto;
+      .gameChip {
+        margin: 5px 10px 5px 10px;
+        float: left;
+        width: 30%;
+      }
     }
     .betOptionsPanel {
       .round-block(@panelWidth, 8px, 10px auto 0 auto);
@@ -394,12 +403,9 @@ body {
       .betOptionsInner {
         float: left;
       }
-      .betBtn {
+      .btn {
         float: right;
-        height: 50px;
-        width: 100px;
-        font-weight: bold;
-        font-size: 1.5em;
+        margin-right: 15px;
         margin-top: 20px;
       }
     }
@@ -421,6 +427,14 @@ body {
         .searchBox {
           width: 75%;
         }
+      }
+    }
+    .btnGroup {
+      width: @panelWidth;
+      margin: 20px auto;
+      .btn {
+        float: right;
+        margin-right: 10px;
       }
     }
   }

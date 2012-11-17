@@ -8,8 +8,6 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
 
   // The friends to display in friend panel
   $scope.friendsToDisplay = [];
-  // The number of columns to display friends.
-  $scope.friendColumn = 6;
   // This correspond to the select box: all/selected.
   $scope.friendFilter = "all";
 
@@ -77,44 +75,12 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
       alert('Sorry, failed to load friends. Please try again.');
     } else {
       $scope.allFriends = res.data;
-      $scope.friendsToDisplay =
-          $scope.formatFriendData($scope.allFriends, $scope.friendColumn);
+      $scope.friendsToDisplay = $scope.allFriends;
     }
   }
 
   // Caling loadData to initialize the page.
   $scope.loadData();
-
-  // Format the input flat array to become nested array with colNum of arrays.
-  $scope.formatFriendData = function(sourceArr, colNum, filterTxt) {
-    var answer = [];
-    var tmpArr = [];
-    var i = colNum;
-    while (i > 0) {
-      answer.push([]);
-      i--;
-    }
-
-    if (filterTxt) {
-      sourceArr.forEach(function(data) {
-        // Only add if the friend's name contains the filter text
-        if (data.name.toLowerCase().search(filterTxt.toLowerCase()) >= 0) {
-          tmpArr.push(data);
-        }
-      });
-    } else {
-      tmpArr = sourceArr
-    }
-
-    var j = 0;
-    while (j < tmpArr.length) {
-      var data = tmpArr[j];
-      var mod = j % colNum;
-      answer[mod].push(data);
-      j++;
-    }
-    return answer;
-  }
 
  $scope.recalcBalance = function() {
    if ($scope.bet) {
@@ -129,19 +95,12 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
  $scope.$watch('bet.betOnTeam2', $scope.recalcBalance);
  $scope.$watch('friendFilter', function(newVal) {
    if (newVal == 'all') {
-     $scope.friendsToDisplay =
-        $scope.formatFriendData($scope.allFriends, $scope.friendColumn, $scope.queryFriend);
+     $scope.friendsToDisplay = $scope.allFriends;
    } else if (newVal == 'selected') {
-     $scope.friendsToDisplay =
-         $scope.formatFriendData($scope.selectedFriends, $scope.friendColumn);
+     $scope.queryFriend = '';
+     $scope.friendsToDisplay = $scope.selectedFriends;
    }
  });
- // Filter the friends to display whenever friend filter text changed.
- $scope.$watch('queryFriend', function(newVal) {
-   $scope.friendsToDisplay =
-       $scope.formatFriendData($scope.allFriends, $scope.friendColumn, $scope.queryFriend);
- });
-
  // -------------------------------------------------------
 
  // Initialize a bet
