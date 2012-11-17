@@ -145,13 +145,22 @@ describe('SocialBetCtrl', function() {
       expect(scope.formatFriendData).toBeFunction();
     });
 
-    it('should do format arrays into matrix', function() {
+    it('should format arrays into matrix', function() {
       var sourceArr = [0, 1, 2, 3, 4, 5, 6, 7];
       var answer = scope.formatFriendData(sourceArr, 3);
       expect(answer.length).toBe(3);
       expect(answer[0]).toEqual([0, 3, 6]);
       expect(answer[1]).toEqual([1, 4, 7]);
       expect(answer[2]).toEqual([2, 5]);
+    });
+
+    it('should apply filters before formatting', function() {
+      var sourceArr = [{name: 'aa'}, {name: 'Abc'},
+                       {name: 'aacb'}, {name: 'aBb'}];
+      var answer = scope.formatFriendData(sourceArr, 2, 'ab');
+      expect(answer.length).toBe(2);
+      expect(answer[0]).toEqual([{name:'Abc'}]);
+      expect(answer[1]).toEqual([{name:'aBb'}]);
     });
   });
 });

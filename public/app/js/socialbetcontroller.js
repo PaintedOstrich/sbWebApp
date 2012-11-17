@@ -86,17 +86,29 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
   $scope.loadData();
 
   // Format the input flat array to become nested array with colNum of arrays.
-  $scope.formatFriendData = function(sourceArr, colNum) {
-    var answer = []
+  $scope.formatFriendData = function(sourceArr, colNum, filterTxt) {
+    var answer = [];
+    var tmpArr = [];
     var i = colNum;
     while (i > 0) {
       answer.push([]);
       i--;
     }
 
+    if (filterTxt) {
+      sourceArr.forEach(function(data) {
+        // Only add if the friend's name contains the filter text
+        if (data.name.toLowerCase().search(filterTxt.toLowerCase()) >= 0) {
+          tmpArr.push(data);
+        }
+      });
+    } else {
+      tmpArr = sourceArr
+    }
+
     var j = 0;
-    while (j < sourceArr.length) {
-      var data = sourceArr[j];
+    while (j < tmpArr.length) {
+      var data = tmpArr[j];
       var mod = j % colNum;
       answer[mod].push(data);
       j++;
@@ -115,6 +127,20 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
  $scope.$watch('selectedFriends', $scope.recalcBalance);
  $scope.$watch('bet.betOnTeam1', $scope.recalcBalance);
  $scope.$watch('bet.betOnTeam2', $scope.recalcBalance);
+ $scope.$watch('friendFilter', function(newVal) {
+   if (newVal == 'all') {
+     $scope.friendsToDisplay =
+        $scope.formatFriendData($scope.allFriends, $scope.friendColumn, $scope.queryFriend);
+   } else if (newVal == 'selected') {
+     $scope.friendsToDisplay =
+         $scope.formatFriendData($scope.selectedFriends, $scope.friendColumn);
+   }
+ });
+ // Filter the friends to display whenever friend filter text changed.
+ $scope.$watch('queryFriend', function(newVal) {
+   $scope.friendsToDisplay =
+       $scope.formatFriendData($scope.allFriends, $scope.friendColumn, $scope.queryFriend);
+ });
 
  // -------------------------------------------------------
 
