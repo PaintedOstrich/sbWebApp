@@ -6,6 +6,9 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
   // An id to Friend obj mapping storing all user's fb friends.
   $scope.allFriends = [];
 
+  // The friends to display in friend panel
+  $scope.friendsToDisplay = [];
+
   // TODO these varaibles should be loaded dynamically.
   $scope.gameTypes = [
     {name: 'NFL', value: 'NFL'}
@@ -37,6 +40,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
       });
     }
   });
+
   // Initialize by loading friends from fb, games from bet server.
   $scope.loadData = function() {
     loadMask.show({text: 'Loading friends and games...'});
@@ -75,6 +79,11 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
   // Caling loadData to initialize the page.
   $scope.loadData();
 
+  // Format the input flat array to become nested array with colNum of arrays.
+  $scope.formatData = function(sourceArr, colNum) {
+
+  }
+
  $scope.recalcBalance = function() {
    if ($scope.bet) {
      var numFriendsBeted = $scope.selectedFriends.length;
@@ -98,11 +107,11 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
      betOnTeam2: 0
    };
  }
- 
+
  $scope.inSelectedFriends = function(friend) {
    return $scope.selectedFriends.indexOf(friend) >= 0;
  }
- 
+
  $scope.toggleSelect = function(friend) {
    var index = $scope.selectedFriends.indexOf(friend);
    if (index >= 0) {

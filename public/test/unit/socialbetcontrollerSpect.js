@@ -52,15 +52,10 @@ describe('SocialBetCtrl', function() {
       var f1 = {id: '123'};
       var f2 = {id: '456'};
       var friends = {data:[f1, f2]};
-      expect(scope.allFriends).toEqual({});
+      expect(scope.allFriends).toEqual([]);
 
-      spyOn(scope, 'initSelectWidget');
       scope.processFriendsData(friends);
-      expect(scope.allFriends).toEqual({
-        '123': f1,
-        '456': f2
-      });
-      expect(scope.initSelectWidget).toHaveBeenCalled();
+      expect(scope.allFriends).toEqual([f1, f2]);
     });
   });
 
