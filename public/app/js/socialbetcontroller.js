@@ -1,5 +1,5 @@
 // Controller for social bet screen
-function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
+function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout) {
   // ------------------- Controller variables ----------------
   // Friends selected to place bet on.
   $scope.selectedFriends = [];
@@ -94,12 +94,16 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
  $scope.$watch('bet.betOnTeam1', $scope.recalcBalance);
  $scope.$watch('bet.betOnTeam2', $scope.recalcBalance);
  $scope.$watch('friendFilter', function(newVal) {
-   if (newVal == 'all') {
-     $scope.friendsToDisplay = $scope.allFriends;
-   } else if (newVal == 'selected') {
-     $scope.queryFriend = '';
-     $scope.friendsToDisplay = $scope.selectedFriends;
-   }
+   // Complicated timeouts to make dom manipulation a bit smoother!!
+   $scope.friendsToDisplay = [];
+   $timeout(function() {
+     if (newVal == 'all') {
+       $scope.friendsToDisplay = $scope.allFriends;
+     } else if (newVal == 'selected') {
+       $scope.queryFriend = '';
+       $scope.friendsToDisplay = $scope.selectedFriends;
+     }
+   }, 50, true);
  });
  // -------------------------------------------------------
 
@@ -126,4 +130,4 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
    }
  }
 }
-SocialBetCtrl.$inject = ['$scope',  'fb', 'loadMask', 'betAPI', '$q'];
+SocialBetCtrl.$inject = ['$scope',  'fb', 'loadMask', 'betAPI', '$q', '$timeout'];
