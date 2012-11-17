@@ -57,18 +57,27 @@
     <div class="titleText">
       Pick some friends to bet on:
     </div>
-    <div class="friendPanel row-fluid" ng-init="loop=[0,1,2,3,4,5]">
-      <div ng-repeat="columnNum in loop" class="span2">
-        <div ng-repeat = "friend in allFriends">
-          <div class="friendChip" ui-if="$index%6 == columnNum"
-              ng-click="toggleSelect(friend)">
-            <div class="friendImage">
-              <img class="img" ng-src="http://graph.facebook.com/{{friend.id}}/picture/">
-              <img class="checkmark" src="app/img/checkmark.png"
-                  ng-show="inSelectedFriends(friend)">
-            </div>
-            <div class="friendName">
-                {{friend.name}}
+    <div class="friendPanel">
+      <div class="friendFilters">
+        <select class="filter">
+          <option>Friends to invite</option>
+          <option>Selected Friends</option>
+        </select>
+        <input type="text" class="searchBox" placeholder="Search...">
+      </div>
+      <div class="row-fluid allFriends" ng-init="loop=[0,1,2,3,4,5]">
+        <div ng-repeat="columnNum in loop" class="span2">
+          <div ng-repeat = "friend in allFriends">
+            <div class="friendChip" ui-if="$index%6 == columnNum"
+                ng-click="toggleSelect(friend)">
+              <div class="friendImage">
+                <img class="img" ng-src="http://graph.facebook.com/{{friend.id}}/picture/">
+                <img class="checkmark" src="app/img/checkmark.png"
+                    ng-show="inSelectedFriends(friend)">
+              </div>
+              <div class="friendName">
+                  {{friend.name}}
+              </div>
             </div>
           </div>
         </div>
@@ -77,59 +86,4 @@
     <div class="btn" ng-click="currentPage = 0">Back</div>
   </div>
 </div>
-    <!-- <div class="betOptionsPanel">
-      <div class="betOptionsInner" ng-show="bet.game">
-        <div class="block">
-          {{bet.game.date | date: 'medium'}}
-        </div>
-        <div class="block">
-          <div>
-            <p>{{bet.game.team1}}</p>
-          </div>
-          <div>
-            <p>{{bet.game.team2}}</p>
-          </div>
-        </div>
-        <div class="block">
-          <div>
-            <p>{{bet.game.spreadPoints}}({{bet.game.totalOver}})</p>
-          </div>
-          <div>
-            <p>{{bet.game.spreadPoints}}({{bet.game.totalOver}})</p>
-          </div>
-        </div>
-        <div class="block">
-          <div>
-            <p>{{bet.game.totalPoints}}({{bet.game.spreadTeam1}})</p>
-          </div>
-          <div>
-            <p>{{bet.game.totalPoints}}({{bet.game.spreadTeam2}})</p>
-          </div>
-        </div>
-        <div class="block">
-          <div>
-            <p>{{bet.game.moneyTeam1}}</p>
-          </div>
-          <div>
-            <p>{{bet.game.moneyTeam2}}</p>
-          </div>
-        </div>
-        <div class="block">
-          <input type="number" ng-model="bet.betOnTeam1" />
-          <input type="number" ng-model="bet.betOnTeam2" />
-        </div>
-      </div>
-    </div>
-
-    <div class="betControls">
-      <div class="friendSelection">
-        <h4 style="margin-bottom: 5px;">Remaining Credit: ${{user.currentBalance}} cents</h4>
-        <h4>Pick Some Friends:</h4>
-        <input type="text" class="friendInput"/>
-      </div>
-      <div class="betBtn btn btn-success btn-large">
-        Place Bets!
-        <i class="icon icon-credit"></i>
-      </div>
-    </div> -->
 

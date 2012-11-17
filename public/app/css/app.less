@@ -410,72 +410,19 @@ body {
     .friendPanel {
       .round-block(@panelWidth, 8px, 10px auto 0 auto);
       height: 450px;
-      overflow: auto;
+      .allFriends {
+        overflow: auto;
+        height: 90%;
+      }
+      .friendFilters {
+        .filter {
+          width: 20%;
+        }
+        .searchBox {
+          width: 75%;
+        }
+      }
     }
   }
 }
-
-/*.panelOne {}
-.panelOne .friendInput {
-  width: 90%;
-  margin: 10px;
-}
-
-.friendsPanel .nextBtn{
-  position: absolute;
-  right: 0;
-  bottom: 0;
-}
-
-.eventsPanel {
-}
-
-.sportsListing {
-  list-style: none;
-}
-
-.sportsListing li.event {
-  cursor: pointer;
-  margin-bottom: 5px;
-  position: relative;
-  width: 220px;
-  height: 43px;
-  font-size: 14px;
-  font-weight: bold;
-  line-height: 43px;
-  text-align: center;
-  border: 1px solid #DDD;
-  .rounded-corners(4px);
-}
-*/
-/*.sportsListing li.event:hover {
-  font-size: 15px;
-  background-color: #F2F2F2;
-}*/
-
-/*.sportsListing li.event .selectedEvent {
-  font-size: 15px;
-  background-color: #6495ED;
-}
-
-.betPanel .predictionChip {
-  cursor: pointer;
-  position: relative;
-  width: 80px;
-  height: 30px;
-  font-size: 14px;
-  font-weight: bold;
-  padding-top: 10px;
-  text-align: center;
-  border: 1px solid #DDD;
-  .rounded-corners(4px);
-}
-
-.betPanel .predictionChip:hover {
-  background-color: #F2F2F2;
-}
-
-.betPanel .predictionChip.winner {
-  background-color: #5BB75B;
-}*/
 /* End of style for SocialBet.html */
