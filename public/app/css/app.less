@@ -96,7 +96,7 @@ body {
   &:hover {
     cursor: pointer;
     .friendImage {
-      img {
+      .img {
         border-color: blue !important;
       }
     }
@@ -107,11 +107,19 @@ body {
   }
   .friendImage {
     text-align: center;
-    img {
+    position: relative;
+    .img {
       border-style: solid;
       border-color: #6D84B4;
       border-width: 3px;
       .rounded-corners(4px);
+    }
+    .checkmark {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      right: 25px;
+      bottom: 0px;
     }
   }
   .friendName { 

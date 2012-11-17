@@ -98,5 +98,18 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
      betOnTeam2: 0
    };
  }
+ 
+ $scope.inSelectedFriends = function(friend) {
+   return $scope.selectedFriends.indexOf(friend) >= 0;
+ }
+ 
+ $scope.toggleSelect = function(friend) {
+   var index = $scope.selectedFriends.indexOf(friend);
+   if (index >= 0) {
+     $scope.selectedFriends.splice(index, 1);
+   } else {
+     $scope.selectedFriends.push(friend);
+   }
+ }
 }
 SocialBetCtrl.$inject = ['$scope',  'fb', 'loadMask', 'betAPI', '$q'];

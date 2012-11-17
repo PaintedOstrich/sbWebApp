@@ -60,9 +60,12 @@
     <div class="friendPanel row-fluid" ng-init="loop=[0,1,2,3,4,5]">
       <div ng-repeat="columnNum in loop" class="span2">
         <div ng-repeat = "friend in allFriends">
-          <div class="friendChip" ui-if="$index%6 == columnNum">
+          <div class="friendChip" ui-if="$index%6 == columnNum"
+              ng-click="toggleSelect(friend)">
             <div class="friendImage">
-              <img ng-src="http://graph.facebook.com/{{friend.id}}/picture/">
+              <img class="img" ng-src="http://graph.facebook.com/{{friend.id}}/picture/">
+              <img class="checkmark" src="app/img/checkmark.png"
+                  ng-show="inSelectedFriends(friend)">
             </div>
             <div class="friendName">
                 {{friend.name}}
