@@ -54,14 +54,24 @@
   </div>
 <!---------------------------------Friend Selection Page-------------------------------->
   <div class="friendSelection">
+    <div class="titleText">
+      Pick some friends to bet on:
+    </div>
+    <div class="friendPanel row-fluid" ng-init="loop=[0,1,2,3,4,5]">
+      <div ng-repeat="columnNum in loop" class="span2">
+        <div ng-repeat = "friend in allFriends">
+          <div class="friendChip" ui-if="$index%6 == columnNum">
+            <div class="friendImage">
+              <img ng-src="http://graph.facebook.com/{{friend.id}}/picture/">
+            </div>
+            <div class="friendName">
+                {{friend.name}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="btn" ng-click="currentPage = 0">Back</div>
-    <div class="btn">lalla</div>
-    <div class="btn">lalla</div>
-    <div class="btn">lalla</div>
-    <div class="btn">lalla</div>
-    <div class="btn">lalla</div>
-    <div class="btn">lalla</div>
-    <div class="btn">lalla</div>
   </div>
 </div>
     <!-- <div class="betOptionsPanel">

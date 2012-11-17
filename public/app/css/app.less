@@ -91,6 +91,36 @@ body {
   }
 }
 
+.friendChip {
+  position: relative;
+  &:hover {
+    cursor: pointer;
+    .friendImage {
+      img {
+        border-color: blue !important;
+      }
+    }
+    .friendName {
+      font-weight: bold;
+      color: blue;
+    } 
+  }
+  .friendImage {
+    text-align: center;
+    img {
+      border-style: solid;
+      border-color: #6D84B4;
+      border-width: 3px;
+      .rounded-corners(4px);
+    }
+  }
+  .friendName { 
+    min-height: 45px;
+    text-align: center;
+    font-size: 0.9em;
+  }
+}
+
 // ------------- End of widgets style -----------------//
 
 /* CSS for loading mask */
@@ -184,7 +214,7 @@ body {
   width: 100%;
   height: 700px;
   // background-image: url('../img/informationBackground.png');
-  opacity: 0.9;
+  opacity: 0.8;
   background-color: white;
 }
 
@@ -336,12 +366,14 @@ body {
     position:absolute;
     top: 20px !important;
   }
-  .gameSelection {
+  .gameSelection, .friendSelection {
     position: relative;
     .titleText {
       padding-top: 20px;
       margin-left: 20px;
     }
+  }
+  .gameSelection {
     .gamesPanel {
       .round-block(@panelWidth, 8px, 10px auto 0 auto);
       height: 350px;
@@ -367,6 +399,11 @@ body {
   .friendSelection {
     // Hidden initially!
     display: none;
+    .friendPanel {
+      .round-block(@panelWidth, 8px, 10px auto 0 auto);
+      height: 450px;
+      overflow: auto;
+    }
   }
 }
 

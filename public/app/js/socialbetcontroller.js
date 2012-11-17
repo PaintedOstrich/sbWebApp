@@ -4,7 +4,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
   // Friends selected to place bet on.
   $scope.selectedFriends = [];
   // An id to Friend obj mapping storing all user's fb friends.
-  $scope.allFriends = {};
+  $scope.allFriends = [];
 
   // TODO these varaibles should be loaded dynamically.
   $scope.gameTypes = [
@@ -68,11 +68,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
     if (res.error) {
       alert('Sorry, failed to load friends. Please try again.');
     } else {
-      $scope.allFriends = {};
-      res.data.forEach(function(friend) {
-        $scope.allFriends[friend.id] = friend;
-      });
-      $scope.initSelectWidget(res.data);
+      $scope.allFriends = res.data;
     }
   }
 
