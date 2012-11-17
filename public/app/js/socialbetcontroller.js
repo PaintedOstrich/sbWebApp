@@ -22,9 +22,21 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q) {
     balance: 100,
     currentBalance: 100
   }
+
+  $scope.pages = ['gameSelection', 'friendSelection'];
+  $scope.currentPage = 0;
   // ---------------------------------------------------------
 
   // ----------------- Initializing funciton ----------------
+  $scope.$watch('currentPage', function(newVal, oldVal) {
+    if (oldVal != newVal) {
+      var oldPage = $scope.pages[oldVal];
+      var newPage = $scope.pages[newVal];
+      $('.socialBet .' + oldPage).fadeOut(300, function() {
+        $('.socialBet .' + newPage).fadeIn(300);
+      });
+    }
+  });
   // Initialize by loading friends from fb, games from bet server.
   $scope.loadData = function() {
     loadMask.show({text: 'Loading friends and games...'});
