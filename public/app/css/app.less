@@ -2,6 +2,7 @@
 
 /* Global variables */
 @panelWidth: 90%;
+@mainPanelWidth: 900px;
 
 // --- Useful mixins ------//
 .rounded-corners (@radius: 5px) {
@@ -196,7 +197,7 @@ body {
 /* --------- End of CSS for Load Mask ------------ */
 
 .mainPanel {
-  width: 900px;
+  width: @mainPanelWidth;
   margin: 0 auto;
   position: relative;
 }
@@ -205,66 +206,53 @@ body {
   margin-bottom: 0 !important;
   .navbar-inner {
     .rounded-corners(0px);
-    .betBtn {
-      float: right;
-    }
-    .appname {
-      background-image: url('../img/appname.png');
-      width: 210px;
-      height: 50px;
-      margin-left: 30px;
+    .container {
+      width: @mainPanelWidth;
+      margin: 0 auto;
+      .betBtn {
+        float: right;
+      }
+      .logo {
+        width: 150px;
+        margin-top: 3px;
+      }
     }
   }
 }
 
 .infoBackground {
   //.rounded-corners (16px);
+  display: none;
   z-index: -1;
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
   height: 700px;
-  // background-image: url('../img/informationBackground.png');
-  opacity: 0.8;
+  opacity: 0.9;
   background-color: white;
 }
 
 /* Style for landing.html */
 .landingPanel {
-  margin-top: -10px;
-  position: relative;
-  min-height: 700px;
-  .callForActionPanel {
-    margin: 10px auto 20px auto;
-    width: 70%;
-    .appName {
-      width: 400px;
-      height: 200px;
-      display: block;
-      margin: 0 auto;
-    }
-    .betBtn {
-      height: 60px;
-      width: 150px;
-      margin: 0 auto;
-      display: block;
-    }
-    .howBtn {
-      width: 150px;
-      margin: 10px auto;
-      display: block;
+  background-color: white;
+  height: 530px;
+  width: 100%;
+  .middle {
+    height: 410px;
+    .suitCase {
+      width: 90%;
+      margin-left: 1px;
     }
   }
-  .recentBets {
-    margin: 0 auto;
-    color: white;
-    width: 70%;
-    .recentBetList {
-      margin-top: 5px;
-      height: 235px;
-      border-style: solid;
-      border-color: black;
+  .bottom {
+    width: 100%;
+    .btn {
+      margin: 0 auto;
+      display: block;
+      width: 200px;
+      font-weight: bold;
+      font-size: 2em;
     }
   }
 }

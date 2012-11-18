@@ -28,9 +28,6 @@ RouteCtrl.$inject = ['$scope', '$location', 'fb'];
 
 // Controller for landing screen for visitor
 function LandingCtrl($scope, $location, fb) {
-  // Hide the nav bar on landing screen.
-  $scope.$parent.hideNavBar = true;
-
   $scope.login = function() {
     var permissions = {scope: 'email,user_likes'};
     var promise = fb.login($scope, permissions);
@@ -40,17 +37,14 @@ function LandingCtrl($scope, $location, fb) {
       }
     });
   }
-
-  // show nav bar again
-  $scope.$on('$destroy', function(){
-    $scope.$parent.hideNavBar = false;
-  });
 }
 LandingCtrl.$inject = ['$scope', '$location', 'fb'];
 
 
 // Controller for user profile screen
 function ProfileCtrl($scope, $location, fb, loadMask, currentUser) {
+  $('.infoBackground').show();
+
   $scope.templates =
      [ { name: 'template1.html', url: 'app/partials/profile/activebets.html'}
      , { name: 'template2.html', url: 'app/partials/profile/betinvites.html'} ];

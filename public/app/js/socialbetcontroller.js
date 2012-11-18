@@ -1,5 +1,6 @@
 // Controller for social bet screen
 function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout) {
+  $('.infoBackground').show();
   // ------------------- Controller variables ----------------
   // Friends selected to place bet on.
   $scope.selectedFriends = [];
