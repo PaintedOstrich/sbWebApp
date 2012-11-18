@@ -51,7 +51,7 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser) {
    $scope.template = $scope.templates[0];
 
   $scope.user = {};
-  // The bet to be shown in bet info modal. Check out showBetInfo function below.
+  // The bet to be shown in bet info modal.
   $scope.focusedBet = undefined;
 
   $scope.init = function() {

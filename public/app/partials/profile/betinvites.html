@@ -1,1 +1,17 @@
-bet invites
+<div class="betInvitePanel">
+  <div ng-repeat="bet in user.betInvites" class="betInvite" 
+      ng-click="$parent.modalShown=true; $parent.focusedBet = bet;">
+    {{bet.initFBId}} against {{bet.callFBId}}, bet amount is {{bet.betAmount}}
+  </div>
+</div>
+
+<div ui-modal class="fade betInfoModal modal" ng-model="modalShown">
+  <div class="header modal-header">
+    {{focusedBet.initFBId}} against {{focusedBet.callFBId}}
+  </div>
+  <div class="body modal-body">
+    <div style="min-height: 300px;">
+      More info about the bet here!!!
+    </div>
+  </div>
+</div>
