@@ -136,7 +136,7 @@
           , timeout = setTimeout(function () {
               that.$element.off($.support.transition.end)
               that.hideModal()
-            }, 500)
+            }, 160)
 
         this.$element.one($.support.transition.end, function () {
           clearTimeout(timeout)
