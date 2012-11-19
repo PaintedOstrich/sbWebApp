@@ -16,9 +16,21 @@
   ],
   "betInvites": [
     {
-      "initFBId": "3232",
-      "callFBId": "24134",
+      "initFBId": "4",
+      "callFBId": "759868917",
       "betAmount": "2312",
+      "type": "spread",
+      "gameId": "2",
+      "initTeamBet": "1",
+      "spreadTeam1": "100.3",
+      "spreadTeam2": "90",
+      "moneyDrawLine": "2",
+      "called": "false"
+    },
+    {
+      "initFBId": "737835647",
+      "callFBId": "759868917",
+      "betAmount": "111",
       "type": "spread",
       "gameId": "2",
       "initTeamBet": "1",

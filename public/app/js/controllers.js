@@ -3,12 +3,29 @@
 /* Controllers */
 
 // The top most controller, mainly in charge of navigations.
-function MainCtrl($scope) {}
+function MainCtrl($scope) {
+  $scope.$on('betInviteCliked', function(e, bet) {
+    $scope.$broadcast('showBetInvite', bet);
+  });
+}
 MainCtrl.$inject = ['$scope'];
 
 // A sort of widget controllers for bet info widget popup
 function BetInviteCtrl($scope) {
-  
+  $scope.$on('showBetInvite', function(e, bet) {
+    $scope.modalShown = true;
+    $scope.betInvite = bet;
+  });
+
+  $scope.acceptBet = function() {
+    $scope.modalShown = false;
+    console.log("TODO! implement accept bet logic!!");
+  }
+
+  $scope.declineBet = function() {
+    $scope.modalShown = false;
+    console.log("TODO! implement decline bet logic!!");
+  }
 }
 BetInviteCtrl.$inject = ['$scope'];
 // ---------- End of widget controllers ------------------------
@@ -55,8 +72,8 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser) {
    $scope.template = $scope.templates[0];
 
   $scope.user = {};
-  // The bet to be shown in bet info modal.
-  $scope.focusedBet = undefined;
+  // // The bet to be shown in bet info modal.
+  // $scope.focusedBet = undefined;
 
   $scope.init = function() {
     loadMask.show({text: 'Loading User Profile...'});
@@ -86,6 +103,11 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser) {
   }
   $scope.isActiveTab = function(index) {
     return $scope.template == $scope.templates[index];
+  }
+
+  // fire bet invite clicked event to parent
+  $scope.betInviteClicked = function(bet) {
+    $scope.$emit('betInviteCliked', bet);
   }
 }
 ProfileCtrl.$inject = ['$scope', '$location', 'fb', 'loadMask', 'currentUser'];

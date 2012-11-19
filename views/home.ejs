@@ -20,9 +20,52 @@
     <div class="infoBackground"></div>
     <ng-view></ng-view>
   </div>
+
   <div ng-controller="BetInviteCtrl">
-    <div ui-modal class="fade betInfoModal modal" ng-model="modalShown">
-      lalalalallalalla
+    <div ui-modal class="fade betInviteModal modal" ng-model="modalShown">
+      <div class="header"></div>
+      <div class="teams">
+        <div class="left">
+          <img  ng-src=
+              "http://graph.facebook.com/{{betInvite.initFBId}}/picture?type=square">
+          <div class="text">
+            <span class="teamName"> Atlanta Falcons</span>
+            <br/><br/>
+            <span class="spread">+150</span>
+          </div>
+        </div>
+        <div class="time">
+          December 12, 2012 7:00pm
+        </div>
+        <div class="right">
+          <div class="text">
+            <span class="teamName"> Houston Texans</span>
+            <br/><br/>
+            <span class="spread">-160</span>
+          </div>
+          <img  ng-src=
+              "http://graph.facebook.com/{{betInvite.callFBId}}/picture?type=square">
+        </div>
+      </div>
+      <div class="helmets">
+        <div class="inner">
+          <img class="left" src="app/img/GreenbayPackers1.png">
+          <img class="right" src="app/img/NewyorkGiants2.png">
+        </div>
+      </div>
+      <div class="money">
+        Win $0.75
+      </div>
+      <div class="buttons">
+        <button class="btn btn-danger acceptBtn"
+            ng-click="acceptBet()">
+          Accept Bet
+        </button>
+        <button class="btn declineBtn"
+            ng-click="declineBet()">
+          No Thanks
+        </button>
+      </div>
     </div>
   </div>
  
