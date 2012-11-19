@@ -3,11 +3,15 @@
 /* Controllers */
 
 // The top most controller, mainly in charge of navigations.
-function MainCtrl($scope, $location) {
+function MainCtrl($scope) {}
+MainCtrl.$inject = ['$scope'];
 
+// A sort of widget controllers for bet info widget popup
+function BetInviteCtrl($scope) {
+  
 }
-MainCtrl.$inject = ['$scope', '$location'];
-
+BetInviteCtrl.$inject = ['$scope'];
+// ---------- End of widget controllers ------------------------
 
 // The very first controller to be reached that routes traffic to
 // landing page for visitors and profile page for returning user.
