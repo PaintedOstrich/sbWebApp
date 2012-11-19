@@ -3,12 +3,19 @@
 /* Controllers */
 
 // The top most controller, mainly in charge of navigations.
-function MainCtrl($scope) {
+function MainCtrl($scope, currentUser, $location) {
+  $scope.user = currentUser;
+
   $scope.$on('betInviteCliked', function(e, bet) {
     $scope.$broadcast('showBetInvite', bet);
   });
+  
+  // Show profile page after the user name on nav bar is clicked
+  $scope.showProfile = function() {
+    $location.path('/profile');
+  }
 }
-MainCtrl.$inject = ['$scope'];
+MainCtrl.$inject = ['$scope', 'currentUser', '$location'];
 
 // A sort of widget controllers for bet info widget popup
 function BetInviteCtrl($scope) {

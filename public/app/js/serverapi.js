@@ -36,7 +36,7 @@ function User($q, $timeout, fb, $http) {
 
   // The User server url.
   var apiUrl = 'app/testData/User';
-  var serverFields = ['activeBets', 'betInvites'];
+  var serverFields = ['activeBets', 'betInvites', 'balance'];
   // Query our user api for user data specific to our app.
   this.queryBackend = function($scope) {
     var deferred = $q.defer();
@@ -56,7 +56,9 @@ function User($q, $timeout, fb, $http) {
     return deferred.promise;
   }
 
-
+  // This method should only be used if user is not loaded at all.
+  // Otherwise just call queryBackend to refresh app related user info.
+  // We should not need to load info from facebook more than once.
   this.loadUser = function($scope) {
     var serviceScope = this;
     return fb.api($scope, '/me')

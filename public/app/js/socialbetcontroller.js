@@ -1,5 +1,5 @@
 // Controller for social bet screen
-function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout) {
+function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) {
   $('.infoBackground').show();
   // ------------------- Controller variables ----------------
   // Friends selected to place bet on.
@@ -46,7 +46,6 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout) {
 
   // Initialize by loading friends from fb, games from bet server.
   $scope.loadData = function() {
-    loadMask.show({text: 'Loading friends and games...'});
     var friendReq = fb.api($scope, '/me/friends');
     var gameReq = betAPI.loadGames($scope.gameType.value);
     $q.all([friendReq, gameReq]).then($scope.processData);
@@ -80,8 +79,18 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout) {
     }
   }
 
-  // Caling loadData to initialize the page.
-  $scope.loadData();
+  $scope.initialize = function() {
+    loadMask.show({text: 'Loading friends and games...'});
+    if (currentUser.isLoaded()) {
+      $scope.loadData();
+    } else {
+      // user info may not have been loaded if we
+      // come from visitor screen directly.
+      currentUser.loadUser($scope).then($scope.loadData);
+    }
+  }
+  // Initialize the page.
+  $scope.initialize();
 
  $scope.recalcBalance = function() {
    if ($scope.bet) {
@@ -131,4 +140,4 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout) {
    }
  }
 }
-SocialBetCtrl.$inject = ['$scope',  'fb', 'loadMask', 'betAPI', '$q', '$timeout'];
+SocialBetCtrl.$inject = ['$scope',  'fb', 'loadMask', 'betAPI', '$q', '$timeout', 'currentUser'];

@@ -209,8 +209,20 @@ body {
     .container {
       width: @mainPanelWidth;
       margin: 0 auto;
-      .betBtn {
+      .betBtn, .username, .balance{
         float: right;
+        margin-left: 7px;
+      }
+      .username, .balance {
+        font-weight: bold;
+        font-size: 1.3em;
+        color: white;
+        text-align: center;
+        font-family: Zapf Chancery, cursive;
+        padding-top: 12px;
+      }
+      .username {
+        cursor: pointer;
       }
       .logo {
         width: 150px;

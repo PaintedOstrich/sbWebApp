@@ -1,5 +1,6 @@
 {
   "success": true,
+  "balance": "8.6",
   "activeBets": [
     {
       "initFBId": "1212",
