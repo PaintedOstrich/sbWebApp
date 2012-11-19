@@ -5,7 +5,8 @@
   <title>Sports Bet</title>
   <link rel="stylesheet" href="app/css/app.css">
   <link rel="stylesheet" href="app/lib/bootstrap/bootstrap.css">
-  <link rel="stylesheet" href="app/lib/select2/select2.css">
+  <!-- Angular need to be loaded first for ngCloak to work! -->
+  <script src="app/lib/angular/angular.js"></script>
 </head>
 <body ng-controller="MainCtrl">
   <div class="navbar navbar-inverse">
@@ -43,8 +44,6 @@
     };
   </script>
   <script src="//connect.facebook.net/en_US/all.js"></script>
-
-  <script src="app/lib/angular/angular.js"></script>
   <script src="app/lib/angular-ui/angular-ui.js"></script>
   <script src="app/js/app.js"></script>
   <script src="app/js/controllers.js"></script>
@@ -54,10 +53,8 @@
   <script src="app/js/serverapi.js"></script>
   <script src="app/lib/angular/angular-resource.js"></script>
   <script src="app/lib/bootstrap/js/bootstrap-transition.js"></script>
-  <script src="app/lib/bootstrap/js/bootstrap-carousel.js"></script>
   <script src="app/lib/bootstrap/js/bootstrap-modal.js"></script>
   <script src="app/lib/spinJs/spin.js"></script>
   <script src="app/lib/spinJs/jquery.spin.js"></script>
-  <script src="app/lib/select2/select2.js"></script>
 </body>
 </html>
