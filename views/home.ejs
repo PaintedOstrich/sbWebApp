@@ -14,7 +14,10 @@
         <div class="username ng-cloak" ng-cloak ng-click="showProfile()">
           {{user.name}}
         </div>
-        <button class="btn btn-danger betBtn">Make a bet</button>
+        <button class="btn btn-danger betBtn"
+            ng-click="newBet()">
+          Make a bet
+        </button>
         <div class="balance ng-cloak" ng-cloak >
           <img src="app/img/coins.png" />
           ${{user.balance}}

@@ -277,12 +277,14 @@ body {
 /* Style for Profile.html */
 .profilePagePanel {
   position: relative;
-  .infoBackground {
+  @leftIndent: 40px;
+/*  .infoBackground {
     top: 20px !important;
-  }
+  }*/
   .profileHeader {
     position: relative;
-    .round-block(@panelWidth);
+    margin-left: @leftIndent;
+    //.round-block(@panelWidth);
 
     .profileImg {
       display: inline-block;
@@ -310,13 +312,22 @@ body {
   }
 
   .controlTabs {
-    width: 60%;
-    margin: 30px auto 0 auto;
+    width: 100%;
+    margin-top: 30px;
     min-height: 200px;
+    ul {
+      li {
+        &:first-child {
+         margin-left: @leftIndent; 
+        }
+        a {
+          font-weight: bold;
+        }
+      }
+    }
     .tabContent {
-      .round-block(100%, 4px);
+      //.round-block(100%, 4px);
        min-height: 200px;
-/*      .rounded-corners(4px);*/
     }
   }
 }

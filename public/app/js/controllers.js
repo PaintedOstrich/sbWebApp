@@ -9,10 +9,14 @@ function MainCtrl($scope, currentUser, $location) {
   $scope.$on('betInviteCliked', function(e, bet) {
     $scope.$broadcast('showBetInvite', bet);
   });
-  
+
   // Show profile page after the user name on nav bar is clicked
   $scope.showProfile = function() {
     $location.path('/profile');
+  }
+
+  $scope.newBet = function() {
+    $location.path('socialbet');
   }
 }
 MainCtrl.$inject = ['$scope', 'currentUser', '$location'];
@@ -99,10 +103,6 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser) {
     }
   }
   $scope.init();
-
-  $scope.newBet = function() {
-    $location.path('socialbet');
-  }
 
   // note: this set/is ActiveTab methods override the methods on its parent scope.
   $scope.setActiveTab = function(index) {

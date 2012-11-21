@@ -7,20 +7,20 @@
       <div>Member since: ???</div>
       <div>Higheset balance: ??? </div>
       <div>Social wins: ??? </div>
-      <a class="btn btn-success betBtn" ng-click="newBet()">
-        New Bet <i class="icon-hand-right"></i>
-      </a>
     </div>
   </div>
   <div class="controlTabs">
     <ul class="nav nav-tabs">
       <li ng-class="{active: isActiveTab(0)}">
         <a href ng-click="setActiveTab(0)">
-          Active bets
+          Active
         </a>
       </li>
       <li ng-class="{active: isActiveTab(1)}">
-        <a href ng-click="setActiveTab(1)">Bet invites</a>
+        <a href ng-click="setActiveTab(1)">Pending</a>
+      </li>
+      <li ng-class="{active: isActiveTab(2)}">
+        <a href ng-click="setActiveTab(2)">Past</a>
       </li>
     </ul>
     <div class="tabContent">
