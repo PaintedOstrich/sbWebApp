@@ -77,14 +77,10 @@ LandingCtrl.$inject = ['$scope', '$location', 'fb'];
 function ProfileCtrl($scope, $location, fb, loadMask, currentUser) {
   $scope.$parent.showInfoBackground = true;
 
-  $scope.templates =
-     [ { name: 'template1.html', url: 'app/partials/profile/bet.html'}
-     , { name: 'template2.html', url: 'app/partials/profile/bet.html'} ];
-   $scope.template = $scope.templates[0];
+  $scope.currentTab = 'active';
+  $scope.betTemplateUrl = 'app/partials/profile/bet.html';
 
   $scope.user = {};
-  // // The bet to be shown in bet info modal.
-  // $scope.focusedBet = undefined;
 
   $scope.init = function() {
     loadMask.show({text: 'Loading User Profile...'});
@@ -103,14 +99,6 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser) {
     }
   }
   $scope.init();
-
-  // note: this set/is ActiveTab methods override the methods on its parent scope.
-  $scope.setActiveTab = function(index) {
-    $scope.template = $scope.templates[index];
-  }
-  $scope.isActiveTab = function(index) {
-    return $scope.template == $scope.templates[index];
-  }
 
   // fire bet invite clicked event to parent
   $scope.betInviteClicked = function(bet) {

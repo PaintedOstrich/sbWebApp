@@ -11,24 +11,24 @@
   </div>
   <div class="controlTabs">
     <ul class="nav nav-tabs">
-      <li ng-class="{active: isActiveTab(0)}">
-        <a href ng-click="setActiveTab(0)">
+      <li ng-class="{active: currentTab == 'active'}">
+        <a href ng-click="currentTab = 'active'">
           Active
         </a>
       </li>
-      <li ng-class="{active: isActiveTab(1)}">
-        <a href ng-click="setActiveTab(1)">Pending</a>
+      <li ng-class="{active: currentTab == 'pending'}">
+        <a href ng-click="currentTab = 'pending'">Pending</a>
       </li>
-      <li ng-class="{active: isActiveTab(2)}">
-        <a href ng-click="setActiveTab(2)">Past</a>
+      <li ng-class="{active: currentTab == 'past'}">
+        <a href ng-click="currentTab = 'past'">Past</a>
       </li>
     </ul>
     <div class="tabContent">
-      <div ng-repeat="bet in user.betInvites"
-          ng-include src="template.url" ng-show="template.name == 'template1.html'">
-      </div>
       <div ng-repeat="bet in user.activeBets"
-          ng-include src="template.url" ng-show="template.name == 'template2.html'">
+          ng-include src="betTemplateUrl" ng-show="currentTab == 'active'">
+      </div>
+      <div ng-repeat="bet in user.betInvites"
+          ng-include src="betTemplateUrl" ng-show="currentTab == 'pending'">
       </div>
     </div>
   </div>

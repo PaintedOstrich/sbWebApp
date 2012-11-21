@@ -122,5 +122,9 @@ describe('SportsBet controllers', function() {
     it('should set showInfoBackground to true on parent', function() {
       expect(scope.$parent.showInfoBackground).toBe(true);
     });
+
+    it('should have initial active tab', function() {
+      expect(scope.currentTab).toEqual('active');
+    });
   });
 });
