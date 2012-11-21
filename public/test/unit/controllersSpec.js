@@ -119,7 +119,8 @@ describe('SportsBet controllers', function() {
               loadMask: mockLoadMask, currentUser: mockCurrentUser});
     }));
 
-    it('should set user obj if fb.api request succeed', function() {
+    it('should set showInfoBackground to true on parent', function() {
+      expect(scope.$parent.showInfoBackground).toBe(true);
     });
   });
 });

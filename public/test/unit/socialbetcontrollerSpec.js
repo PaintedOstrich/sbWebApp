@@ -8,6 +8,28 @@ describe('SocialBetCtrl', function() {
               return "Expected " + this.actual + " to be a function";
             }
             return typeof this.actual == 'function';
+          },
+          toHaveWatcher: function(name) {
+            var watchers = this.actual.$$watchers;
+            if (!watchers || watchers.length == 0) {
+              this.message = function () {
+                return "Passed in object/scope has no watcher at all";
+               }
+               return false;
+            }
+
+            var found = false;
+            for (var i = 0; i < watchers.length; i++) {
+             if (watchers[i].exp == name) {
+               found = true;
+               break;
+             }
+            }
+
+            this.message = function () {
+              return "Passed in object/scope has no watcher on " + name;
+             }
+             return found;
           }
       });
   });
@@ -39,9 +61,24 @@ describe('SocialBetCtrl', function() {
         {$scope: scope, fb: mockFb, loadMask: mockLoadMask,
           betAPI: mockBetAPI, $q: mockQ, $timeout: undefined, currentUser: mockUser});
   }));
-  
+
   it('should set showInfoBackground to true on parent', function() {
     expect(scope.$parent.showInfoBackground).toBe(true);
+  });
+
+  it('should have currentPage set to 0 and pages array', function() {
+    expect(scope.pages).toBeDefined();
+    expect(scope.currentPage).toBe(0);
+  });
+
+  it('should have watchers', function() {
+    var watchers = scope.$$watchers;
+    expect(watchers.length).toBe(5);
+    expect(scope).toHaveWatcher('currentPage');
+    expect(scope).toHaveWatcher('friendFilter');
+    expect(scope).toHaveWatcher('bet.betOnTeam2');
+    expect(scope).toHaveWatcher('bet.betOnTeam1');
+    expect(scope).toHaveWatcher('selectedFriends');
   });
 
 
@@ -130,16 +167,16 @@ describe('SocialBetCtrl', function() {
     //   expect(scope.selectedFriends).toEqual([]);
     //   expect(scope.bet.betOnTeam1).toBe(0);
     //   expect(scope.bet.betOnTeam2).toBe(0);
-    // 
+    //
     //    scope.selectedFriends = [{}, {}];
     //    scope.$digest();
     //    expect(scope.user.currentBalance).toBe(100);
-    // 
+    //
     //    scope.bet.betOnTeam1 = 2;
     //    scope.bet.betOnTeam2 = 1;
     //    scope.$digest();
     //    expect(scope.user.currentBalance).toBe(94);
-    // 
+    //
     //    scope.selectedFriends = [];
     //    scope.$digest();
     //    expect(scope.user.currentBalance).toBe(100);
