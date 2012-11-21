@@ -326,13 +326,14 @@ body {
       }
     }
     .tabContent {
-      //.round-block(100%, 4px);
-      overflow: auto;
+       //.round-block(100%, 4px);
+       overflow: auto;
        max-height: 350px;
        min-height: 120px;
        .betChip {
-         width: 195px;
-         height: 130px;
+         cursor: pointer;
+         width: 265px;
+         height: 140px;
          border-style: solid;
          border-color: #DDD;
          border-left-width: 2px;
@@ -342,7 +343,55 @@ body {
          .rounded-corners (5px);
          .box-shadow(0px 2px 2px 1px grey);
          float: left;
-         margin: 10px;
+         margin-left: 20px;
+         margin-bottom: 10px;
+         &:hover {
+           background-color: #F0F8FF;
+         }
+         .otherUserName {
+           text-align: center;
+           font-weight: bold;
+           margin-bottom: 6px;
+           font-size: 1.1em;
+         }
+         .body {
+           height: 95px;
+           .left, .vsText {
+             float: left;
+             text-align: center;
+           }
+           .vsText {
+             width: 20%;
+             font-weight: bold;
+             font-size: 1.3em;
+           }
+           .right {
+             float: right;
+             text-align: center;
+           }
+           .left, .right {
+             width: 40%;
+           }
+           .profileImg {
+             width: 40px;
+             height: 40px;
+             border-style: solid;
+             border-color: #6D84B4;
+             border-width: 3px;
+             .rounded-corners(4px);
+             width: 50px;
+             height: 50px;
+           }
+           .teamName, .spread {
+             font-size: 0.8em;
+           }
+         }
+         .betAmount {
+           width: 100%;
+           background-color: gray;
+           font-weight: bold;
+           text-align: center;
+         }
        }
     }
   }
