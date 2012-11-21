@@ -53,7 +53,9 @@
 <!---------------------------------Friend Selection Page-------------------------------->
   <div class="friendSelection">
     <div class="titleText">
-      Pick some friends to bet on:
+      <a class="backBtn" ng-click="currentPage = 0;">
+        Back
+      </a>
     </div>
     <div class="friendPanel">
       <div class="friendFilters">
@@ -81,9 +83,24 @@
         </div>
       </div>
     </div>
-    <div class="btnGroup">
-       <div class="btn btn-success btn-large" ng-click="">Place Bet!</div>
-       <div class="btn btn-large" ng-click="currentPage = 0;">Back</div>
+    <div class="bottom">
+      <div class="bottomInner">
+        <div class="numbers">
+          <div class="field">
+            <span class="fieldName">Bet: </span>
+            <span class="uneditable">$0.4</span>
+          </div>
+          <div class="field">
+            <span class="fieldName">Friends: </span>
+            <span class="uneditable">{{selectedFriends.length}}</span>
+          </div>
+          <div class="field">
+            <span class="fieldName">Win: </span>
+            <span class="uneditable" style="color: green;">$?????</span>
+          </div>
+        </div>
+        <div class="btn btn-danger btn-large">PLACE BET!</div>
+      </div>
     </div>
   </div>
 </div>

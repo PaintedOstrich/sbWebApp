@@ -564,7 +564,8 @@ body {
     position: relative;
     .titleText {
       padding-top: 20px;
-      margin-left: 20px;
+      padding-left: 40px;
+      border-bottom: solid 2px #DDD;
     }
   }
   .gameSelection {
@@ -595,6 +596,9 @@ body {
   .friendSelection {
     // Hidden initially!
     display: none;
+    .backBtn {
+      cursor: pointer;
+    }
     .friendPanel {
       .round-block(@panelWidth, 8px, 10px auto 0 auto);
       height: 450px;
@@ -611,12 +615,42 @@ body {
         }
       }
     }
-    .btnGroup {
+    .bottom {
       width: @panelWidth;
       margin: 20px auto;
-      .btn {
-        float: right;
-        margin-right: 10px;
+      .bottomInner {
+        width: 60%;
+        margin: 0 auto;
+        position: relative;
+        .numbers {
+          display: inline-block;
+          font-family: Zapf Chancery, cursive;
+          font-size: 1.2em;
+          .field {
+            margin-top: 5px;
+            .fieldName {
+              display: inline-block;
+              width: 65px;
+              font-weight: bold;
+            }
+            .uneditable {
+              background-color: whiteSmoke;
+              display: inline-block;
+              width: 70px;
+              text-align: center;
+              border: solid 2px #DDD;
+            }
+          }
+        }
+        .btn {
+          position: absolute;
+          top: 15px;
+          right: 0;
+          width: 250px;
+          height: 30px;
+          font-size: 1.7em;
+          font-weight: bold;
+        }
       }
     }
   }
