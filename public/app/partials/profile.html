@@ -24,7 +24,12 @@
       </li>
     </ul>
     <div class="tabContent">
-      <div ng-include src="template.url"></div>
+      <div ng-repeat="bet in user.betInvites"
+          ng-include src="template.url" ng-show="template.name == 'template1.html'">
+      </div>
+      <div ng-repeat="bet in user.activeBets"
+          ng-include src="template.url" ng-show="template.name == 'template2.html'">
+      </div>
     </div>
   </div>
 </div>

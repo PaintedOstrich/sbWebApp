@@ -78,8 +78,8 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser) {
   $scope.$parent.showInfoBackground = true;
 
   $scope.templates =
-     [ { name: 'template1.html', url: 'app/partials/profile/activebets.html'}
-     , { name: 'template2.html', url: 'app/partials/profile/betinvites.html'} ];
+     [ { name: 'template1.html', url: 'app/partials/profile/bet.html'}
+     , { name: 'template2.html', url: 'app/partials/profile/bet.html'} ];
    $scope.template = $scope.templates[0];
 
   $scope.user = {};

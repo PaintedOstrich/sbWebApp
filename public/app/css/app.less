@@ -327,7 +327,23 @@ body {
     }
     .tabContent {
       //.round-block(100%, 4px);
-       min-height: 200px;
+      overflow: auto;
+       max-height: 350px;
+       min-height: 120px;
+       .betChip {
+         width: 195px;
+         height: 130px;
+         border-style: solid;
+         border-color: #DDD;
+         border-left-width: 2px;
+         border-right-width: 2px;
+         border-bottom-width: 2px;
+         border-top-width: 0px;
+         .rounded-corners (5px);
+         .box-shadow(0px 2px 2px 1px grey);
+         float: left;
+         margin: 10px;
+       }
     }
   }
 }
