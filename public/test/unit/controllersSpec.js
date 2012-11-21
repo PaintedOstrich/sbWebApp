@@ -126,5 +126,10 @@ describe('SportsBet controllers', function() {
     it('should have initial active tab', function() {
       expect(scope.currentTab).toEqual('active');
     });
+
+    it('should have functions', function() {
+      expect(scope.loadUser).toBeFunction();
+      expect(scope.loadBetInfo).toBeFunction();
+    });
   });
 });

@@ -74,7 +74,7 @@ LandingCtrl.$inject = ['$scope', '$location', 'fb'];
 
 
 // Controller for user profile screen
-function ProfileCtrl($scope, $location, fb, loadMask, currentUser) {
+function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q) {
   $scope.$parent.showInfoBackground = true;
 
   $scope.currentTab = 'active';
@@ -82,30 +82,60 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser) {
 
   $scope.user = {};
 
-  $scope.init = function() {
-    loadMask.show({text: 'Loading User Profile...'});
+  $scope.loadUser = function() {
+    var deferred = $q.defer();
     if (currentUser.isLoaded()) {
       currentUser.queryBackend($scope).then(function() {
         $scope.user = currentUser;
-        loadMask.hide();
+        deferred.resolve();
       });
     } else {
       currentUser.loadUser($scope).then(function() {
         $scope.user = currentUser;
-        loadMask.hide();
+        deferred.resolve();
       }, function() {
         loadMask.hide();
+        deferred.reject();
       });
     }
+    return deferred.promise;
   }
-  $scope.init();
+
+  // We need to load user name for each user that initiates the bet from facebook.
+  $scope.loadBetInfo = function() {
+    var promises = [];
+    if ($scope.user.activeBets) {
+      $scope.user.activeBets.forEach(function(bet) {
+        var promise = fb.api($scope, bet.initFBId + '?fields=name').
+            then(function(res) {bet.initFBName = res.name});
+        promises.push(promise);
+      });
+    }
+    if ($scope.user.betInvites) {
+      $scope.user.betInvites.forEach(function(bet) {
+        var promise = fb.api($scope, bet.initFBId + '?fields=name').
+            then(function(res) {bet.initFBName = res.name});
+        promises.push(promise);
+      });
+    }
+
+    // Hide loadMask no matter what;
+    $q.all(promises).then(function(resArr) {
+      loadMask.hide();
+    }, function() {
+      loadMask.hide();
+    });
+  }
+
+  loadMask.show({text: 'Loading User Profile...'});
+  $scope.loadUser().then($scope.loadBetInfo);
 
   // fire bet invite clicked event to parent
   $scope.betInviteClicked = function(bet) {
     $scope.$emit('betInviteCliked', bet);
   }
 }
-ProfileCtrl.$inject = ['$scope', '$location', 'fb', 'loadMask', 'currentUser'];
+ProfileCtrl.$inject = ['$scope', '$location', 'fb', 'loadMask', 'currentUser', '$q'];
 
 
 
