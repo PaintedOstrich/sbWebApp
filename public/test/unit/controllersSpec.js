@@ -58,12 +58,6 @@ describe('SportsBet controllers', function() {
       ctrl = $controller(LandingCtrl,
           {$scope: scope, $location: mockLocation, fb: mockFb});
     }));
-
-    it('should hide nav on initiation but show it before exiting', function() {
-      expect(scope.$parent.hideNavBar).toBe(true);
-      scope.$destroy();
-      expect(scope.$parent.hideNavBar).toBe(false);
-    });
   });
 
   describe('RouteCtrl', function() {
@@ -117,7 +111,8 @@ describe('SportsBet controllers', function() {
         })
       }
       var mainScope = $rootScope.$new();
-      var mainCtrl = $controller(MainCtrl, {$scope: mainScope});
+      var mainCtrl = $controller(MainCtrl,
+          {$scope: mainScope, currentUser: mockCurrentUser});
       scope = mainScope.$new();
       ctrl = $controller(ProfileCtrl,
           {$scope: scope, fb: mockFb, $location: mockLocation,

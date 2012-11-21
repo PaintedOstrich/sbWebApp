@@ -71,7 +71,7 @@ LandingCtrl.$inject = ['$scope', '$location', 'fb'];
 
 // Controller for user profile screen
 function ProfileCtrl($scope, $location, fb, loadMask, currentUser) {
-  $('.infoBackground').show();
+  $scope.$parent.showInfoBackground = true;
 
   $scope.templates =
      [ { name: 'template1.html', url: 'app/partials/profile/activebets.html'}
