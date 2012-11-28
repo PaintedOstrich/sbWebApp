@@ -644,10 +644,20 @@ body {
       margin: 50px auto 0 auto;
       min-height: 100px;
       position: relative;
-      .numbers {
+      .sampleBet {
         float: left;
         font-family: Zapf Chancery, cursive;
         font-size: 1.2em;
+        position: relative;
+        .question {
+          position: absolute;
+          top: 30%;
+          right: -5px;
+          img {
+            width: 30px;
+            height: 30px;
+          }
+        }
         .field {
           margin-top: 15px;
           .fieldName {
@@ -665,10 +675,14 @@ body {
       }
       .teams {
         float: left;
-        margin-left: 25px;
+        margin-left: 45px;
         width: 180px;
         height: 70px;
         .teamBlock {
+          &:hover {
+            background-color: lightblue;
+            cursor: pointer;
+          }
           width: 45%;
           float: left;
           margin-right: 2%;
