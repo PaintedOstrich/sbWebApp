@@ -118,12 +118,11 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) 
  // -------------------------------------------------------
 
  // Initialize a bet
- $scope.initBet = function(game) {
+ $scope.initBet = function(game, winnerId) {
    // Should use a resource class. but it is fine for now!
    $scope.bet = {
      game: game,
-     betOnTeam1: 0,
-     betOnTeam2: 0
+     winner: winnerId
    };
  }
 

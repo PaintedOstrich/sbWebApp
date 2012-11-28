@@ -13,16 +13,18 @@
             </div>
             <div class="teamBlock">
               <div class="team">
-                <img src="app/img/helmut1.png" class="teamLogo">
-                {{game.team1}}
+                <img ng-src="app/img/helmets/{{game.team1Name.split(' ').join('')}}1.png" 
+                    class="teamLogo">
+                {{game.team1Name}}
               </div>
               <div class="team">
-                <img src="app/img/helmut2.png" class="teamLogo">
-                {{game.team2}}
+                <img ng-src="app/img/helmets/{{game.team2Name.split(' ').join('')}}2.png" 
+                    class="teamLogo">
+                {{game.team2Name}}
               </div>
             </div>
             <div class="timeBlock">
-              {{game.date | date: 'medium'}}
+              {{game.gdate | date: 'medium'}}
             </div>
             <div class="spreadBlock">
               <div class="team">{{game.spreadTeam1}}</div>
