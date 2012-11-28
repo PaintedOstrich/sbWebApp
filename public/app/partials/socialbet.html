@@ -7,44 +7,53 @@
     <div class="gamesPanel row-fluid">
         <div ng-repeat = "game in games">
           <div class="gameChip" ng-click="initBet(game)">
-            <div class="block teamBlock">
-              <img src="app/img/helmut1.png" class="teamLogo">
-              {{game.team1}}
+            <div class="mask">
+              <div class="left"></div>
+              <div class="right"></div>
             </div>
-            <div class="block">
-              <div class="vsText">
-                 VS
+            <div class="teamBlock">
+              <div class="team">
+                <img src="app/img/helmut1.png" class="teamLogo">
+                {{game.team1}}
               </div>
-              {{game.date | date: 'mediumDate'}}
+              <div class="team">
+                <img src="app/img/helmut2.png" class="teamLogo">
+                {{game.team2}}
+              </div>
             </div>
-            <div class="block teamBlock">
-              <img src="app/img/helmut2.png" class="teamLogo">
-              {{game.team2}}
+            <div class="timeBlock">
+              {{game.date | date: 'medium'}}
+            </div>
+            <div class="spreadBlock">
+              <div class="team">{{game.spreadTeam1}}</div>
+              <div class="team">{{game.spreadTeam2}}</div>
             </div>
           </div>
         </div>
     </div>
 
-    <div class="betOptionsPanel">
-      <div class="betOptionsInner" ng-show="bet.game">
-        <div class="gameChip">
-          <div class="block teamBlock">
-            <img src="app/img/helmut1.png" class="teamLogo">
-            {{bet.game.team1}}
-          </div>
-          <div class="block">
-            <div class="vsText">
-               VS
-            </div>
-            {{bet.game.date | date: 'mediumDate'}}
-          </div>
-          <div class="block teamBlock">
-            <img src="app/img/helmut2.png" class="teamLogo">
-            {{bet.game.team2}}
-          </div>
+    <div class="betOptionsPanel" ng-show="bet.game">
+      <div class="sampleBet numbers">
+        <div class="field">
+          <span class="fieldName">Sample Bet: </span>
+          <span class="uneditable">$0.50</span>
+        </div>
+        <div class="field">
+          <span class="fieldName">Sample Win: </span>
+          <span class="uneditable" style="color: green;">$11.00</span>
         </div>
       </div>
-      <div class="btn btn-success btn-large" ng-click="currentPage = 1">
+      <div class="teams">
+        <div class="teamBlock">
+          <img src="app/img/helmut1.png" class="teamLogo">
+          <div>{{bet.game.spreadTeam1}}</div>
+        </div>
+        <div class="teamBlock">
+          <img src="app/img/helmut2.png" class="teamLogo">
+          <div>{{bet.game.spreadTeam2}}</div>
+        </div>
+      </div>
+      <div class="btn btn-danger btn-large" ng-click="currentPage = 1">
         Continue
       </div>
     </div>

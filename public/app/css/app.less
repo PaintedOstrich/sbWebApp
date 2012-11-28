@@ -564,32 +564,133 @@ body {
     position: relative;
     .titleText {
       padding-top: 20px;
-      padding-left: 40px;
+      padding-left: 10px;
       border-bottom: solid 2px #DDD;
     }
   }
   .gameSelection {
     .gamesPanel {
-      .round-block(@panelWidth, 8px, 10px auto 0 auto);
-      height: 350px;
+      width: 98%;
+      margin: 10px auto 0 auto;
+      height: 390px;
       overflow: auto;
       .gameChip {
-        margin: 5px 10px 5px 10px;
-        float: left;
+        cursor: pointer;
         width: 30%;
+        height: 110px;
+        border-style: solid;
+        border-color: #DDD;
+        border-left-width: 2px;
+        border-right-width: 2px;
+        border-bottom-width: 2px;
+        border-top-width: 0px;
+        .rounded-corners (5px);
+        .box-shadow(0px 2px 2px 1px grey);
+        float: left;
+        margin-left: 20px;
+        margin-bottom: 20px;
+        position: relative;
+        .mask {
+          position: absolute;
+          left: 0;
+          top: 0;
+          height: 100%;
+          width: 100%;
+          .left, .right {
+            width: 50%;
+            height: 100%;
+            float: left;
+            opacity: .5;
+            &:hover {
+              background-color: lightblue;
+            }
+          }
+        }
+        .teamBlock {
+          height: 70%;
+          .team {
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            float: left;
+            text-align: center;
+            font-size: 0.7em;
+            img {
+              display: block;
+              margin: 0 auto;
+              width: 75px;
+              height: 60px;
+            }
+          }
+        }
+        .spreadBlock {
+          height: 15%;
+          background-color: #DDD;
+          .team {
+            float: left;
+            text-align: center;
+            width: 50%;
+            font-weight: bold;
+          }
+        }
+        .timeBlock {
+          height: 15%;
+          text-align: center;
+        }
       }
     }
     .betOptionsPanel {
-      .round-block(@panelWidth, 8px, 10px auto 0 auto);
+      width: 90%;
+      margin: 50px auto 0 auto;
       min-height: 100px;
       position: relative;
-      .betOptionsInner {
+      .numbers {
         float: left;
+        font-family: Zapf Chancery, cursive;
+        font-size: 1.2em;
+        .field {
+          margin-top: 15px;
+          .fieldName {
+            display: inline-block;
+            width: 100px;
+            font-weight: bold;
+          }
+          .uneditable {
+            // background-color: whiteSmoke;
+            display: inline-block;
+            width: 70px;
+            // border: solid 2px #DDD;
+          }
+        }
+      }
+      .teams {
+        float: left;
+        margin-left: 25px;
+        width: 180px;
+        height: 70px;
+        .teamBlock {
+          width: 45%;
+          float: left;
+          margin-right: 2%;
+          border: solid 1px black;
+          text-align: center;
+          font-weight: bold;
+          img {
+            display: block;
+            margin: 0 auto;
+            width: 75px;
+            height: 60px;
+          }
+        }
       }
       .btn {
-        float: right;
-        margin-right: 15px;
-        margin-top: 20px;
+        position: absolute;
+        top: 15px;
+        right: 30px;
+        width: 250px;
+        height: 30px;
+        font-size: 1.7em;
+        font-weight: bold;
       }
     }
   }
