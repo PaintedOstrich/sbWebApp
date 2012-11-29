@@ -76,7 +76,7 @@ describe('SocialBetCtrl', function() {
     expect(watchers.length).toBe(3);
     expect(scope).toHaveWatcher('currentPage');
     expect(scope).toHaveWatcher('friendFilter');
-    expect(scope).toHaveWatcher('selectedFriends');
+    expect(scope).toHaveWatcher('selectedFriends.length');
   });
 
 
