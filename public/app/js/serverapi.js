@@ -35,23 +35,25 @@ function User($q, $timeout, fb, $http) {
   }
 
   // The User server url.
-  var apiUrl = 'app/testData/User';
+  var apiUrl = 'http://sportsbetsservice.herokuapp.com/api/user/login/';
   var serverFields = ['activeBets', 'betInvites', 'balance'];
   // Query our user api for user data specific to our app.
   this.queryBackend = function($scope) {
     var deferred = $q.defer();
     var serviceScope = this;
-    $http.get(apiUrl).success(function(data) {
-      if (data.success) {
-        serverFields.forEach(function(fieldName) {
-          if (data[fieldName]) {
-            serviceScope[fieldName] = data[fieldName];
-          }
-        });
-        deferred.resolve();
-      } else {
-        deferred.reject();
-      }
+    fb.getLoginStatus($scope).then(function(res) {
+      $http.get(apiUrl + res.authResponse.signedRequest).success(function(data) {
+        if (data.success) {
+          serverFields.forEach(function(fieldName) {
+            if (data[fieldName]) {
+              serviceScope[fieldName] = data[fieldName];
+            }
+          });
+          deferred.resolve();
+        } else {
+          deferred.reject();
+        }
+      });
     });
     return deferred.promise;
   }
