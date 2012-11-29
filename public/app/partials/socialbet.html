@@ -46,7 +46,8 @@
             ${{sampleBetAmount * bet.winRatio | number:2}}
           </span>
         </div>
-        <a class="question">
+        <a class="question" ui-jq="tooltip"
+          data-original-title="If you bet ${{sampleBetAmount}} on {{bet.winnerName}}, you can possibly gain ${{sampleBetAmount * bet.winRatio | number:2}} when {{bet.winnerName}} wins">
           <img src="app/img/questionmark.png" />
         </a>
       </div>

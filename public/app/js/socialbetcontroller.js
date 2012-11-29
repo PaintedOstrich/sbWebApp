@@ -118,13 +118,15 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) 
 
  // Initialize a bet
  $scope.initBet = function(game, winnerId) {
-   var spread = winnerId == game.team1Id ? game.spreadTeam1 : game.spreadTeam2
+   var spread = winnerId == game.team1Id ? game.spreadTeam1 : game.spreadTeam2;
+   var winnerName = winnerId == game.team1Id ? game.team1Name : game.team2Name;
    // Should use a resource class. but it is fine for now!
    $scope.bet = {
      game: game,
      winner: winnerId,
      winRatio: $scope.calcWinRatio(spread),
-     amount:  0
+     amount:  0,
+     winnerName: winnerName
    };
    $scope.calcBetAmount();
  }
