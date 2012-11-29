@@ -35,7 +35,7 @@ function User($q, $timeout, fb, $http) {
   }
 
   // The User server url.
-  var apiUrl = 'http://sportsbetsservice.herokuapp.com/api/user/login/';
+  var apiUrl = 'app/testData/User?';
   var serverFields = ['activeBets', 'betInvites', 'balance'];
   // Query our user api for user data specific to our app.
   this.queryBackend = function($scope) {
