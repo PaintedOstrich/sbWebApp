@@ -6,10 +6,10 @@
     </div>
     <div class="gamesPanel row-fluid">
         <div ng-repeat = "game in games">
-          <div class="gameChip" ng-click="initBet(game)">
+          <div class="gameChip">
             <div class="mask">
-              <div class="left"></div>
-              <div class="right"></div>
+              <div class="left" ng-click="initBet(game, game.team1Id)"></div>
+              <div class="right" ng-click="initBet(game, game.team2Id)"></div>
             </div>
             <div class="teamBlock">
               <div class="team">
@@ -38,23 +38,31 @@
       <div class="sampleBet">
         <div class="field">
           <span class="fieldName">Sample Bet: </span>
-          <span class="uneditable">$0.50</span>
+          <span class="uneditable">${{sampleBetAmount | number:2}}</span>
         </div>
         <div class="field">
           <span class="fieldName">Sample Win: </span>
-          <span class="uneditable" style="color: green;">$11.00</span>
+          <span class="uneditable" style="color: green;">
+            ${{bet.betAmount * bet.winRatio | number:2}}
+          </span>
         </div>
         <a class="question">
           <img src="app/img/questionmark.png" />
         </a>
       </div>
       <div class="teams">
-        <div class="teamBlock">
-          <img src="app/img/helmut1.png" class="teamLogo">
+        <div class="teamBlock"
+            ng-class="{'highlight': bet.winner==bet.game.team1Id}"
+            ng-click="bet.winner=bet.game.team1Id">
+          <img ng-src="app/img/helmets/{{bet.game.team1Name.split(' ').join('')}}1.png" 
+              class="teamLogo">
           <div>{{bet.game.spreadTeam1}}</div>
         </div>
-        <div class="teamBlock">
-          <img src="app/img/helmut2.png" class="teamLogo">
+        <div class="teamBlock"
+            ng-class="{'highlight': bet.winner==bet.game.team2Id}"
+            ng-click="bet.winner=bet.game.team2Id">
+          <img ng-src="app/img/helmets/{{bet.game.team2Name.split(' ').join('')}}2.png" 
+              class="teamLogo">
           <div>{{bet.game.spreadTeam2}}</div>
         </div>
       </div>

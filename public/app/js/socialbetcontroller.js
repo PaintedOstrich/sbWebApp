@@ -28,6 +28,8 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) 
     balance: 100,
     currentBalance: 100
   }
+  // Sample bet amount is 50;
+  $scope.sampleBetAmount = 50;
 
   $scope.pages = ['gameSelection', 'friendSelection'];
   $scope.currentPage = 0;
@@ -119,11 +121,29 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) 
 
  // Initialize a bet
  $scope.initBet = function(game, winnerId) {
+   var spread = winnerId == game.team1Id ? game.spreadTeam1 : game.spreadTeam2
    // Should use a resource class. but it is fine for now!
    $scope.bet = {
      game: game,
-     winner: winnerId
+     winner: winnerId,
+     winRatio: $scope.calcWinRatio(spread),
+     betAmount: $scope.sampleBetAmount
    };
+ }
+
+ /* Calculate win ratio from odds
+  * if spread is -105, then you bet $105 dollars to win $100
+  * if spread is 120, then you bet $100 dollars to win $120
+  */
+ $scope.calcWinRatio = function(winSpread) {
+  var odds = parseFloat(winSpread);
+  var toR;
+  if (odds < 0) {
+    toR = 100.0/odds;
+  } else {
+    toR = odds/100.0;
+  }
+  return Math.abs(toR);
  }
 
  $scope.inSelectedFriends = function(friend) {
