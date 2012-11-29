@@ -94,17 +94,14 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) 
   // Initialize the page.
   $scope.initialize();
 
- $scope.recalcBalance = function() {
+ $scope.calcBetAmount = function() {
    if ($scope.bet) {
      var numFriendsBeted = $scope.selectedFriends.length;
-     var betAmount = numFriendsBeted * ($scope.bet.betOnTeam1 + $scope.bet.betOnTeam2);
-     $scope.user.currentBalance = $scope.user.balance - betAmount;
+     $scope.bet.amount = numFriendsBeted * 0.1; // Each friend worth 10 cents in bet!
    }
  }
 
- $scope.$watch('selectedFriends', $scope.recalcBalance);
- $scope.$watch('bet.betOnTeam1', $scope.recalcBalance);
- $scope.$watch('bet.betOnTeam2', $scope.recalcBalance);
+ $scope.$watch('selectedFriends.length', $scope.calcBetAmount);
  $scope.$watch('friendFilter', function(newVal) {
    // Complicated timeouts to make dom manipulation a bit smoother!!
    $scope.friendsToDisplay = [];
@@ -127,8 +124,9 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) 
      game: game,
      winner: winnerId,
      winRatio: $scope.calcWinRatio(spread),
-     betAmount: $scope.sampleBetAmount
+     amount:  0
    };
+   $scope.calcBetAmount();
  }
 
  /* Calculate win ratio from odds

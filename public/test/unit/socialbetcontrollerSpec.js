@@ -73,11 +73,9 @@ describe('SocialBetCtrl', function() {
 
   it('should have watchers', function() {
     var watchers = scope.$$watchers;
-    expect(watchers.length).toBe(5);
+    expect(watchers.length).toBe(3);
     expect(scope).toHaveWatcher('currentPage');
     expect(scope).toHaveWatcher('friendFilter');
-    expect(scope).toHaveWatcher('bet.betOnTeam2');
-    expect(scope).toHaveWatcher('bet.betOnTeam1');
     expect(scope).toHaveWatcher('selectedFriends');
   });
 
@@ -149,38 +147,9 @@ describe('SocialBetCtrl', function() {
 
     it('should init bet', function() {
       expect(scope.bet).toBeUndefined();
-      scope.initBet();
+      scope.initBet({}, 1);
       expect(scope.bet).toBeDefined()
     });
-  });
-
-
-  describe('SocialBetCtrl.recalcBalance', function() {
-    it('should be a function', function() {
-      expect(typeof scope.recalcBalance).toEqual('function');
-    });
-
-    // it('should calculate balance', function() {
-    //   scope.user.balance = scope.user.currentBalance = 100;
-    //   var mockGame = {};
-    //   scope.initBet(mockGame);
-    //   expect(scope.selectedFriends).toEqual([]);
-    //   expect(scope.bet.betOnTeam1).toBe(0);
-    //   expect(scope.bet.betOnTeam2).toBe(0);
-    //
-    //    scope.selectedFriends = [{}, {}];
-    //    scope.$digest();
-    //    expect(scope.user.currentBalance).toBe(100);
-    //
-    //    scope.bet.betOnTeam1 = 2;
-    //    scope.bet.betOnTeam2 = 1;
-    //    scope.$digest();
-    //    expect(scope.user.currentBalance).toBe(94);
-    //
-    //    scope.selectedFriends = [];
-    //    scope.$digest();
-    //    expect(scope.user.currentBalance).toBe(100);
-    // });
   });
 });
 
