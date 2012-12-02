@@ -1,152 +1,61 @@
 {
-  "success": true,
-  "balance": "8.6",
-  "activeBets": [
-    {
-      "initFBId": "1212",
-      "callFBId": "6668",
-      "betAmount": "123",
-      "type": "spread",
-      "gameId": "2",
-      "initTeamBet": "1",
-      "spreadTeam1": "100.3",
-      "spreadTeam2": "90",
-      "moneyDrawLine": "2",
-      "called": "false"
-    }
-  ],
-  "betInvites": [
-    {
-      "initFBId": "4",
-      "callFBId": "759868917",
-      "betAmount": "2312",
-      "type": "spread",
-      "gameId": "2",
-      "initTeamBet": "1",
-      "spreadTeam1": "100.3",
-      "spreadTeam2": "90",
-      "moneyDrawLine": "2",
-      "called": "false"
-    },
-    {
-      "initFBId": "737835647",
-      "callFBId": "759868917",
-      "betAmount": "111",
-      "type": "spread",
-      "gameId": "2",
-      "initTeamBet": "1",
-      "spreadTeam1": "100.3",
-      "spreadTeam2": "90",
-      "moneyDrawLine": "2",
-      "called": "false"
-    },
-    {
-      "initFBId": "4",
-      "callFBId": "759868917",
-      "betAmount": "2312",
-      "type": "spread",
-      "gameId": "2",
-      "initTeamBet": "1",
-      "spreadTeam1": "100.3",
-      "spreadTeam2": "90",
-      "moneyDrawLine": "2",
-      "called": "false"
-    },
-    {
-      "initFBId": "737835647",
-      "callFBId": "759868917",
-      "betAmount": "111",
-      "type": "spread",
-      "gameId": "2",
-      "initTeamBet": "1",
-      "spreadTeam1": "100.3",
-      "spreadTeam2": "90",
-      "moneyDrawLine": "2",
-      "called": "false"
-    },
-    {
-      "initFBId": "4",
-      "callFBId": "759868917",
-      "betAmount": "2312",
-      "type": "spread",
-      "gameId": "2",
-      "initTeamBet": "1",
-      "spreadTeam1": "100.3",
-      "spreadTeam2": "90",
-      "moneyDrawLine": "2",
-      "called": "false"
-    },
-    {
-      "initFBId": "737835647",
-      "callFBId": "759868917",
-      "betAmount": "111",
-      "type": "spread",
-      "gameId": "2",
-      "initTeamBet": "1",
-      "spreadTeam1": "100.3",
-      "spreadTeam2": "90",
-      "moneyDrawLine": "2",
-      "called": "false"
-    },
-    {
-      "initFBId": "4",
-      "callFBId": "759868917",
-      "betAmount": "2312",
-      "type": "spread",
-      "gameId": "2",
-      "initTeamBet": "1",
-      "spreadTeam1": "100.3",
-      "spreadTeam2": "90",
-      "moneyDrawLine": "2",
-      "called": "false"
-    },
-    {
-      "initFBId": "737835647",
-      "callFBId": "759868917",
-      "betAmount": "111",
-      "type": "spread",
-      "gameId": "2",
-      "initTeamBet": "1",
-      "spreadTeam1": "100.3",
-      "spreadTeam2": "90",
-      "moneyDrawLine": "2",
-      "called": "false"
-    },
-    {
-       "initFBId": "737835647",
-       "callFBId": "759868917",
-       "betAmount": "111",
-       "type": "spread",
-       "gameId": "2",
-       "initTeamBet": "1",
-       "spreadTeam1": "100.3",
-       "spreadTeam2": "90",
-       "moneyDrawLine": "2",
-       "called": "false"
-     },
-     {
-       "initFBId": "4",
-       "callFBId": "759868917",
-       "betAmount": "2312",
-       "type": "spread",
-       "gameId": "2",
-       "initTeamBet": "1",
-       "spreadTeam1": "100.3",
-       "spreadTeam2": "90",
-       "moneyDrawLine": "2",
-       "called": "false"
-     },
-     {
-       "initFBId": "737835647",
-       "callFBId": "759868917",
-       "betAmount": "111",
-       "type": "spread",
-       "gameId": "2",
-       "initTeamBet": "1",
-       "spreadTeam1": "100.3",
-       "spreadTeam2": "90",
-       "moneyDrawLine": "2",
-       "called": "false"
-     }
-  ]
+  "uid":"759868917",
+  "balance":"200",
+  "bets":{
+    "current":[
+      {
+        "initFBId": "1212",
+        "callFBId": "759868917",
+        "betAmount": "123",
+        "type": "spread",
+        "gameId": "2",
+        "initTeamBet": "1",
+        "spreadTeam1": "100.3",
+        "spreadTeam2": "90",
+        "moneyDrawLine": "2",
+        "called": "false"
+      }
+    ],
+    "past":[],
+    "pendingUserAccept":[
+      {
+        "initFBId": "4",
+        "callFBId": "759868917",
+        "betAmount": "2312",
+        "type": "spread",
+        "gameId": "2",
+        "initTeamBet": "1",
+        "spreadTeam1": "100.3",
+        "spreadTeam2": "90",
+        "moneyDrawLine": "2",
+        "called": "false"
+      },
+      {
+        "initFBId": "737835647",
+        "callFBId": "759868917",
+        "betAmount": "111",
+        "type": "spread",
+        "gameId": "2",
+        "initTeamBet": "1",
+        "spreadTeam1": "100.3",
+        "spreadTeam2": "90",
+        "moneyDrawLine": "2",
+        "called": "false"
+      }
+    ],
+    "pendingOtherAccept":[
+      {
+        "initFBId": "759868917",
+        "callFBId": "1124",
+        "betAmount": "2312",
+        "type": "spread",
+        "gameId": "2",
+        "initTeamBet": "1",
+        "spreadTeam1": "100.3",
+        "spreadTeam2": "90",
+        "moneyDrawLine": "2",
+        "called": "false"
+      }
+    ]
+  }
 }
