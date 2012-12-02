@@ -36,14 +36,14 @@ function User($q, $timeout, fb, $http) {
 
   // The User server url.
   var apiUrl = 'app/testData/User?';
-  var serverFields = ['activeBets', 'betInvites', 'balance'];
+  var serverFields = ['bets', 'balance'];
   // Query our user api for user data specific to our app.
   this.queryBackend = function($scope) {
     var deferred = $q.defer();
     var serviceScope = this;
     fb.getLoginStatus($scope).then(function(res) {
       $http.get(apiUrl + res.authResponse.signedRequest).success(function(data) {
-        if (data.success) {
+        if (!data.err) {
           serverFields.forEach(function(fieldName) {
             if (data[fieldName]) {
               serviceScope[fieldName] = data[fieldName];

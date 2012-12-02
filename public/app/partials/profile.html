@@ -16,19 +16,28 @@
           Active
         </a>
       </li>
-      <li ng-class="{active: currentTab == 'pending'}">
-        <a href ng-click="currentTab = 'pending'">Pending</a>
+      <li ng-class="{active: currentTab == 'invite'}">
+        <a href ng-click="currentTab = 'invite'">Bet Invites</a>
+      </li>
+      <li ng-class="{active: currentTab == 'outgoing'}">
+        <a href ng-click="currentTab = 'outgoing'">Pending Accept</a>
       </li>
       <li ng-class="{active: currentTab == 'past'}">
         <a href ng-click="currentTab = 'past'">Past</a>
       </li>
     </ul>
     <div class="tabContent">
-      <div ng-repeat="bet in user.activeBets"
+      <div ng-repeat="bet in user.bets.current"
           ng-include src="betTemplateUrl" ng-show="currentTab == 'active'">
       </div>
-      <div ng-repeat="bet in user.betInvites"
-          ng-include src="betTemplateUrl" ng-show="currentTab == 'pending'">
+      <div ng-repeat="bet in user.bets.pendingUserAccept"
+          ng-include src="betTemplateUrl" ng-show="currentTab == 'invite'">
+      </div>
+      <div ng-repeat="bet in user.bets.pendingOtherAccept"
+          ng-include src="betTemplateUrl" ng-show="currentTab == 'outgoing'">
+      </div>
+      <div ng-repeat="bet in user.bets.past"
+          ng-include src="betTemplateUrl" ng-show="currentTab == 'past'">
       </div>
     </div>
   </div>
