@@ -92,6 +92,10 @@ function FBSdk($q, $timeout) {
     throw new Error('FB is not available!');
   }
 
+  this.getAccessToken = function() {
+    return FB.getAccessToken();
+  }
+
   this.getLoginStatus = function(scope) {
     var deferred = $q.defer();
     // Force everythig to be async. Because FB calls callback syncrhonously
