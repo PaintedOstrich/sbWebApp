@@ -28,7 +28,9 @@
         "spreadTeam1": "100.3",
         "spreadTeam2": "90",
         "moneyDrawLine": "2",
-        "called": "false"
+        "called": "false",
+        "ended": "false",
+        "timeKey": "1353984488180"
       },
       {
         "initFBId": "737835647",
@@ -40,7 +42,9 @@
         "spreadTeam1": "100.3",
         "spreadTeam2": "90",
         "moneyDrawLine": "2",
-        "called": "false"
+        "called": "false",
+        "ended": "false",
+        "timeKey": "1353984488180"
       }
     ],
     "pendingOtherAccept":[
@@ -54,7 +58,9 @@
         "spreadTeam1": "100.3",
         "spreadTeam2": "90",
         "moneyDrawLine": "2",
-        "called": "false"
+        "called": "false",
+        "ended": "false",
+        "timeKey": "1443984488180"
       }
     ]
   }
