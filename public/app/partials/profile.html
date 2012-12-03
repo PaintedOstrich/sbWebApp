@@ -27,17 +27,31 @@
       </li>
     </ul>
     <div class="tabContent">
-      <div ng-repeat="bet in user.bets.current"
-          ng-include src="betTemplateUrl" ng-show="currentTab == 'active'">
+      <div class="currentBets" ng-show="currentTab == 'active'">
+        <div ng-repeat="bet in user.bets.current" ng-include src="betTemplateUrl"></div>
+        <div class="noBets" ng-show="user.bets.current.length==0">
+          There is no active bets.
+        </div>
       </div>
-      <div ng-repeat="bet in user.bets.pendingUserAccept"
-          ng-include src="betTemplateUrl" ng-show="currentTab == 'invite'">
+      <div class="pendingInvites" ng-show="currentTab == 'invite'">
+        <div ng-repeat="bet in user.bets.pendingUserAccept" 
+            ng-include src="betTemplateUrl"></div>
+        <div class="noBets" ng-show="user.bets.pendingUserAccept.length==0">
+          There is no pending invites.
+        </div>
       </div>
-      <div ng-repeat="bet in user.bets.pendingOtherAccept"
-          ng-include src="betTemplateUrl" ng-show="currentTab == 'outgoing'">
+      <div class="outgoingInvites" ng-show="currentTab == 'outgoing'">
+        <div ng-repeat="bet in user.bets.pendingOtherAccept"
+            ng-include src="betTemplateUrl"></div>
+        <div class="noBets" ng-show="user.bets.pendingOtherAccept.length==0">
+          There is no outgoing invites.
+        </div>
       </div>
-      <div ng-repeat="bet in user.bets.past"
-          ng-include src="betTemplateUrl" ng-show="currentTab == 'past'">
+      <div class="pastBets" ng-show="currentTab == 'past'">
+        <div ng-repeat="bet in user.bets.past" ng-include src="betTemplateUrl"></div>
+        <div class="noBets" ng-show="user.bets.past.length==0">
+          There is no past bets.
+        </div>
       </div>
     </div>
   </div>
