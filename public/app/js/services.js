@@ -4,28 +4,7 @@
 
 angular.module('services', ['ng', 'ngResource'])
     .service('fb', FBSdk)
-    .service('loadMask', LoadMask)
-    .service('betAPI', BetAPI);
-
-
-/**
- * A service to talk to bet API server.
- */
-function BetAPI($resource, $q) {
-  // The API server url.
-  this.url = 'http://sportsbetsservice.herokuapp.com/api/';
-
-  var Game = $resource(this.url + 'games/:gameType', {gameType: '@gameType'}, {});
-  this.loadGames = function(gameType) {
-    var deferred = $q.defer();
-    var games = Game.query({gameType: gameType}, function() {
-      deferred.resolve(games);
-    }, function() {
-      console.error('Failed to load games');
-    });
-    return deferred.promise;
-  }
-}
+    .service('loadMask', LoadMask);
 
 
 
