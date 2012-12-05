@@ -160,7 +160,21 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) 
  }
 
  $scope.postBet = function() {
-   console.log($scope.bet);
+   var bet = {
+     initFBId: currentUser.id,
+     // Assuming even distribution
+     betAmount: $scope.bet.amount / $scope.selectedFriends.length,
+     type: 'spread',
+     gameId: $scope.bet.game.gid,
+     initTeamBet: $scope.bet.winner,
+     spreadTeam1: $scope.bet.game.spreadTeam1,
+     spreadTeam2: $scope.bet.game.spreadTeam2
+   };
+   for (var i=0; i < $scope.selectedFriends.length; i++)
+   {
+     bet.callFBId = $scope.selectedFriends[i].id;
+     betAPI.placeBet(bet);
+   }
  }
 }
 SocialBetCtrl.$inject = ['$scope',  'fb', 'loadMask', 'betAPI', '$q', '$timeout', 'currentUser'];

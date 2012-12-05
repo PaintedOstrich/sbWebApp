@@ -41,7 +41,8 @@ describe('SocialBetCtrl', function() {
     };
 
     mockBetAPI = {
-      loadGames: jasmine.createSpy()
+      loadGames: jasmine.createSpy('loadGames'),
+      placeBet: jasmine.createSpy('placeBet')
     }
     mockFb = {
       api: jasmine.createSpy()
@@ -151,11 +152,53 @@ describe('SocialBetCtrl', function() {
       expect(scope.bet).toBeDefined()
     });
   });
-  
-  
+
+
   describe('SocialBetCtrl.postBet', function() {
     it('should be a function', function() {
       expect(scope.postBet).toBeFunction();
+    });
+
+    it('should convert bet into usable format', function() {
+      mockUser.id = '123';
+      scope.selectedFriends = [
+        {id: '1'}
+      ]
+      // The bet object stored in social bet controller.
+      scope.bet = {
+        amount: 0.1,
+        game: {
+          gdate: "2012-12-02 13:00:00",
+          gid: "11",
+          header: "Indianapolis Colts At Detroit Lions",
+          sport: "NFL",
+          spreadTeam1: "-105",
+          spreadTeam2: "-115",
+          team1Id: "17",
+          team1Name: "Indianapolis Colts",
+          team2Id: "18",
+          team2Name: "Detroit Lions",
+          wagerCutoff: "2012-12-02 12:55:00"
+        },
+        winRatio: 0.8695652173913043,
+        winner: "18",
+        winnerName: "Detroit Lions"
+      }
+
+      // The format to be sent to the server for real.
+      var apiBetFormat = {
+        initFBId: '123',
+        callFBId: '1',
+        betAmount: 0.1,
+        type:'spread',
+        gameId: '11',
+        initTeamBet: '18', // this is the teamId of the team the user wants to bet on
+        spreadTeam1: "-105",
+        spreadTeam2: "-115"
+      }
+
+      scope.postBet();
+      expect(mockBetAPI.placeBet).toHaveBeenCalledWith(apiBetFormat);
     });
   });
 });

@@ -24,6 +24,10 @@ function BetAPI($resource, $q) {
     });
     return deferred.promise;
   }
+
+  this.placeBet = function(bet) {
+
+  }
 }
 
 /**

@@ -24,6 +24,32 @@ describe('serverApi', function() {
       });
   });
 
+  describe('BetAPI', function() {
+    var api;
+
+    beforeEach(inject(function(betAPI, $injector) {
+      api = betAPI;
+    }));
+
+    it('should exist', function() {
+      expect(api).toBeDefined();
+    });
+
+
+    describe('BetAPI.loadGames', function() {
+      it('should be function', function() {
+        expect(api.loadGames).toBeFunction();
+      });
+    });
+
+
+    describe('BetAPI.placeBet', function() {
+      it('should be function', function() {
+        expect(api.placeBet).toBeFunction();
+      });
+    });
+  });
+
   describe('currentUser singleton', function() {
     var user, $mockHttp;
     beforeEach(inject(function(currentUser, $injector) {
