@@ -158,5 +158,9 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) 
      $scope.selectedFriends.push(friend);
    }
  }
+
+ $scope.postBet = function() {
+   console.log($scope.bet);
+ }
 }
 SocialBetCtrl.$inject = ['$scope',  'fb', 'loadMask', 'betAPI', '$q', '$timeout', 'currentUser'];

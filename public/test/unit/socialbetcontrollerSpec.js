@@ -151,5 +151,12 @@ describe('SocialBetCtrl', function() {
       expect(scope.bet).toBeDefined()
     });
   });
+  
+  
+  describe('SocialBetCtrl.postBet', function() {
+    it('should be a function', function() {
+      expect(scope.postBet).toBeFunction();
+    });
+  });
 });
 
