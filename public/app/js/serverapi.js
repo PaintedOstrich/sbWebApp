@@ -10,7 +10,7 @@ angular.module('serverApi', ['ng', 'ngResource', 'services'])
 /**
  * A service to talk to bet API server.
  */
-function BetAPI($resource, $q) {
+function BetAPI($resource, $q, $http) {
   // The API server url.
   this.url = 'http://sportsbetsservice.herokuapp.com/api/';
 
@@ -26,7 +26,7 @@ function BetAPI($resource, $q) {
   }
 
   this.placeBet = function(bet) {
-
+    $http.post(this.url + 'bet', bet).success(function(res) {console.log(res)});
   }
 }
 
