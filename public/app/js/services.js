@@ -13,9 +13,9 @@ angular.module('services', ['ng', 'ngResource'])
  */
 function BetAPI($resource, $q) {
   // The API server url.
-  this.url = 'http://sportsbetsservice.herokuapp.com/api/games'
+  this.url = 'http://sportsbetsservice.herokuapp.com/api/';
 
-  var Game = $resource(this.url + '/:gameType', {gameType: '@gameType'}, {});
+  var Game = $resource(this.url + 'games/:gameType', {gameType: '@gameType'}, {});
   this.loadGames = function(gameType) {
     var deferred = $q.defer();
     var games = Game.query({gameType: gameType}, function() {
