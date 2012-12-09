@@ -131,5 +131,65 @@ describe('SportsBet controllers', function() {
       expect(scope.loadUser).toBeFunction();
       expect(scope.loadBetInfo).toBeFunction();
     });
+
+
+    describe('ProfileCtrl.loadBetFailed', function() {
+      it('should be a function', function() {
+        expect(scope.loadBetFailed).toBeFunction();
+      });
+    });
+
+
+    describe('ProfileCtrl.checkInitActions', function() {
+      afterEach(function () {
+        window.$ = undefined;
+      });
+
+      it('should be a function', function() {
+        expect(scope.checkInitActions).toBeFunction();
+      });
+
+      it('should obtain data from dom', function() {
+        expect(window.$).toBeUndefined();
+
+        var data = '/?showBet=123'
+        var fakeDom = {
+          attr: function() {return data;}
+        }
+        window.$ = jasmine.createSpy().andReturn(fakeDom);
+        spyOn(scope, 'parseInitData').andReturn([]);
+        scope.checkInitActions();
+        expect(scope.parseInitData).toHaveBeenCalledWith(data);
+      });
+
+
+      describe('ProfileCtrl.parseInitData', function() {
+        it('should parse data and return an array', function() {
+          var data = '/?showBet=123';
+          var arr = scope.parseInitData(data);
+          expect(arr.length).toBe(1);
+          expect(arr[0]).toEqual('123');
+
+          data = '/?showBet=23,45';
+          arr = scope.parseInitData(data);
+          expect(arr.length).toBe(2);
+          expect(arr[1]).toEqual('45');
+        });
+
+        it('should return nothin if no real data passed in', function() {
+          var data = '/';
+          var arr = scope.parseInitData(data);
+          expect(arr.length).toBe(0);
+
+          data = '/?bogus=abc';
+          arr = scope.parseInitData(data);
+          expect(arr.length).toBe(0);
+
+          data = '/?bogus-abc';
+          arr = scope.parseInitData(data);
+          expect(arr.length).toBe(0);
+        });
+      });
+    });
   });
 });

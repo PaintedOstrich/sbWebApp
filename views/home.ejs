@@ -7,6 +7,12 @@
   <link rel="stylesheet" href="app/lib/bootstrap/bootstrap.css">
 </head>
 <body ng-controller="MainCtrl">
+  <!-- This invisible span will convey initial data such as
+  opening bet invites if user arrives at our app by clicking an 
+  invite link -->
+  <span id="initialData"style="display:none;" 
+      data="<%= req.url %>"></span>
+
   <div class="navbar navbar-inverse">
     <div class="navbar-inner">
       <div class="container">

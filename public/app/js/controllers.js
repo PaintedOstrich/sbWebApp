@@ -76,7 +76,6 @@ LandingCtrl.$inject = ['$scope', '$location', 'fb'];
 // Controller for user profile screen
 function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q) {
   $scope.$parent.showInfoBackground = true;
-
   $scope.currentTab = 'active';
   $scope.betTemplateUrl = 'app/partials/profile/bet.html';
 
@@ -118,17 +117,48 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q) {
         promises.push(promise);
       });
     }
+    return $q.all(promises);
+  }
 
-    // Hide loadMask no matter what;
-    $q.all(promises).then(function(resArr) {
-      loadMask.hide();
-    }, function() {
-      loadMask.hide();
-    });
+  // Invoked when loadBetInfo failed in some way
+  $scope.loadBetFailed = function() {
+    loadMask.hide();
+  }
+
+  // After bets are loaded, we check to see if there is any initial
+  // bet invites we need to show up for the user to confirm (this
+  // happens when user arrives to our app by clicking on an invite)
+  $scope.checkInitActions = function() {
+    loadMask.hide();
+    var data = $('#initialData').attr('data');
+    if (data) {
+      var betsToShow = $scope.parseInitData(data);
+      if (betsToShow.length > 0) {
+        $scope.$emit('showMultipleBets', betsToShow); 
+      }
+    }
+  }
+
+  // Helper method to parse initial data passed in from url
+  $scope.parseInitData = function(dataStr) {
+    var toR = [];
+    var chunks = dataStr.split('?');
+    if (chunks.length < 2) return toR;
+
+    chunks = chunks[1].split('=');
+    if (chunks.length < 2) return toR;
+
+    var fieldName = chunks[0];
+    if (fieldName != 'showBet') return toR;
+
+    var betIds = chunks[1].split(',');
+    return betIds;
   }
 
   loadMask.show({text: 'Loading User Profile...'});
-  $scope.loadUser().then($scope.loadBetInfo);
+  $scope.loadUser().
+      then($scope.loadBetInfo).
+      then($scope.checkInitActions, $scope.loadBetFailed);
 
   // fire bet invite clicked event to parent
   $scope.betInviteClicked = function(bet) {
