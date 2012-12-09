@@ -10,6 +10,10 @@ function MainCtrl($scope, currentUser, $location) {
     $scope.$broadcast('showBetInvite', bet);
   });
 
+  $scope.$on('showMultipleBets', function(e, betArr) {
+    $scope.$broadcast('showBetInvite', betArr);
+  });
+
   // Show profile page after the user name on nav bar is clicked
   $scope.showProfile = function() {
     $location.path('/profile');

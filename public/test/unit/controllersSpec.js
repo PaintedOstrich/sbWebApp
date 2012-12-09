@@ -39,9 +39,15 @@ describe('SportsBet controllers', function() {
   describe('MainCtrl', function() {
     var scope, ctrl;
     beforeEach(inject(function($rootScope, $controller) {
+      var mockUser = {}
       scope = $rootScope.$new();
-      ctrl = $controller(MainCtrl, {$scope: scope});
+      ctrl = $controller(MainCtrl, {$scope: scope, currentUser: mockUser});
     }));
+
+    it('should have the right number of listeners', function() {
+      expect(scope.$$listeners.betInviteCliked).toBeDefined();
+      expect(scope.$$listeners.showMultipleBets).toBeDefined();
+    });
   });
 
   describe('LandingCtrl', function() {
