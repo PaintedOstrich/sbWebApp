@@ -152,7 +152,19 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q) {
     if (data) {
       var betsToShow = $scope.parseInitData(data);
       if (betsToShow.length > 0) {
-        $scope.$emit('showMultipleBets', betsToShow);
+        var bets = [];
+        betsToShow.forEach(function(betId) {
+          for (var i = 0; i <  $scope.user.betInvites.length; i++) {
+            var betInvite = $scope.user.betInvites[i];
+            if (betId == betInvite.betId) {
+              bets.push(betInvite);
+              break;
+            }
+          }
+        });
+        if (bets.length > 0) {
+          $scope.$emit('showMultipleBets', bets);
+        }
       }
     }
   }

@@ -4,6 +4,7 @@
   "bets":{
     "current":[
       {
+        "betId": "123",
         "initFBId": "1212",
         "callFBId": "759868917",
         "betAmount": "123",
@@ -19,6 +20,7 @@
     "past":[],
     "pendingUserAccept":[
       {
+        "betId": "234",
         "initFBId": "4",
         "callFBId": "759868917",
         "betAmount": "2312",
@@ -33,6 +35,7 @@
         "timeKey": "1353984488180"
       },
       {
+        "betId": "567",
         "initFBId": "737835647",
         "callFBId": "759868917",
         "betAmount": "111",
@@ -49,6 +52,7 @@
     ],
     "pendingOtherAccept":[
       {
+        "betId": "897",
         "initFBId": "759868917",
         "callFBId": "1124",
         "betAmount": "2312",

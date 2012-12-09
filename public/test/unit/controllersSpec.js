@@ -65,7 +65,7 @@ describe('SportsBet controllers', function() {
     it('should have the right number of listeners', function() {
       expect(scope.$$listeners.showBetInvite).toBeDefined();
     });
-    
+
     it('should invoke different methods depending on the type of params passed in', function() {
       spyOn(scope, 'showBet');
       spyOn(scope, 'showMultipleBets');
@@ -191,6 +191,36 @@ describe('SportsBet controllers', function() {
         spyOn(scope, 'parseInitData').andReturn([]);
         scope.checkInitActions();
         expect(scope.parseInitData).toHaveBeenCalledWith(data);
+      });
+
+      it('should emit the right event with data', function() {
+        expect(window.$).toBeUndefined();
+        var bet = { betId: '123' };
+        scope.user = {
+          betInvites: [bet]
+        }
+        var fakeDom = {
+          attr: function() {return '/?showBet=123,noSuchBet'}
+        }
+        window.$ = jasmine.createSpy().andReturn(fakeDom);
+        spyOn(scope, 'parseInitData').andReturn(['123', 'noSuchBet']);
+        spyOn(scope, '$emit');
+        scope.checkInitActions();
+        expect(scope.$emit).toHaveBeenCalledWith('showMultipleBets', [bet]);
+      });
+
+      it('should emit no event if data is not correct', function() {
+        scope.user = {
+          betInvites: []
+        }
+        var fakeDom = {
+          attr: function() {return '/?showBet=123,noSuchBet'}
+        }
+        window.$ = jasmine.createSpy().andReturn(fakeDom);
+        spyOn(scope, 'parseInitData').andReturn(['123', 'noSuchBet']);
+        spyOn(scope, '$emit');
+        scope.checkInitActions();
+        expect(scope.$emit).not.toHaveBeenCalled();
       });
 
 
