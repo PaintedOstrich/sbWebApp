@@ -43,7 +43,8 @@ function BetInviteCtrl($scope) {
 
   // Show multiple bets, one after another
   $scope.showMultipleBets = function(betArr) {
-
+    $scope.modalShown = true;
+    $scope.betInvite = betArr[0];
   }
 
   $scope.acceptBet = function() {
