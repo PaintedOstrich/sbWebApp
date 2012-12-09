@@ -122,20 +122,26 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q) {
   // We need to load user name for each user that initiates the bet from facebook.
   $scope.loadBetInfo = function() {
     var promises = [];
-    if ($scope.user.activeBets) {
-      $scope.user.activeBets.forEach(function(bet) {
-        var promise = fb.api($scope, bet.initFBId + '?fields=name').
-            then(function(res) {bet.initFBName = res.name});
-        promises.push(promise);
-      });
-    }
-    if ($scope.user.betInvites) {
-      $scope.user.betInvites.forEach(function(bet) {
-        var promise = fb.api($scope, bet.initFBId + '?fields=name').
-            then(function(res) {bet.initFBName = res.name});
-        promises.push(promise);
-      });
-    }
+    var allBets = [];
+
+     $scope.user.bets.current.forEach(function(bet) {
+       allBets.push(bet);
+     });
+     $scope.user.bets.past.forEach(function(bet) {
+       allBets.push(bet);
+     });
+     $scope.user.bets.pendingUserAccept.forEach(function(bet) {
+       allBets.push(bet);
+     });
+     $scope.user.bets.pendingOtherAccept.forEach(function(bet) {
+       allBets.push(bet);
+     });
+
+     allBets.forEach(function(bet) {
+       var promise = fb.api($scope, bet.initFBId + '?fields=name').
+           then(function(res) {bet.initFBName = res.name});
+       promises.push(promise);
+     });
     return $q.all(promises);
   }
 
