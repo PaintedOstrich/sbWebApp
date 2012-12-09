@@ -28,9 +28,23 @@ MainCtrl.$inject = ['$scope', 'currentUser', '$location'];
 // A sort of widget controllers for bet info widget popup
 function BetInviteCtrl($scope) {
   $scope.$on('showBetInvite', function(e, bet) {
+    if (bet instanceof Array) {
+      $scope.showMultipleBets(bet);
+    } else {
+      $scope.showBet(bet);
+    }
+  });
+
+  // show a single bet
+  $scope.showBet = function(bet) {
     $scope.modalShown = true;
     $scope.betInvite = bet;
-  });
+  }
+
+  // Show multiple bets, one after another
+  $scope.showMultipleBets = function(betArr) {
+
+  }
 
   $scope.acceptBet = function() {
     $scope.modalShown = false;
@@ -138,7 +152,7 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q) {
     if (data) {
       var betsToShow = $scope.parseInitData(data);
       if (betsToShow.length > 0) {
-        $scope.$emit('showMultipleBets', betsToShow); 
+        $scope.$emit('showMultipleBets', betsToShow);
       }
     }
   }

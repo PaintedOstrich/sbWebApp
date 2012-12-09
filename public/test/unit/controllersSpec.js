@@ -50,6 +50,31 @@ describe('SportsBet controllers', function() {
     });
   });
 
+
+  describe('BetInviteCtrl', function() {
+    var rootScope, scope, ctrl, mockLocation;
+
+    beforeEach(inject(function($rootScope, $controller) {
+      rootScope = $rootScope.$new();
+      var mockUser = {}
+      var mainCtrl = $controller(MainCtrl, {$scope: rootScope, currentUser: mockUser});
+      scope = rootScope.$new();
+      ctrl = $controller(BetInviteCtrl, {$scope: scope});
+    }));
+
+    it('should have the right number of listeners', function() {
+      expect(scope.$$listeners.showBetInvite).toBeDefined();
+    });
+    
+    it('should invoke different methods depending on the type of params passed in', function() {
+      spyOn(scope, 'showBet');
+      spyOn(scope, 'showMultipleBets');
+      rootScope.$broadcast('showBetInvite', {});
+      expect(scope.showBet).toHaveBeenCalled();
+      expect(scope.showMultipleBets).not.toHaveBeenCalled();
+    });
+  });
+
   describe('LandingCtrl', function() {
     var scope, ctrl, mockLocation;
 
