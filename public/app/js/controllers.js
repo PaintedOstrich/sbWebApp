@@ -155,14 +155,15 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q) {
   // happens when user arrives to our app by clicking on an invite)
   $scope.checkInitActions = function() {
     loadMask.hide();
-    var data = $('#initialData').attr('data');
-    if (data) {
+    var dom = $('#initialData');
+    var data = dom.attr('data');
+    if (dom.length > 0 && data) {
       var betsToShow = $scope.parseInitData(data);
       if (betsToShow.length > 0) {
         var bets = [];
         betsToShow.forEach(function(betId) {
-          for (var i = 0; i <  $scope.user.betInvites.length; i++) {
-            var betInvite = $scope.user.betInvites[i];
+          for (var i = 0; i <  $scope.user.bets.pendingUserAccept.length; i++) {
+            var betInvite = $scope.user.bets.pendingUserAccept[i];
             if (betId == betInvite.betId) {
               bets.push(betInvite);
               break;
@@ -174,6 +175,8 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q) {
         }
       }
     }
+    //Remember to remove it so it does not pop uo again.
+    dom.remove();
   }
 
   // Helper method to parse initial data passed in from url
