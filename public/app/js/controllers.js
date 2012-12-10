@@ -26,7 +26,10 @@ function MainCtrl($scope, currentUser, $location) {
 MainCtrl.$inject = ['$scope', 'currentUser', '$location'];
 
 // A sort of widget controllers for bet info widget popup
-function BetInviteCtrl($scope) {
+function BetInviteCtrl($scope, $timeout) {
+  // A queue of bets to be shown one after another.
+  $scope.betQueue = [];
+
   $scope.$on('showBetInvite', function(e, bet) {
     if (bet instanceof Array) {
       $scope.showMultipleBets(bet);
@@ -38,26 +41,43 @@ function BetInviteCtrl($scope) {
   // show a single bet
   $scope.showBet = function(bet) {
     $scope.modalShown = true;
-    $scope.betInvite = bet;
+    $scope.focusedBet = bet;
   }
 
   // Show multiple bets, one after another
   $scope.showMultipleBets = function(betArr) {
-    $scope.modalShown = true;
-    $scope.betInvite = betArr[0];
+    $scope.betQueue = betArr;
+    $scope.checkNextInQueue();
   }
 
   $scope.acceptBet = function() {
-    $scope.modalShown = false;
+    $scope.closeModal();
     console.log("TODO! implement accept bet logic!!");
   }
 
   $scope.declineBet = function() {
-    $scope.modalShown = false;
     console.log("TODO! implement decline bet logic!!");
+    $scope.closeModal();
+  }
+  
+  // We need better way to close modal without taking away the mask
+  // for better chained invite confirmation effect!!!!
+  $scope.closeModal = function() {
+    $scope.modalShown = false;
+    $timeout($scope.checkNextInQueue, 1000);
+  }
+
+  // Show next bet in betQueue if there is any.
+  $scope.checkNextInQueue = function() {
+      if ($scope.betQueue.length > 0) {
+        var nextBet = $scope.betQueue[0];
+        $scope.betQueue.splice(0, 1);
+        $scope.modalShown = true;
+        $scope.focusedBet = nextBet;
+      }
   }
 }
-BetInviteCtrl.$inject = ['$scope'];
+BetInviteCtrl.$inject = ['$scope', '$timeout'];
 // ---------- End of widget controllers ------------------------
 
 // The very first controller to be reached that routes traffic to
@@ -191,7 +211,7 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q) {
     var fieldName = chunks[0];
     if (fieldName != 'showBet') return toR;
 
-    var betIds = chunks[1].split(',');
+    var betIds = chunks[1].split('%2C');
     return betIds;
   }
 

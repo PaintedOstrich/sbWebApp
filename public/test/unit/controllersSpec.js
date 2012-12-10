@@ -198,10 +198,11 @@ describe('SportsBet controllers', function() {
 
       it('should emit the right event with data', function() {
         expect(window.$).toBeUndefined();
-        var bet = { betId: '123' };
+        var bet1 = { betId: '123' };
+        var bet2 = { betId: '456' };
         scope.user = {
           bets: {
-            pendingUserAccept: [bet]
+            pendingUserAccept: [bet1, bet2]
           }
         }
         var fakeDom = {
@@ -210,10 +211,10 @@ describe('SportsBet controllers', function() {
           remove: jasmine.createSpy('remove')
         }
         window.$ = jasmine.createSpy().andReturn(fakeDom);
-        spyOn(scope, 'parseInitData').andReturn(['123', 'noSuchBet']);
+        spyOn(scope, 'parseInitData').andReturn(['123', '456', 'noSuchBet']);
         spyOn(scope, '$emit');
         scope.checkInitActions();
-        expect(scope.$emit).toHaveBeenCalledWith('showMultipleBets', [bet]);
+        expect(scope.$emit).toHaveBeenCalledWith('showMultipleBets', [bet1, bet2]);
       });
 
       it('should emit no event if data is not correct', function() {
@@ -242,7 +243,7 @@ describe('SportsBet controllers', function() {
           expect(arr.length).toBe(1);
           expect(arr[0]).toEqual('123');
 
-          data = '/?showBet=23,45';
+          data = '/?showBet=23%2C45';
           arr = scope.parseInitData(data);
           expect(arr.length).toBe(2);
           expect(arr[1]).toEqual('45');
