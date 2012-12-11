@@ -159,6 +159,21 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) 
    }
  }
 
+ // Show an advertisement for the user to watch.
+ $scope.watchAd = function() {
+
+ }
+
+ // Invoked when the place bet button is clicked by user.
+ $scope.betBtnClicked = function() {
+   if ($scope.bet.amount > currentUser.balance) {
+     $scope.watchAd();
+   } else {
+     console.log('should post bet??');
+   }
+ }
+
+ // Post bets to the server
  $scope.postBet = function() {
    var bet = {
      initFBId: currentUser.id,

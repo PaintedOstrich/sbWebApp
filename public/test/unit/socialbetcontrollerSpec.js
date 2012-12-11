@@ -154,6 +154,32 @@ describe('SocialBetCtrl', function() {
   });
 
 
+  describe('SocialBetCtrl.watchAd', function() {
+    it('should be a function', function() {
+      expect(scope.watchAd).toBeFunction();
+    });
+  });
+
+
+  describe('SocialBetCtrl.betBtnClicked', function() {
+    it('should be a function', function() {
+      expect(scope.betBtnClicked).toBeFunction();
+    });
+
+    it('should make user watch an ad if not sufficient fund', function() {
+      mockUser.balance = 0;
+      scope.bet = {amount: 10};
+      spyOn(scope, 'watchAd');
+      scope.betBtnClicked();
+      expect(scope.watchAd).toHaveBeenCalled();
+    });
+
+    it('should post bet right away if user have sufficient fund', function() {
+
+    });
+  });
+
+
   describe('SocialBetCtrl.postBet', function() {
     it('should be a function', function() {
       expect(scope.postBet).toBeFunction();
