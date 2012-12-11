@@ -1,5 +1,5 @@
 // Controller for social bet screen
-function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) {
+function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, videoAd) {
   $scope.$parent.showInfoBackground = true;
   // ------------------- Controller variables ----------------
   // Friends selected to place bet on.
@@ -162,6 +162,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) 
  // Show an advertisement for the user to watch.
  $scope.watchAd = function() {
    loadMask.show({hideSpinner: true});
+   videoAd.showAd();
  }
 
  // Invoked when the place bet button is clicked by user.
@@ -192,4 +193,4 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) 
    }
  }
 }
-SocialBetCtrl.$inject = ['$scope',  'fb', 'loadMask', 'betAPI', '$q', '$timeout', 'currentUser'];
+SocialBetCtrl.$inject = ['$scope',  'fb', 'loadMask', 'betAPI', '$q', '$timeout', 'currentUser', 'videoAd'];

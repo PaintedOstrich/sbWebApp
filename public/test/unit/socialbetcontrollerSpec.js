@@ -1,5 +1,5 @@
 describe('SocialBetCtrl', function() {
-  var scope, ctrl, mockFb, mockLoadMask, mockQ, mockUser;
+  var scope, ctrl, mockFb, mockLoadMask, mockQ, mockUser, mockVideoAd;
 
   beforeEach(function() {
       this.addMatchers({
@@ -53,6 +53,9 @@ describe('SocialBetCtrl', function() {
     mockUser = {
       isLoaded: jasmine.createSpy().andReturn(true)
     };
+    mockVideoAd = {
+      showAd: jasmine.createSpy('showAd')
+    };
     scope = $rootScope.$new();
 
     var mainScope = $rootScope.$new();
@@ -60,7 +63,9 @@ describe('SocialBetCtrl', function() {
     scope = mainScope.$new();
     ctrl = $controller(SocialBetCtrl,
         {$scope: scope, fb: mockFb, loadMask: mockLoadMask,
-          betAPI: mockBetAPI, $q: mockQ, $timeout: undefined, currentUser: mockUser});
+          betAPI: mockBetAPI, $q: mockQ,
+          $timeout: undefined, currentUser: mockUser,
+          videoAd: mockVideoAd});
   }));
 
   it('should set showInfoBackground to true on parent', function() {
@@ -157,6 +162,12 @@ describe('SocialBetCtrl', function() {
   describe('SocialBetCtrl.watchAd', function() {
     it('should be a function', function() {
       expect(scope.watchAd).toBeFunction();
+    });
+
+    it('should show mask and invoke videoAd.showAd', function() {
+      scope.watchAd();
+      expect(mockVideoAd.showAd).toHaveBeenCalled();
+      expect(mockLoadMask.show).toHaveBeenCalled();
     });
   });
 

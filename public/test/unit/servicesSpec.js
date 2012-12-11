@@ -19,4 +19,16 @@ describe('services', function() {
           }
       });
   });
+
+  describe('VideoAd', function() {
+    var videoAdService;
+
+    beforeEach(inject(function(videoAd, $injector) {
+      videoAdService = videoAd;
+    }));
+
+    it('should be defined', function() {
+      expect(videoAdService).toBeDefined();
+    });
+  });
 });

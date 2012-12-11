@@ -4,9 +4,27 @@
 
 angular.module('services', ['ng', 'ngResource'])
     .service('fb', FBSdk)
-    .service('loadMask', LoadMask);
+    .service('loadMask', LoadMask)
+    .service('videoAd', VideoAd)
 
-
+/**
+  * Control showing and hiding video advertisments.
+  */
+function VideoAd() {
+  /** Show an advertisement based on the options passed in.
+      If the delegate has appropriate methods defined, invoke
+      these methods to let the deleagte know about certain key 
+      status.
+      
+      example:
+        opt: {
+          delegate: theDelegateObj
+        }
+    */
+  this.showAd = function(opt) {
+    console.log('showAd called');
+  }
+}
 
 /**
  * A load mask singleton class that is used to show and hide a loading mask
