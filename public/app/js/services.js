@@ -9,20 +9,73 @@ angular.module('services', ['ng', 'ngResource'])
 
 /**
   * Control showing and hiding video advertisments.
+  * We are using iframe player from Youtube, the documentation is:
+  *   https://developers.google.com/youtube/iframe_api_reference
+  *
   */
 function VideoAd() {
+  function onYouTubeIframeAPIReady() {
+         this.player = new YT.Player('player', {
+           height: '390',
+           width: '640',
+           videoId: 'J6iqNTc6G6g',
+           playerVars: {
+             controls: 0,
+             showinfo: 0,
+             // Does not show Youtube logo
+             modestbranding: 1,
+             // disable the player keyboard controls
+             disablekb: 1
+           },
+           events: {
+             'onReady': angular.bind(this, this.onPlayerReady),
+             'onStateChange': angular.bind(this, this.onPlayerStateChange)
+           }
+         });
+       }
+
   /** Show an advertisement based on the options passed in.
       If the delegate has appropriate methods defined, invoke
-      these methods to let the deleagte know about certain key 
+      these methods to let the deleagte know about certain key
       status.
-      
+
       example:
         opt: {
           delegate: theDelegateObj
         }
     */
   this.showAd = function(opt) {
-    console.log('showAd called');
+    // 2. This code loads the IFrame Player API code asynchronously.
+    var tag = document.createElement('script');
+    tag.src = "//www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    window.onYouTubeIframeAPIReady = angular.bind(this, onYouTubeIframeAPIReady);
+    if (opt && opt.delegate) {
+      this.currentDelegate = opt.delegate;
+    }
+  }
+
+  this.onPlayerReady = function(event) {
+    event.target.playVideo();
+  }
+
+  // 5. The API calls this function when the player's state changes.
+  //    The function indicates that when playing a video (state=1),
+  //    the player should play for six seconds and then stop.
+  var done = false;
+  this.onPlayerStateChange = function(event) {
+    if (event.data == YT.PlayerState.ENDED) {
+      event.target.clearVideo();
+      event.target.destroy();
+      var delegate = this.currentDelegate;
+      if (delegate) {
+        if (typeof delegate.adEnded == 'function') {
+          delegate.adEnded();
+        }
+        this.currentDelegate = undefined;
+      }
+    }
   }
 }
 

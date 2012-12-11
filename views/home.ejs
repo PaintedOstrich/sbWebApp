@@ -8,10 +8,13 @@
 </head>
 <body ng-controller="MainCtrl">
   <!-- This invisible span will convey initial data such as
-  opening bet invites if user arrives at our app by clicking an 
+  opening bet invites if user arrives at our app by clicking an
   invite link -->
-  <span id="initialData"style="display:none;" 
+  <span id="initialData"style="display:none;"
       data="<%= req.url %>"></span>
+
+  <!-- The div youtube uses to embed and show iframe -->
+  <div id="player" class="youtubePlayer"></div>
 
   <div class="navbar navbar-inverse">
     <div class="navbar-inner">
