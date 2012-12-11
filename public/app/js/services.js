@@ -21,16 +21,20 @@ function LoadMask($timeout) {
     top: '40%'
   };
 
-  // Creating a spinner component with default configurations.
-  this.createMaskEl = function() {
-    var dom = '<div class="loadMask">' +
-                '<div class="backDrop"></div>' +
-                '<div class="spinnerBg"></div>' +
-                '<div class="innerMask">' +
-                  '<div class="text">Loading...</div>' +
-                '</div>' +
-              '</div>';
+  this.domStrSpinner =     '<div class="loadMask">' +
+                              '<div class="backDrop"></div>' +
+                              '<div class="spinnerBg"></div>' +
+                              '<div class="innerMask">' +
+                                '<div class="text">Loading...</div>' +
+                              '</div>' +
+                            '</div>';
 
+  this.domStr = '<div class="loadMask">' +
+                   '<div class="backDrop"></div>' +
+                 '</div>';
+
+  // Creating a spinner component with default configurations.
+  this.createMaskEl = function(dom) {
    var el = $(dom);
    var innerMask = el.children('.innerMask');
 
@@ -42,9 +46,16 @@ function LoadMask($timeout) {
     return el;
   }
 
+  /**
+      opt: {
+        text: 'text to be shown under spinner'
+        hideSpinner: true // whether or not to hide spinner.
+      }
+    */
   this.show = function(opt) {
-    maskEl = this.createMaskEl();
     if (opt) {
+      var domStr = opt.hideSpinner ? this.domStr : this.domStrSpinner
+      maskEl = this.createMaskEl(domStr);
       if (opt.text) {
         maskEl.find('.text').html(opt.text);
       }

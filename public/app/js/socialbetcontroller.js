@@ -161,7 +161,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) 
 
  // Show an advertisement for the user to watch.
  $scope.watchAd = function() {
-
+   loadMask.show({hideSpinner: true});
  }
 
  // Invoked when the place bet button is clicked by user.
