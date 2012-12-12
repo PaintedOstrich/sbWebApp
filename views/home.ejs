@@ -22,9 +22,9 @@
     <div class="navbar-inner">
       <div class="container">
         <img class="logo" src="app/img/logo.png" ng-click="showProfile()">
-        <div class="username ng-cloak" ng-cloak ng-click="showProfile()">
+        <a class="username ng-cloak" ng-cloak ng-click="showProfile()">
           {{user.name}}
-        </div>
+        </a>
         <button class="btn btn-danger betBtn"
             ng-click="newBet()">
           Make a bet
