@@ -13,12 +13,12 @@
             </div>
             <div class="teamBlock">
               <div class="team">
-                <img ng-src="app/img/helmets/{{game.team1Name.split(' ').join('')}}1.png" 
+                <img ng-src="app/img/helmets/{{game.team1Name.split(' ').join('').toLowerCase()}}1.png" 
                     class="teamLogo">
                 {{game.team1Name}}
               </div>
               <div class="team">
-                <img ng-src="app/img/helmets/{{game.team2Name.split(' ').join('')}}2.png" 
+                <img ng-src="app/img/helmets/{{game.team2Name.split(' ').join('').toLowerCase()}}2.png" 
                     class="teamLogo">
                 {{game.team2Name}}
               </div>
@@ -55,14 +55,14 @@
         <div class="teamBlock"
             ng-class="{'highlight': bet.winner==bet.game.team1Id}"
             ng-click="initBet(bet.game, bet.game.team1Id)">
-          <img ng-src="app/img/helmets/{{bet.game.team1Name.split(' ').join('')}}1.png" 
+          <img ng-src="app/img/helmets/{{bet.game.team1Name.split(' ').join('').toLowerCase()}}1.png" 
               class="teamLogo">
           <div>{{bet.game.spreadTeam1}}</div>
         </div>
         <div class="teamBlock"
             ng-class="{'highlight': bet.winner==bet.game.team2Id}"
             ng-click="initBet(bet.game, bet.game.team2Id)">
-          <img ng-src="app/img/helmets/{{bet.game.team2Name.split(' ').join('')}}2.png" 
+          <img ng-src="app/img/helmets/{{bet.game.team2Name.split(' ').join('').toLowerCase()}}2.png" 
               class="teamLogo">
           <div>{{bet.game.spreadTeam2}}</div>
         </div>
