@@ -25,11 +25,17 @@ describe('serverApi', function() {
   });
 
   describe('BetAPI', function() {
-    var api;
+    var api, $mockHttp;
 
     beforeEach(inject(function(betAPI, $injector) {
       api = betAPI;
+      $mockHttp = $injector.get('$httpBackend');
     }));
+
+    afterEach(function() {
+      $mockHttp.verifyNoOutstandingExpectation();
+      $mockHttp.verifyNoOutstandingRequest();
+    });
 
     it('should exist', function() {
       expect(api).toBeDefined();
@@ -46,6 +52,13 @@ describe('serverApi', function() {
     describe('BetAPI.placeBet', function() {
       it('should be function', function() {
         expect(api.placeBet).toBeFunction();
+      });
+
+      it('should return a resolve a future when request suceed', function() {
+        var bet = {};
+        $mockHttp.expectPOST(api.url + 'bet', bet).respond({});
+        var p = api.placeBet(bet);
+        $mockHttp.flush();
       });
     });
   });
