@@ -111,11 +111,15 @@ function LoadMask($timeout) {
   this.domStr = '<div class="loadMask">' +
                    '<div class="backDrop"></div>' +
                  '</div>';
-  
+
   this.successDomStr = '<div class="innerMask">' +
                           '<div class="successTick"></div>' +
                           '<div class="text">Done</div>' +
-                        '</div>'
+                        '</div>';
+  this.failedDomStr = '<div class="innerMask">' +
+                        '<div class="failedIcon"></div>' +
+                        '<div class="text">Sorry, please try again</div>' +
+                      '</div>';
 
   // Creating a spinner component with default configurations.
   this.createMaskEl = function(dom) {
@@ -159,7 +163,7 @@ function LoadMask($timeout) {
       maskEl = undefined;
     }
   }
-  
+
   // Show a success tick mark before hiding the load mask
   this.loadSuccess = function(opt) {
     if (maskEl) {
@@ -172,6 +176,20 @@ function LoadMask($timeout) {
       }
       maskEl.append(domStr);
       $timeout(angular.bind(this, this.hide), 200);
+    }
+  }
+
+  this.loadFailed = function(opt) {
+    if (maskEl) {
+      maskEl.children('.innerMask').remove();
+      var domStr = this.failedDomStr
+      if (opt) {
+        if (opt.text) {
+          domStr = this.failedDomStr.replace('Sorry, please try again', opt.text);
+        }
+      }
+      maskEl.append(domStr);
+      $timeout(angular.bind(this, this.hide), 2000);
     }
   }
 }

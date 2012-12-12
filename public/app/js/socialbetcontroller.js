@@ -203,7 +203,6 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
  }
 
  $scope.networkSuccess = function(res) {
-   loadMask.hide();
    if (res.err) {
      $scope.betFailed(res);
    } else {
@@ -212,13 +211,11 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
  }
 
  $scope.networkFailed = function(err) {
-   loadMask.hide();
-   console.log('show a message saying bet failed!!!');
-   alert('Bet failed due to network problem, please try again!');
+   loadMask.loadFailed({text: 'Failed, please check your connections'});
  }
 
  $scope.betFailed = function(err) {
-   alert('Bet failed, please try again!');
+   loadMask.loadFailed({text: 'Failed to place bet. Please try again.'});
  }
 
  $scope.betSuccess = function(res) {
