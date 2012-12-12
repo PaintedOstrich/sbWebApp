@@ -164,7 +164,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
    loadMask.show({hideSpinner: true});
    videoAd.showAd({delegate: $scope});
  }
- 
+
  // Delegate method to be called by videoAd service
  $scope.adEnded = function() {
    loadMask.hide();
@@ -182,21 +182,49 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
 
  // Post bets to the server
  $scope.postBet = function() {
+   var friendIds = [];
+   for (var i=0; i < $scope.selectedFriends.length; i++)
+   {
+     friendIds.push($scope.selectedFriends[i].id);
+   }
    var bet = {
      initFBId: currentUser.id,
+     callFBIds: friendIds,
      // Assuming even distribution
-     betAmount: $scope.bet.amount / $scope.selectedFriends.length,
+     betAmount: $scope.bet.amount,
      type: 'spread',
      gameId: $scope.bet.game.gid,
      initTeamBet: $scope.bet.winner,
      spreadTeam1: $scope.bet.game.spreadTeam1,
      spreadTeam2: $scope.bet.game.spreadTeam2
    };
-   for (var i=0; i < $scope.selectedFriends.length; i++)
-   {
-     bet.callFBId = $scope.selectedFriends[i].id;
-     betAPI.placeBet(bet);
+   loadMask.show({text: 'Placing bets....'});
+   betAPI.placeBet(bet).then($scope.networkSuccess, $scope.networkFailed);
+ }
+
+ $scope.networkSuccess = function(res) {
+   loadMask.hide();
+   if (res.err) {
+     $scope.betFailed(res);
+   } else {
+     $scope.betSuccess(res);
    }
  }
+
+ $scope.networkFailed = function(err) {
+   loadMask.hide();
+   console.log('show a message saying bet failed!!!');
+   alert('Bet failed due to network problem, please try again!');
+ }
+
+ $scope.betFailed = function(err) {
+   alert('Bet failed, please try again!');
+ }
+
+ $scope.betSuccess = function(res) {
+   alert('Success, should redirect!');
+   console.log(res);
+ }
+
 }
 SocialBetCtrl.$inject = ['$scope',  'fb', 'loadMask', 'betAPI', '$q', '$timeout', 'currentUser', 'videoAd'];

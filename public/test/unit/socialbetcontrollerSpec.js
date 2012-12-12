@@ -42,7 +42,7 @@ describe('SocialBetCtrl', function() {
 
     mockBetAPI = {
       loadGames: jasmine.createSpy('loadGames'),
-      placeBet: jasmine.createSpy('placeBet')
+      placeBet: jasmine.createSpy('placeBet').andReturn({then: function() {}})
     }
     mockFb = {
       api: jasmine.createSpy()
@@ -199,7 +199,8 @@ describe('SocialBetCtrl', function() {
     it('should convert bet into usable format', function() {
       mockUser.id = '123';
       scope.selectedFriends = [
-        {id: '1'}
+        {id: '1'},
+        {id: '2'}
       ]
       // The bet object stored in social bet controller.
       scope.bet = {
@@ -225,7 +226,7 @@ describe('SocialBetCtrl', function() {
       // The format to be sent to the server for real.
       var apiBetFormat = {
         initFBId: '123',
-        callFBId: '1',
+        callFBIds: ['1', '2'],
         betAmount: 0.1,
         type:'spread',
         gameId: '11',
