@@ -145,10 +145,12 @@ function LoadMask($timeout) {
     maskEl.removeClass('fade');
     // Wait for CSS3 transition to finish (not too long so older brwoser user
     // will not be affected much).
-    $timeout(function() {
-      maskEl.remove();
-      maskEl = undefined;
-    }, 200);
+    $timeout((function(el) {
+      return function() {
+        el.remove();
+      }
+    })(maskEl), 200);
+    maskEl = undefined;
   }
 }
 
