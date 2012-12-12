@@ -58,7 +58,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
     $scope.processFriendsData(friendRes);
     var gameRes = combinedData[1];
     $scope.processGameData(gameRes);
-    loadMask.hide();
+    loadMask.loadSuccess();
   }
 
   $scope.processGameData = function(res) {
