@@ -142,15 +142,17 @@ function LoadMask($timeout) {
   }
 
   this.hide = function() {
-    maskEl.removeClass('fade');
-    // Wait for CSS3 transition to finish (not too long so older brwoser user
-    // will not be affected much).
-    $timeout((function(el) {
-      return function() {
-        el.remove();
-      }
-    })(maskEl), 200);
-    maskEl = undefined;
+    if (maskEl) {
+      maskEl.removeClass('fade');
+      // Wait for CSS3 transition to finish (not too long so older brwoser user
+      // will not be affected much).
+      $timeout((function(el) {
+        return function() {
+          el.remove();
+        }
+      })(maskEl), 200);
+      maskEl = undefined;
+    }
   }
 }
 
