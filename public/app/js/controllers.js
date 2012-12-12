@@ -174,7 +174,7 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q) {
   // bet invites we need to show up for the user to confirm (this
   // happens when user arrives to our app by clicking on an invite)
   $scope.checkInitActions = function() {
-    loadMask.loadSuccess();
+    loadMask.loadSuccess({text: 'User Info Loaded'});
     var dom = $('#initialData');
     var data = dom.attr('data');
     if (dom.length > 0 && data) {

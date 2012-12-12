@@ -114,7 +114,7 @@ function LoadMask($timeout) {
   
   this.successDomStr = '<div class="innerMask">' +
                           '<div class="successTick"></div>' +
-                          '<div class="text">Loading Success</div>' +
+                          '<div class="text">Done</div>' +
                         '</div>'
 
   // Creating a spinner component with default configurations.
@@ -161,10 +161,16 @@ function LoadMask($timeout) {
   }
   
   // Show a success tick mark before hiding the load mask
-  this.loadSuccess = function() {
+  this.loadSuccess = function(opt) {
     if (maskEl) {
       maskEl.children('.innerMask').remove();
-      maskEl.append(this.successDomStr);
+      var domStr = this.successDomStr
+      if (opt) {
+        if (opt.text) {
+          domStr = this.successDomStr.replace('Done', opt.text);
+        }
+      }
+      maskEl.append(domStr);
       $timeout(angular.bind(this, this.hide), 200);
     }
   }
