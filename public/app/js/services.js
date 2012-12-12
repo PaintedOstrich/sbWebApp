@@ -14,11 +14,13 @@ angular.module('services', ['ng', 'ngResource'])
   *
   */
 function VideoAd() {
+  this.apiScriptId = 'youtubeApi';
+
   function onYouTubeIframeAPIReady() {
          this.player = new YT.Player('player', {
            height: '390',
            width: '640',
-           videoId: 'J6iqNTc6G6g',
+           videoId: 'jKUw3asDVNY',
            playerVars: {
              controls: 0,
              showinfo: 0,
@@ -46,11 +48,17 @@ function VideoAd() {
     */
   this.showAd = function(opt) {
     // 2. This code loads the IFrame Player API code asynchronously.
-    var tag = document.createElement('script');
-    tag.src = "//www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    window.onYouTubeIframeAPIReady = angular.bind(this, onYouTubeIframeAPIReady);
+    var tag = document.getElementById(this.apiScriptId);
+    if (!tag) {
+      tag = document.createElement('script');
+      tag.src = "//www.youtube.com/iframe_api";
+      tag.id = "youtubeApi";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      window.onYouTubeIframeAPIReady = angular.bind(this, onYouTubeIframeAPIReady);
+    } else {
+      window.onYouTubeIframeAPIReady();
+    }
     if (opt && opt.delegate) {
       this.currentDelegate = opt.delegate;
     }
