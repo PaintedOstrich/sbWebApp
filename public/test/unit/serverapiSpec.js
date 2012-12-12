@@ -56,9 +56,32 @@ describe('serverApi', function() {
 
       it('should return a resolve a future when request suceed', function() {
         var bet = {};
+        var resolved = false;
+        var rejected = false;
         $mockHttp.expectPOST(api.url + 'bet', bet).respond({});
-        var p = api.placeBet(bet);
+        api.placeBet(bet).then(function() {
+          resolved = true;
+        }, function() {
+          rejected = true;
+        });
         $mockHttp.flush();
+        expect(resolved).toBe(true);
+        expect(rejected).toBe(false);
+      });
+
+      it('should return reject a future when request fails', function() {
+        var bet = {};
+        var resolved = false;
+        var rejected = false;
+        $mockHttp.expectPOST(api.url + 'bet', bet).respond(404);
+        api.placeBet(bet).then(function() {
+          resolved = true;
+        }, function() {
+            rejected = true;
+        });
+        $mockHttp.flush();
+        expect(resolved).toBe(false);
+        expect(rejected).toBe(true);
       });
     });
   });
