@@ -26,7 +26,11 @@ function BetAPI($resource, $q, $http) {
   }
 
   this.placeBet = function(bet) {
-    $http.post(this.url + 'bet', bet).success(function(res) {console.log(res)});
+    var deferred = $q.defer();
+    $http.post(this.url + 'bet', bet).
+      success(function(res) {deferred.resolve(res)}).
+      error(function(err) {deferred.reject(err)});
+    return deferred.promise;
   }
 }
 

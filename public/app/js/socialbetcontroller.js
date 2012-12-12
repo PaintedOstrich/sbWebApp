@@ -168,6 +168,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
  // Delegate method to be called by videoAd service
  $scope.adEnded = function() {
    loadMask.hide();
+   $scope.postBet();
  }
 
  // Invoked when the place bet button is clicked by user.
@@ -175,7 +176,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
    if ($scope.bet.amount > currentUser.balance) {
      $scope.watchAd();
    } else {
-     console.log('should post bet??');
+     $scope.postBet();
    }
  }
 
