@@ -1,7 +1,10 @@
 describe('SocialBetCtrl', function() {
-  var scope, ctrl, mockFb, mockLoadMask, mockQ, mockUser, mockVideoAd;
+  var scope, ctrl, mockFb, mockLoadMask, mockQ,
+      mockUser, mockVideoAd, mockLocation, realParentUrlParser
 
   beforeEach(function() {
+      // Services module need to be inluded so we can use the real url parser.
+      module('services', function($provide) {});
       this.addMatchers({
           toBeFunction: function(expected) {
             this.message = function () {
@@ -34,7 +37,8 @@ describe('SocialBetCtrl', function() {
       });
   });
 
-  beforeEach(inject(function($rootScope, $controller, $q) {
+  beforeEach(inject(function($rootScope, $controller, $q, parentUrlParser) {
+    realParentUrlParser = parentUrlParser;
     mockLoadMask = {
       show: jasmine.createSpy('showMask'),
       hide: jasmine.createSpy('hideMask')
@@ -56,10 +60,15 @@ describe('SocialBetCtrl', function() {
     mockVideoAd = {
       showAd: jasmine.createSpy('showAd')
     };
+    mockLocation = {
+      
+    };
     scope = $rootScope.$new();
 
     var mainScope = $rootScope.$new();
-    var mainCtrl = $controller(MainCtrl, {$scope: mainScope, currentUser: mockUser});
+    var mainCtrl = $controller(MainCtrl,
+      {$scope: mainScope, currentUser: mockUser,
+       $location: mockLocation, parentUrlParser: realParentUrlParser});
     scope = mainScope.$new();
     ctrl = $controller(SocialBetCtrl,
         {$scope: scope, fb: mockFb, loadMask: mockLoadMask,
