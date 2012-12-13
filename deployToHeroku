@@ -1,0 +1,3 @@
+git co backendApi
+git rebase master
+git push --f heroku backendApi:master
