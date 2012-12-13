@@ -6,6 +6,34 @@ angular.module('services', ['ng', 'ngResource'])
     .service('fb', FBSdk)
     .service('loadMask', LoadMask)
     .service('videoAd', VideoAd)
+    .service('parentUrlParser', ParentUrlParser);
+
+/**
+  * The parser service will parse the parent frame's url and
+  * give us relevant GET params.
+  */
+function ParentUrlParser() {
+  this._data = {};
+
+  this.parseUrl = function(urlStr) {
+    if (urlStr.slice(0, 2) == "/?") {
+      urlStr = urlStr.slice(2);
+      var chunks = urlStr.split("&");
+      var self = this;
+      chunks.forEach(function(str) {
+        var pairs = str.split('=');
+        if (pairs.length == 2) {
+          self._data[pairs[0]] = pairs[1];
+        }
+      });
+    }
+  }
+
+  this.get = function(name) {
+    return this._data[name];
+  }
+}
+
 
 /**
   * Control showing and hiding video advertisments.
