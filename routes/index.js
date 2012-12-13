@@ -10,7 +10,8 @@ module.exports.home = function(req, res) {
         layout:    false,
         req:       req,
         app:       app,
-        user:      user
+        user:      user,
+        mixPanelToken: process.env.mixPanelToken
       });
     });
   });

@@ -5,7 +5,6 @@
 // The top most controller, mainly in charge of navigations.
 function MainCtrl($scope, currentUser, $location, parentUrlParser) {
   $scope.user = currentUser;
-
   $scope.$on('betInviteCliked', function(e, bet) {
     $scope.$broadcast('showBetInvite', bet);
   });
