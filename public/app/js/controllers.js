@@ -181,7 +181,7 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q, parentUrl
   $scope.checkInitActions = function() {
     loadMask.loadSuccess({text: 'User Info Loaded'});
     var data;
-    if (data = parentUrlParser.get('showBet')) {
+    if (data = parentUrlParser.get('showbet')) {
       var betsToShow = data.split('%2C');
       if (betsToShow.length > 0) {
         var bets = [];

@@ -92,8 +92,8 @@ describe('services', function() {
 
       it('should parse more realistic examples', function() {
         expect(parser._data).toEqual({});
-        parser.parseUrl('/?showBet=1,2,3&fb_source=notification&');
-        expect(parser._data).toEqual({showBet: '1,2,3', fb_source:'notification'});
+        parser.parseUrl('/?showbet=1,2,3&fb_source=notification&');
+        expect(parser._data).toEqual({showbet: '1,2,3', fb_source:'notification'});
       });
     });
   });
