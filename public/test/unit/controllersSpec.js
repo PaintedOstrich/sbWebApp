@@ -12,12 +12,19 @@ describe('SportsBet controllers', function() {
             return typeof this.actual == 'function';
           }
       });
+
+      module('services', function($provide) {
+      });
   });
 
   // The fb service mock that does nothing but returning a promise,
   // imitating the api of actual fb service in services.js.
-  var mockFb, mockLoadMask;
+  var mockFb, mockLoadMask, mockLocation;
   beforeEach(inject(function($q){
+    mockLocation = {
+      path: jasmine.createSpy('location')
+    };
+
     mockFb = {
       promises: {}
     }
@@ -54,7 +61,7 @@ describe('SportsBet controllers', function() {
 
 
   describe('BetInviteCtrl', function() {
-    var rootScope, scope, ctrl, mockLocation;
+    var rootScope, scope, ctrl;
 
     beforeEach(inject(function($rootScope, $controller) {
       rootScope = $rootScope.$new();
@@ -78,13 +85,9 @@ describe('SportsBet controllers', function() {
   });
 
   describe('LandingCtrl', function() {
-    var scope, ctrl, mockLocation;
+    var scope, ctrl;
 
     beforeEach(inject(function($rootScope, $controller) {
-      mockLocation = {
-        path: jasmine.createSpy('location')
-      };
-
       var mainScope = $rootScope.$new();
       var mainCtrl = $controller(MainCtrl, {$scope: mainScope});
       scope = mainScope.$new();
@@ -132,10 +135,6 @@ describe('SportsBet controllers', function() {
     var scope, ctrl, mockLocation, mockCurrentUser;
 
     beforeEach(inject(function($rootScope, $controller) {
-      mockLocation = {
-        path: jasmine.createSpy('location')
-      };
-
       mockCurrentUser = {
         isLoaded: jasmine.createSpy(),
 
