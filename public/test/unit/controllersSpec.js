@@ -32,7 +32,9 @@ describe('SportsBet controllers', function() {
 
     mockLoadMask = {
       show: jasmine.createSpy('showMask'),
-      hide: jasmine.createSpy('hideMask')
+      hide: jasmine.createSpy('hideMask'),
+      loadSuccess: jasmine.createSpy('loadSuccess'),
+      loadFailed: jasmine.createSpy('loadFailed')
     };
   }));
 
