@@ -22,7 +22,7 @@ function ParentUrlParser() {
       if (dom.length > 0 && data) {
         this.parseUrl(data);
         //Remember to remove it so it does not pop uo again.
-        dom.remove();
+        dom.attr('data', '');
       }
     }
   }
