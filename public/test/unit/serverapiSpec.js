@@ -58,7 +58,7 @@ describe('serverApi', function() {
         var bet = {};
         var resolved = false;
         var rejected = false;
-        $mockHttp.expectPOST(api.url + 'bet', bet).respond({});
+        $mockHttp.expectPOST(api.url + 'bet/batch', bet).respond({});
         api.placeBet(bet).then(function() {
           resolved = true;
         }, function() {
@@ -73,7 +73,7 @@ describe('serverApi', function() {
         var bet = {};
         var resolved = false;
         var rejected = false;
-        $mockHttp.expectPOST(api.url + 'bet', bet).respond(404);
+        $mockHttp.expectPOST(api.url + 'bet/batch', bet).respond(404);
         api.placeBet(bet).then(function() {
           resolved = true;
         }, function() {

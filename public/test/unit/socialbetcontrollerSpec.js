@@ -230,7 +230,7 @@ describe('SocialBetCtrl', function() {
         betAmount: 0.1,
         type:'spread',
         gameId: '11',
-        initTeamBet: '18', // this is the teamId of the team the user wants to bet on
+        initTeamBetId: '18', // this is the teamId of the team the user wants to bet on
         spreadTeam1: "-105",
         spreadTeam2: "-115"
       }
