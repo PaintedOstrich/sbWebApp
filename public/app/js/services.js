@@ -74,7 +74,7 @@ function VideoAd() {
   var done = false;
   this.onPlayerStateChange = function(event) {
     if (event.data == YT.PlayerState.ENDED) {
-      event.target.clearVideo();
+      event.target.stopVideo();
       event.target.destroy();
       var delegate = this.currentDelegate;
       if (delegate) {

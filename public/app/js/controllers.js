@@ -20,7 +20,9 @@ function MainCtrl($scope, currentUser, $location) {
   }
 
   $scope.newBet = function() {
-    $location.path('socialbet');
+    if ($scope.user.isLoaded()) {
+      $location.path('socialbet');
+    }
   }
 }
 MainCtrl.$inject = ['$scope', 'currentUser', '$location'];
