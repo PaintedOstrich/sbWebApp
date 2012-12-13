@@ -44,6 +44,10 @@ function ParentUrlParser() {
   this.get = function(name) {
     return this._data[name];
   }
+
+  this.set = function(name, value) {
+    this._data[name] = value;
+  }
 }
 
 
