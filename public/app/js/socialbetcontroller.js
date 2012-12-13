@@ -219,8 +219,8 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
  }
 
  $scope.betSuccess = function(res) {
-   alert('Success, should redirect!');
-   console.log(res);
+   loadMask.loadSuccess({text: 'Bet posted, redirecting...'});
+   $timeout(angular.bind($scope.$parent, $scope.$parent.showProfile), 200);
  }
 
 }
