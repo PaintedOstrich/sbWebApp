@@ -3,7 +3,7 @@
 /* Controllers */
 
 // The top most controller, mainly in charge of navigations.
-function MainCtrl($scope, currentUser, $location) {
+function MainCtrl($scope, currentUser, $location, parentUrlParser) {
   $scope.user = currentUser;
 
   $scope.$on('betInviteCliked', function(e, bet) {
@@ -25,7 +25,7 @@ function MainCtrl($scope, currentUser, $location) {
     }
   }
 }
-MainCtrl.$inject = ['$scope', 'currentUser', '$location'];
+MainCtrl.$inject = ['$scope', 'currentUser', '$location', 'parentUrlParser'];
 
 // A sort of widget controllers for bet info widget popup
 function BetInviteCtrl($scope, $timeout) {
