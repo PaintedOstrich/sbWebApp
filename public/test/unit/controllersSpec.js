@@ -50,7 +50,8 @@ describe('SportsBet controllers', function() {
     beforeEach(inject(function($rootScope, $controller) {
       var mockUser = {}
       scope = $rootScope.$new();
-      ctrl = $controller(MainCtrl, {$scope: scope, currentUser: mockUser});
+      ctrl = $controller(MainCtrl,
+        {$scope: scope, currentUser: mockUser, $location: mockLocation});
     }));
 
     it('should have the right number of listeners', function() {
@@ -66,7 +67,8 @@ describe('SportsBet controllers', function() {
     beforeEach(inject(function($rootScope, $controller) {
       rootScope = $rootScope.$new();
       var mockUser = {}
-      var mainCtrl = $controller(MainCtrl, {$scope: rootScope, currentUser: mockUser});
+      var mainCtrl = $controller(MainCtrl,
+          {$scope: rootScope, currentUser: mockUser, $location: mockLocation});
       scope = rootScope.$new();
       ctrl = $controller(BetInviteCtrl, {$scope: scope});
     }));
@@ -144,7 +146,7 @@ describe('SportsBet controllers', function() {
       }
       var mainScope = $rootScope.$new();
       var mainCtrl = $controller(MainCtrl,
-          {$scope: mainScope, currentUser: mockCurrentUser});
+          {$scope: mainScope, currentUser: mockCurrentUser, $location: mockLocation});
       scope = mainScope.$new();
       ctrl = $controller(ProfileCtrl,
           {$scope: scope, fb: mockFb, $location: mockLocation,
