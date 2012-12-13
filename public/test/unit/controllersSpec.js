@@ -175,28 +175,18 @@ describe('SportsBet controllers', function() {
 
 
     describe('ProfileCtrl.checkInitActions', function() {
+      var realParentUrlParser;
+      
+      beforeEach(inject(function(parentUrlParser) {
+        realParentUrlParser = parentUrlParser
+      }));
+      
       afterEach(function () {
         window.$ = undefined;
       });
 
       it('should be a function', function() {
         expect(scope.checkInitActions).toBeFunction();
-      });
-
-      it('should obtain data from dom', function() {
-        expect(window.$).toBeUndefined();
-
-        var data = '/?showBet=123'
-        var fakeDom = {
-          length: 1,
-          attr: function() {return data;},
-          remove: jasmine.createSpy('remove')
-        }
-        window.$ = jasmine.createSpy().andReturn(fakeDom);
-        spyOn(scope, 'parseInitData').andReturn([]);
-        scope.checkInitActions();
-        expect(scope.parseInitData).toHaveBeenCalledWith(data);
-        expect(fakeDom.remove).toHaveBeenCalled();
       });
 
       it('should emit the right event with data', function() {
@@ -208,13 +198,7 @@ describe('SportsBet controllers', function() {
             pendingUserAccept: [bet1, bet2]
           }
         }
-        var fakeDom = {
-          length: 1,
-          attr: function() {return '/?showBet=123,noSuchBet'},
-          remove: jasmine.createSpy('remove')
-        }
-        window.$ = jasmine.createSpy().andReturn(fakeDom);
-        spyOn(scope, 'parseInitData').andReturn(['123', '456', 'noSuchBet']);
+        spyOn(realParentUrlParser, 'get').andReturn('123%2C456%2CnoSuchBet');
         spyOn(scope, '$emit');
         scope.checkInitActions();
         expect(scope.$emit).toHaveBeenCalledWith('showMultipleBets', [bet1, bet2]);
@@ -226,45 +210,10 @@ describe('SportsBet controllers', function() {
             pendingUserAccept: []
           }
         }
-        var fakeDom = {
-          attr: function() {return '/?showBet=123,noSuchBet'},
-          length: 1,
-          remove: jasmine.createSpy('remove')
-        }
-        window.$ = jasmine.createSpy().andReturn(fakeDom);
-        spyOn(scope, 'parseInitData').andReturn(['123', 'noSuchBet']);
+        spyOn(realParentUrlParser, 'get').andReturn('noSuchBet');
         spyOn(scope, '$emit');
         scope.checkInitActions();
         expect(scope.$emit).not.toHaveBeenCalled();
-      });
-
-
-      describe('ProfileCtrl.parseInitData', function() {
-        it('should parse data and return an array', function() {
-          var data = '/?showBet=123';
-          var arr = scope.parseInitData(data);
-          expect(arr.length).toBe(1);
-          expect(arr[0]).toEqual('123');
-
-          data = '/?showBet=23%2C45';
-          arr = scope.parseInitData(data);
-          expect(arr.length).toBe(2);
-          expect(arr[1]).toEqual('45');
-        });
-
-        it('should return nothin if no real data passed in', function() {
-          var data = '/';
-          var arr = scope.parseInitData(data);
-          expect(arr.length).toBe(0);
-
-          data = '/?bogus=abc';
-          arr = scope.parseInitData(data);
-          expect(arr.length).toBe(0);
-
-          data = '/?bogus-abc';
-          arr = scope.parseInitData(data);
-          expect(arr.length).toBe(0);
-        });
       });
     });
   });

@@ -182,7 +182,7 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q, parentUrl
     loadMask.loadSuccess({text: 'User Info Loaded'});
     var data;
     if (data = parentUrlParser.get('showBet')) {
-      var betsToShow = $scope.parseInitData(data);
+      var betsToShow = data.split('%2C');
       if (betsToShow.length > 0) {
         var bets = [];
         betsToShow.forEach(function(betId) {
@@ -199,22 +199,6 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q, parentUrl
         }
       }
     }
-  }
-
-  // Helper method to parse initial data passed in from url
-  $scope.parseInitData = function(dataStr) {
-    var toR = [];
-    var chunks = dataStr.split('?');
-    if (chunks.length < 2) return toR;
-
-    chunks = chunks[1].split('=');
-    if (chunks.length < 2) return toR;
-
-    var fieldName = chunks[0];
-    if (fieldName != 'showBet') return toR;
-
-    var betIds = chunks[1].split('%2C');
-    return betIds;
   }
 
   loadMask.show({text: 'Loading User Profile...'});
