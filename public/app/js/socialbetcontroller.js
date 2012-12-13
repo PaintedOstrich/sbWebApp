@@ -194,7 +194,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
      betAmount: $scope.bet.amount,
      type: 'spread',
      gameId: $scope.bet.game.gid,
-     initTeamBet: $scope.bet.winner,
+     initTeamBetId: $scope.bet.winner,
      spreadTeam1: $scope.bet.game.spreadTeam1,
      spreadTeam2: $scope.bet.game.spreadTeam2
    };
