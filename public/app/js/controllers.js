@@ -188,7 +188,7 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q, parentUrl
         betsToShow.forEach(function(betId) {
           for (var i = 0; i <  $scope.user.bets.pendingUserAccept.length; i++) {
             var betInvite = $scope.user.bets.pendingUserAccept[i];
-            if (betId == betInvite.betId) {
+            if (betId == betInvite['_id']) {
               bets.push(betInvite);
               break;
             }
