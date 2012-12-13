@@ -15,6 +15,18 @@ angular.module('services', ['ng', 'ngResource'])
 function ParentUrlParser() {
   this._data = {};
 
+  this.init = function() {
+    if ($ && typeof $ == 'function') {
+      var dom = $('#initialData');
+      var data = dom.attr('data');
+      if (dom.length > 0 && data) {
+        this.parseUrl(data);
+        //Remember to remove it so it does not pop uo again.
+        dom.remove();
+      }
+    }
+  }
+
   this.parseUrl = function(urlStr) {
     if (urlStr.slice(0, 2) == "/?") {
       urlStr = urlStr.slice(2);

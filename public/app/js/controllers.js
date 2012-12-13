@@ -24,6 +24,9 @@ function MainCtrl($scope, currentUser, $location, parentUrlParser) {
       $location.path('socialbet');
     }
   }
+
+  // Initialize parentUrlParser so its _data will be populated.
+  parentUrlParser.init();
 }
 MainCtrl.$inject = ['$scope', 'currentUser', '$location', 'parentUrlParser'];
 
@@ -61,7 +64,7 @@ function BetInviteCtrl($scope, $timeout) {
     console.log("TODO! implement decline bet logic!!");
     $scope.closeModal();
   }
-  
+
   // We need better way to close modal without taking away the mask
   // for better chained invite confirmation effect!!!!
   $scope.closeModal = function() {
@@ -115,7 +118,7 @@ LandingCtrl.$inject = ['$scope', '$location', 'fb'];
 
 
 // Controller for user profile screen
-function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q) {
+function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q, parentUrlParser) {
   $scope.$parent.showInfoBackground = true;
   $scope.currentTab = 'active';
   $scope.betTemplateUrl = 'app/partials/profile/bet.html';
@@ -177,9 +180,8 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q) {
   // happens when user arrives to our app by clicking on an invite)
   $scope.checkInitActions = function() {
     loadMask.loadSuccess({text: 'User Info Loaded'});
-    var dom = $('#initialData');
-    var data = dom.attr('data');
-    if (dom.length > 0 && data) {
+    var data;
+    if (data = parentUrlParser.get('showBet')) {
       var betsToShow = $scope.parseInitData(data);
       if (betsToShow.length > 0) {
         var bets = [];
@@ -197,8 +199,6 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q) {
         }
       }
     }
-    //Remember to remove it so it does not pop uo again.
-    dom.remove();
   }
 
   // Helper method to parse initial data passed in from url
@@ -227,7 +227,7 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q) {
     $scope.$emit('betInviteCliked', bet);
   }
 }
-ProfileCtrl.$inject = ['$scope', '$location', 'fb', 'loadMask', 'currentUser', '$q'];
+ProfileCtrl.$inject = ['$scope', '$location', 'fb', 'loadMask', 'currentUser', '$q', 'parentUrlParser'];
 
 
 

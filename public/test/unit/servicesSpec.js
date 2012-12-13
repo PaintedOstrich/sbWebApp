@@ -45,6 +45,14 @@ describe('services', function() {
       expect(parser).toBeDefined();
     });
 
+
+    describe('ParentUrlParser.init', function() {
+      it('should be a function', function() {
+        expect(parser.init).toBeFunction();
+      });
+    });
+
+
     describe('ParentUrlParser.parseUrl', function() {
       it('should be a function', function() {
         expect(parser.parseUrl).toBeFunction();
