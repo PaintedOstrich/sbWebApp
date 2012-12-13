@@ -27,7 +27,7 @@ function BetAPI($resource, $q, $http) {
 
   this.placeBet = function(bet) {
     var deferred = $q.defer();
-    $http.post(this.url + 'bet', bet).
+    $http.post(this.url + 'bet/batch', bet).
       success(function(res) {deferred.resolve(res)}).
       error(function(err) {deferred.reject(err)});
     return deferred.promise;
