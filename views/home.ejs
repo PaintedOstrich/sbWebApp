@@ -48,6 +48,7 @@
     window.fbAsyncInit = function() {
       FB.init({
         appId      : <%= app.id %>, // App ID
+        frictionlessRequests: true,
         channelUrl : '//'+window.location.hostname+'/channel', // Channel File
         status     : true, // check login status
         cookie     : true, // enable cookies to allow the server to access the session
