@@ -191,8 +191,8 @@ describe('SportsBet controllers', function() {
 
       it('should emit the right event with data', function() {
         expect(window.$).toBeUndefined();
-        var bet1 = { betId: '123' };
-        var bet2 = { betId: '456' };
+        var bet1 = { _id: '123' };
+        var bet2 = { _id: '456' };
         scope.user = {
           bets: {
             pendingUserAccept: [bet1, bet2]
