@@ -55,20 +55,13 @@ function BetInviteCtrl($scope, $timeout) {
   }
 
   $scope.acceptBet = function() {
-    $scope.closeModal();
+    $scope.modalShown = false;
     console.log("TODO! implement accept bet logic!!");
   }
 
   $scope.declineBet = function() {
     console.log("TODO! implement decline bet logic!!");
-    $scope.closeModal();
-  }
-
-  // We need better way to close modal without taking away the mask
-  // for better chained invite confirmation effect!!!!
-  $scope.closeModal = function() {
     $scope.modalShown = false;
-    $timeout($scope.checkNextInQueue, 1000);
   }
 
   // Show next bet in betQueue if there is any.
@@ -80,6 +73,12 @@ function BetInviteCtrl($scope, $timeout) {
         $scope.focusedBet = nextBet;
       }
   }
+
+  $scope.$watch('modalShown', function(newVal) {
+    if (newVal == false) {
+      $timeout($scope.checkNextInQueue, 1000);
+    }
+  })
 }
 BetInviteCtrl.$inject = ['$scope', '$timeout'];
 // ---------- End of widget controllers ------------------------
