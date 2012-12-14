@@ -135,6 +135,12 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q, parentUrl
       currentUser.loadUser($scope).then(function() {
         $scope.user = currentUser;
         deferred.resolve();
+        // Initialize mixPanel here!
+        if (window.mixpanel) {
+          mixpanel.identify($scope.user.id);
+          mixpanel.name_tag($scope.user.name);
+          mixpanel.track('totalAppLoads', { uid: $scope.user.id});
+        }
       }, function() {
         loadMask.hide();
         deferred.reject();
