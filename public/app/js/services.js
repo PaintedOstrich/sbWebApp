@@ -303,4 +303,12 @@ function FBSdk($q, $timeout) {
     }, 1);
     return deferred.promise;
   }
+
+
+  this.ui = function() {
+    FB.ui({method: 'apprequests',
+       message: 'My Great Request',
+       to: '1015630654'
+     }, function(a, b, c) {debugger; console.log('closed')});
+  }
 }
