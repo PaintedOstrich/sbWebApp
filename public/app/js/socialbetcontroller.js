@@ -214,12 +214,13 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
      }
    }
 
-   var message = {
+   var opts = {
      method: 'apprequests',
-     message: 'I challenge you!',
-     to: nonUserIds.join(',')
+     message: 'I challenge you to a Swagger bet!',
+     to: nonUserIds.join(','),
+     title: 'Invite these friends, your bet is free!'
    }
-   fb.ui($scope, message).then(function() {
+   fb.ui($scope, opts).then(function() {
      console.log('hereherere!!!!');
    });
  }
