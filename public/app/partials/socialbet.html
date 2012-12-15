@@ -83,8 +83,15 @@
     <div class="friendPanel">
       <div class="friendFilters">
         <select class="filter" ng-model="friendFilter">
-          <option value="all">Friends to invite</option>
-          <option value="selected">Selected Friends</option>
+          <option value="all">
+            Friends to bet on
+          </option>
+          <option value="installed">
+            Friends using the app
+          </option>
+          <option value="selected">
+            Selected Friends
+          </option>
         </select>
         <input type="text" class="searchBox" placeholder="Search..."
             ng-model="queryFriend" ng-show="friendFilter == 'all'">

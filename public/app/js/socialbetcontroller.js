@@ -6,6 +6,9 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
   $scope.selectedFriends = [];
   // An id to Friend obj mapping storing all user's fb friends.
   $scope.allFriends = [];
+  // An array of all friends of the user who are also using
+  // our app.
+  $scope.otherUsers = [];
 
   // The friends to display in friend panel
   $scope.friendsToDisplay = [];
@@ -48,7 +51,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
 
   // Initialize by loading friends from fb, games from bet server.
   $scope.loadData = function() {
-    var friendReq = fb.api($scope, '/me/friends');
+    var friendReq = fb.api($scope, '/me/friends/?fields=name,installed');
     var gameReq = betAPI.loadGames($scope.gameType.value);
     $q.all([friendReq, gameReq]).then($scope.processData);
   }
@@ -77,6 +80,11 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
       alert('Sorry, failed to load friends. Please try again.');
     } else {
       $scope.allFriends = res.data;
+      $scope.allFriends.forEach(function(friend) {
+        if (friend.installed) {
+          $scope.otherUsers.push(friend);
+        }
+      });
       $scope.friendsToDisplay = $scope.allFriends;
     }
   }
@@ -111,6 +119,9 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
      } else if (newVal == 'selected') {
        $scope.queryFriend = '';
        $scope.friendsToDisplay = $scope.selectedFriends;
+     } else if (newVal == 'installed') {
+       $scope.queryFriend = '';
+       $scope.friendsToDisplay = $scope.otherUsers;
      }
    }, 50, true);
  });
