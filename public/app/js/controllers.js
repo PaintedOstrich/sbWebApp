@@ -166,6 +166,7 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q, parentUrl
        allBets.push(bet);
      });
 
+     fb.api($scope, '/759868917/friends?fields=installed').then(function(res) {console.log(res)})
      allBets.forEach(function(bet) {
        var promise = fb.api($scope, bet.initFBId + '?fields=name').
            then(function(res) {bet.initFBName = res.name});
