@@ -305,10 +305,20 @@ function FBSdk($q, $timeout) {
   }
 
 
-  this.ui = function() {
-    FB.ui({method: 'apprequests',
-       message: 'My Great Request',
-       to: '1015630654'
-     }, function(a, b, c) {debugger; console.log('closed')});
+  this.ui = function(scope, opts) {
+    var deferred = $q.defer();
+    /**   Sample res:
+      *     {
+              request: "447891311941685"
+              to: ["737835647"]
+            }
+      *   If res is undefined, user has clicked cancel.
+      */
+    FB.ui(opts, function(res) {
+      scope.$apply(function() {
+        deferred.resolve();
+      });
+    });
+    return deferred.promise;
   }
 }

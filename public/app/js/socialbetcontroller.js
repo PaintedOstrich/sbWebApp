@@ -191,8 +191,52 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
    }
  }
 
+
+ $scope.sendRequestToNoneUsers = function() {
+   fb.ui('')
+ }
+
+ // Check if any selected friends are not in the list of friends that
+ // have already installed our app.
+ $scope.needsRequest = function() {
+   for (var i = 0; i < $scope.selectedFriends.length; i++) {
+     if ($scope.otherUsers.indexOf($scope.selectedFriends[i]) < 0) return true;
+   }
+   return false;
+ }
+
+ $scope.sendRequestToNoneUsers = function() {
+   // Figure out who are the non-users
+   var nonUserIds = [];
+   for (var i = 0; i < $scope.selectedFriends.length; i++) {
+     if ($scope.otherUsers.indexOf($scope.selectedFriends[i]) < 0) {
+       nonUserIds.push($scope.selectedFriends[i].id);
+     }
+   }
+
+   var message = {
+     method: 'apprequests',
+     message: 'I challenge you!',
+     to: nonUserIds.join(',')
+   }
+   fb.ui($scope, message).then(function() {
+     console.log('hereherere!!!!');
+   });
+ }
+
  // Post bets to the server
  $scope.postBet = function() {
+   if ($scope.needsRequest()) {
+     $scope.sendRequestToNoneUsers();
+   } else {
+     $scope.doPostBet();
+   }
+ }
+
+
+ // Actually posting bet to the server, after making sure the requests are sent
+ // to none-users.
+ $scope.doPostBet = function() {
    var friendIds = [];
    for (var i=0; i < $scope.selectedFriends.length; i++)
    {
