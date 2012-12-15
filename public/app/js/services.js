@@ -316,7 +316,7 @@ function FBSdk($q, $timeout) {
       */
     FB.ui(opts, function(res) {
       scope.$apply(function() {
-        deferred.resolve();
+        deferred.resolve(res);
       });
     });
     return deferred.promise;

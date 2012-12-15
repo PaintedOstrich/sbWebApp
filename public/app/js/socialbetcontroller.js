@@ -191,11 +191,6 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
    }
  }
 
-
- $scope.sendRequestToNoneUsers = function() {
-   fb.ui('')
- }
-
  // Check if any selected friends are not in the list of friends that
  // have already installed our app.
  $scope.needsRequest = function() {
@@ -218,10 +213,27 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
      method: 'apprequests',
      message: 'I challenge you to a Swagger bet!',
      to: nonUserIds.join(','),
-     title: 'Invite these friends, your bet is free!'
+     title: 'Follwing friends are not yet on Swagger:'
    }
-   fb.ui($scope, opts).then(function() {
-     console.log('hereherere!!!!');
+   fb.ui($scope, opts).then(function(res) {
+     if (res) {
+       // If res is defined, user has accepted the request to send to friends.
+       $scope.doPostBet();
+     } else {
+       // User does not want to send requests to new friends(remove these friends and
+       // post bet request for the rest of the friends)
+       var newSelectedFriends = [];
+       for (var i = 0; i < $scope.selectedFriends.length; i++) {
+         var tmp =$scope.selectedFriends[i];
+         if ($scope.otherUsers.indexOf(tmp) >= 0) {
+           newSelectedFriends.push(tmp);
+         }
+       }
+       if (newSelectedFriends.length > 0) {
+         $scope.selectedFriends = newSelectedFriends;
+         $scope.doPostBet();
+       }
+     }
    });
  }
 
