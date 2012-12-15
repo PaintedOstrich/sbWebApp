@@ -173,9 +173,18 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q, parentUrl
      });
 
      allBets.forEach(function(bet) {
-       var promise = fb.api($scope, bet.initFBId + '?fields=name').
-           then(function(res) {bet.initFBName = res.name});
-       promises.push(promise);
+       
+       if (bet.initFBId != currentUser.id) {
+         var promise1 = fb.api($scope, bet.initFBId + '?fields=name').
+             then(function(res) {bet.initFBName = res.name});
+          promises.push(promise1);
+       }
+
+       if (bet.callFBId != currentUser.id) {
+         var promise2 = fb.api($scope, bet.callFBId + '?fields=name').
+             then(function(res) {bet.callFBName = res.name});
+         promises.push(promise2);
+       }
      });
     return $q.all(promises);
   }
