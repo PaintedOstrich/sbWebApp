@@ -117,13 +117,14 @@ describe('SocialBetCtrl', function() {
 
   describe('SocialBetCtrl.processFriendsData', function() {
     it('parse friend array into map=> id: obj', function() {
-      var f1 = {id: '123'};
+      var f1 = {id: '123', installed: true};
       var f2 = {id: '456'};
       var friends = {data:[f1, f2]};
       expect(scope.allFriends).toEqual([]);
 
       scope.processFriendsData(friends);
       expect(scope.allFriends).toEqual([f1, f2]);
+      expect(scope.otherUsers).toEqual([f1]);
     });
   });
 
