@@ -179,15 +179,24 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
  // Delegate method to be called by videoAd service
  $scope.adEnded = function() {
    loadMask.hide();
-   $scope.postBet();
+   $scope.doPostBet();
  }
 
  // Invoked when the place bet button is clicked by user.
  $scope.betBtnClicked = function() {
+     if ($scope.needsRequest()) {
+       $scope.sendRequestToNoneUsers();
+     } else {
+       $scope.postBet();
+     }
+ }
+
+ $scope.postBet = function() {
    if ($scope.bet.amount > currentUser.balance) {
+     // Should pop up a dialog box, give user ways to get more money.
      $scope.watchAd();
    } else {
-     $scope.postBet();
+     $scope.doPostBet();
    }
  }
 
@@ -215,10 +224,11 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
      to: nonUserIds.join(','),
      title: 'Follwing friends are not yet on Swagger:'
    }
+
    fb.ui($scope, opts).then(function(res) {
      if (res) {
        // If res is defined, user has accepted the request to send to friends.
-       $scope.doPostBet();
+       $scope.postBet();
      } else {
        // User does not want to send requests to new friends(remove these friends and
        // post bet request for the rest of the friends)
@@ -231,19 +241,10 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
        }
        if (newSelectedFriends.length > 0) {
          $scope.selectedFriends = newSelectedFriends;
-         $scope.doPostBet();
+         $scope.postBet();
        }
      }
    });
- }
-
- // Post bets to the server
- $scope.postBet = function() {
-   if ($scope.needsRequest()) {
-     $scope.sendRequestToNoneUsers();
-   } else {
-     $scope.doPostBet();
-   }
  }
 
 
