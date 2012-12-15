@@ -149,20 +149,26 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q, parentUrl
   }
 
   // We need to load user name for each user that initiates the bet from facebook.
+  // In addition, we also manually add a _betType field into the bet object for conveniece
+  // ONLY use it on the front end.
   $scope.loadBetInfo = function() {
     var promises = [];
     var allBets = [];
 
      $scope.user.bets.current.forEach(function(bet) {
+       bet._betType = 'current';
        allBets.push(bet);
      });
      $scope.user.bets.past.forEach(function(bet) {
+       bet._betType = 'past';
        allBets.push(bet);
      });
      $scope.user.bets.pendingUserAccept.forEach(function(bet) {
+       bet._betType = 'pendingUserAccept';
        allBets.push(bet);
      });
      $scope.user.bets.pendingOtherAccept.forEach(function(bet) {
+       bet._betType = 'pendingOtherAccept';
        allBets.push(bet);
      });
 

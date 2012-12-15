@@ -80,7 +80,6 @@ function User($q, $timeout, fb, $http) {
     fb.getLoginStatus($scope).then(function(res) {
       $http.get(apiUrl + res.authResponse.signedRequest).success(function(data) {
         if (!data.err) {
-          console.log(data);
           serverFields.forEach(function(fieldName) {
             if (data[fieldName]) {
               serviceScope[fieldName] = data[fieldName];

@@ -35,7 +35,7 @@
     <div class="money">
       Win $0.75
     </div>
-    <div class="buttons">
+    <div class="buttons" ng-show="focusedBet._betType == 'pendingUserAccept'">
       <button class="btn btn-danger acceptBtn"
           ng-click="acceptBet()">
         Accept Bet
