@@ -101,7 +101,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
   }
   // Initialize the page.
   $scope.initialize();
-  
+
   // We need this special conversion because
   // floating number arithmetic is weird.
   // 0.1 * 0.3 = 0.30000000004 ???!!!!
