@@ -173,7 +173,9 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
  }
 
  $scope.toggleSelect = function(friend) {
-   if ($scope.inSelectedFriends(friend)) {
+   // We need the index here so we cannot use inSelectedFriends funciton above.
+   var index = $scope.selectedFriends.indexOf(friend);
+   if (index >= 0) {
      $scope.selectedFriends.splice(index, 1);
    } else {
      $scope.selectedFriends.push(friend);
