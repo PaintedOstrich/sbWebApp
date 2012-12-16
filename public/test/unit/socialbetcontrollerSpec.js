@@ -229,21 +229,39 @@ describe('SocialBetCtrl', function() {
   });
 
 
-  describe('SocialBetCtrl.betBtnClicked', function() {
+  describe('SocialBetCtrl.postBet', function() {
     it('should be a function', function() {
-      expect(scope.betBtnClicked).toBeFunction();
+      expect(scope.postBet).toBeFunction();
     });
 
-    it('should make user watch an ad if not sufficient fund', function() {
-      mockUser.balance = 0;
-      scope.bet = {amount: 10};
+    it('should make user watch ad if realAmount > user balance', function() {
+      scope.user = {balance: 0.1};
+      // We let calcBetAmount to calculate the amounts.
+      scope.bet = {};
+      spyOn(scope, 'calcBetAmount').andCallFake(function() {
+        scope.bet.realAmount = 0.2;
+      });
       spyOn(scope, 'watchAd');
-      scope.betBtnClicked();
+      spyOn(scope, 'doPostBet');
+
+      scope.postBet();
       expect(scope.watchAd).toHaveBeenCalled();
+      expect(scope.doPostBet).not.toHaveBeenCalled();
     });
 
-    it('should post bet right away if user have sufficient fund', function() {
+    it('should just post the bet if user has enough fund', function() {
+      scope.user = {balance: 0.1};
+      // We let calcBetAmount to calculate the amounts.
+      scope.bet = {};
+      spyOn(scope, 'calcBetAmount').andCallFake(function() {
+        scope.bet.realAmount = 0;
+      });
+      spyOn(scope, 'watchAd');
+      spyOn(scope, 'doPostBet');
 
+      scope.postBet();
+      expect(scope.watchAd).not.toHaveBeenCalled();
+      expect(scope.doPostBet).toHaveBeenCalled();
     });
   });
 

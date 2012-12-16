@@ -26,11 +26,8 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
 
   // The bet to be placed.
   $scope.bet = undefined;
-  // TODO This should be a singleton
-  $scope.user = {
-    balance: 100,
-    currentBalance: 100
-  }
+
+  $scope.user = currentUser;
   // Sample bet amount is 50;
   $scope.sampleBetAmount = 50;
 
@@ -208,7 +205,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
    // Just to make sure the bet amount is most up to date, since the 
    // watcher will only be called async.
    $scope.calcBetAmount();
-   if ($scope.bet.realAmount > currentUser.balance) {
+   if ($scope.bet.realAmount > $scope.user.balance) {
      // Should pop up a dialog box, give user ways to get more money.
      $scope.watchAd();
    } else {
