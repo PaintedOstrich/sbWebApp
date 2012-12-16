@@ -207,9 +207,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
  $scope.postBet = function() {
    // Just to make sure the bet amount is most up to date, since the 
    // watcher will only be called async.
-   debugger;
    $scope.calcBetAmount();
-   debugger;
    if ($scope.bet.realAmount > currentUser.balance) {
      // Should pop up a dialog box, give user ways to get more money.
      $scope.watchAd();
