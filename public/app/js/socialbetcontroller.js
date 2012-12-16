@@ -171,9 +171,6 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
   return Math.abs(toR);
  }
 
- $scope.inSelectedFriends = function(friend) {
-   return $scope.selectedFriends.indexOf(friend) >= 0;
- }
 
  $scope.toggleSelect = function(friend) {
    var index = $scope.selectedFriends.indexOf(friend);
@@ -206,7 +203,12 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
  }
 
  $scope.postBet = function() {
-   if ($scope.bet.amount > currentUser.balance) {
+   // Just to make sure the bet amount is most up to date, since the 
+   // watcher will only be called async.
+   debugger;
+   $scope.calcBetAmount();
+   debugger;
+   if ($scope.bet.realAmount > currentUser.balance) {
      // Should pop up a dialog box, give user ways to get more money.
      $scope.watchAd();
    } else {
