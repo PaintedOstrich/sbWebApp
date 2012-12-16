@@ -171,10 +171,12 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
   return Math.abs(toR);
  }
 
+ $scope.inSelectedFriends = function(friend) {
+   return $scope.selectedFriends.indexOf(friend) >= 0;
+ }
 
  $scope.toggleSelect = function(friend) {
-   var index = $scope.selectedFriends.indexOf(friend);
-   if (index >= 0) {
+   if ($scope.inSelectedFriends(friend)) {
      $scope.selectedFriends.splice(index, 1);
    } else {
      $scope.selectedFriends.push(friend);
