@@ -61,7 +61,7 @@ describe('SocialBetCtrl', function() {
       showAd: jasmine.createSpy('showAd')
     };
     mockLocation = {
-      
+
     };
     scope = $rootScope.$new();
 
@@ -165,6 +165,53 @@ describe('SocialBetCtrl', function() {
       expect(scope.bet).toBeUndefined();
       scope.initBet({}, 1);
       expect(scope.bet).toBeDefined()
+    });
+
+    it('should init bet', function() {
+      expect(scope.bet).toBeUndefined();
+
+      var winnerName = 'name1';
+      var winRatio = 1;
+      var game = {
+        team1Id: '11',
+        team2Id: '22',
+        spreadTeam1: 'sp1',
+        spreadTeam2: 'sp2',
+        team1Name: winnerName,
+        team2Name: 'name2'
+      };
+      var winnerId = '11';
+      spyOn(scope, 'calcWinRatio').andReturn(winRatio);
+      spyOn(scope, 'calcBetAmount');
+      var sampleBet = {
+        game: game,
+        winner: winnerId,
+        winRatio: winRatio,
+        displayAmount:  0,
+        realAmount: 0,
+        winnerName: winnerName
+      }
+
+      scope.initBet(game, winnerId);
+      expect(scope.bet).toEqual(sampleBet);
+      expect(scope.calcWinRatio).toHaveBeenCalledWith('sp1');
+      expect(scope.calcBetAmount).toHaveBeenCalled();
+    });
+  });
+
+
+  describe('SocialBetCtrl.calcBetAmount', function() {
+    it('should be a function', function() {
+      expect(scope.calcBetAmount).toBeFunction();
+    });
+
+    it('should calc the right amount', function() {
+      scope.selectedFriends = [1, 2, 3];
+      scope.otherUsers = [1];
+      scope.bet = {};
+      scope.calcBetAmount();
+      expect(scope.bet.displayAmount).toBe(0.3);
+      expect(scope.bet.realAmount).toBe(0.2);
     });
   });
 

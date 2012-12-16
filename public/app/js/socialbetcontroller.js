@@ -101,11 +101,24 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
   }
   // Initialize the page.
   $scope.initialize();
+  
+  // We need this special conversion because
+  // floating number arithmetic is weird.
+  // 0.1 * 0.3 = 0.30000000004 ???!!!!
+  // Read about it here: http://floating-point-gui.de/basic/
+  function numConvert(num) {
+    return Number(num.toFixed(2));
+  }
 
  $scope.calcBetAmount = function() {
    if ($scope.bet) {
-     var numFriendsBeted = $scope.selectedFriends.length;
-     $scope.bet.amount = numFriendsBeted * 0.1; // Each friend worth 10 cents in bet!
+     var selectedFriendCount = $scope.selectedFriends.length;
+     var betCount = selectedFriendCount;
+     for (var i = 0; i < $scope.selectedFriends.length; i++) {
+       if ($scope.otherUsers.indexOf($scope.selectedFriends[i]) >= 0) betCount--;
+     }
+     $scope.bet.realAmount = numConvert(betCount * 0.1); // Each friend worth 10 cents in bet!
+     $scope.bet.displayAmount = numConvert(selectedFriendCount * 0.1);
    }
  }
 
@@ -136,7 +149,8 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
      game: game,
      winner: winnerId,
      winRatio: $scope.calcWinRatio(spread),
-     amount:  0,
+     displayAmount:  0,
+     realAmount: 0,
      winnerName: winnerName
    };
    $scope.calcBetAmount();
