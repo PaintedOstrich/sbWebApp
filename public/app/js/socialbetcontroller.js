@@ -136,7 +136,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
        $scope.queryFriend = '';
        $scope.friendsToDisplay = $scope.otherUsers;
      }
-   }, 50, true);
+   }, 1, true);
  });
  // -------------------------------------------------------
 

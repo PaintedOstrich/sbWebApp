@@ -118,7 +118,7 @@
         <div class="numbers">
           <div class="field">
             <span class="fieldName">Bet: </span>
-            <span class="uneditable">${{bet.amount | number:2}}</span>
+            <span class="uneditable">${{bet.displayAmount | number:2}}</span>
           </div>
           <div class="field">
             <span class="fieldName">Friends: </span>
@@ -127,7 +127,7 @@
           <div class="field">
             <span class="fieldName">Win: </span>
             <span class="uneditable" style="color: green;">
-              ${{bet.amount * bet.winRatio | number:2}}
+              ${{bet.displayAmount * bet.winRatio | number:2}}
             </span>
           </div>
         </div>
