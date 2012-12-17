@@ -1,6 +1,7 @@
 <!-- Bet Invite Popup view -->
 <div ng-controller="BetInviteCtrl">
-  <div ui-modal class="fade betInviteModal modal" ng-model="modalShown">
+  <div ui-modal class="fade betInviteModal betInfoModal modal" ng-model="modalShown">
+    <div class="closeBtn" ng-click="modalShown=false"></div>
     <div class="header"></div>
     <div class="teams">
       <div class="left">
@@ -34,7 +35,7 @@
     <div class="money">
       Win $0.75
     </div>
-    <div class="buttons">
+    <div class="buttons" ng-show="focusedBet._betType == 'pendingUserAccept'">
       <button class="btn btn-danger acceptBtn"
           ng-click="acceptBet()">
         Accept Bet

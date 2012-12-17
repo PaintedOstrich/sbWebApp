@@ -25,11 +25,17 @@ describe('serverApi', function() {
   });
 
   describe('BetAPI', function() {
-    var api;
+    var api, $mockHttp;
 
     beforeEach(inject(function(betAPI, $injector) {
       api = betAPI;
+      $mockHttp = $injector.get('$httpBackend');
     }));
+
+    afterEach(function() {
+      $mockHttp.verifyNoOutstandingExpectation();
+      $mockHttp.verifyNoOutstandingRequest();
+    });
 
     it('should exist', function() {
       expect(api).toBeDefined();
@@ -46,6 +52,36 @@ describe('serverApi', function() {
     describe('BetAPI.placeBet', function() {
       it('should be function', function() {
         expect(api.placeBet).toBeFunction();
+      });
+
+      it('should return a resolve a future when request suceed', function() {
+        var bet = {};
+        var resolved = false;
+        var rejected = false;
+        $mockHttp.expectPOST(api.url + 'bet/batch', bet).respond({});
+        api.placeBet(bet).then(function() {
+          resolved = true;
+        }, function() {
+          rejected = true;
+        });
+        $mockHttp.flush();
+        expect(resolved).toBe(true);
+        expect(rejected).toBe(false);
+      });
+
+      it('should return reject a future when request fails', function() {
+        var bet = {};
+        var resolved = false;
+        var rejected = false;
+        $mockHttp.expectPOST(api.url + 'bet/batch', bet).respond(404);
+        api.placeBet(bet).then(function() {
+          resolved = true;
+        }, function() {
+            rejected = true;
+        });
+        $mockHttp.flush();
+        expect(resolved).toBe(false);
+        expect(rejected).toBe(true);
       });
     });
   });

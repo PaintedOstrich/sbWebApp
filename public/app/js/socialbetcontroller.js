@@ -1,11 +1,14 @@
 // Controller for social bet screen
-function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) {
+function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, videoAd) {
   $scope.$parent.showInfoBackground = true;
   // ------------------- Controller variables ----------------
   // Friends selected to place bet on.
   $scope.selectedFriends = [];
   // An id to Friend obj mapping storing all user's fb friends.
   $scope.allFriends = [];
+  // An array of all friends of the user who are also using
+  // our app.
+  $scope.otherUsers = [];
 
   // The friends to display in friend panel
   $scope.friendsToDisplay = [];
@@ -23,11 +26,8 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) 
 
   // The bet to be placed.
   $scope.bet = undefined;
-  // TODO This should be a singleton
-  $scope.user = {
-    balance: 100,
-    currentBalance: 100
-  }
+
+  $scope.user = currentUser;
   // Sample bet amount is 50;
   $scope.sampleBetAmount = 50;
 
@@ -48,7 +48,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) 
 
   // Initialize by loading friends from fb, games from bet server.
   $scope.loadData = function() {
-    var friendReq = fb.api($scope, '/me/friends');
+    var friendReq = fb.api($scope, '/me/friends/?fields=name,installed');
     var gameReq = betAPI.loadGames($scope.gameType.value);
     $q.all([friendReq, gameReq]).then($scope.processData);
   }
@@ -58,7 +58,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) 
     $scope.processFriendsData(friendRes);
     var gameRes = combinedData[1];
     $scope.processGameData(gameRes);
-    loadMask.hide();
+    loadMask.loadSuccess();
   }
 
   $scope.processGameData = function(res) {
@@ -77,6 +77,11 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) 
       alert('Sorry, failed to load friends. Please try again.');
     } else {
       $scope.allFriends = res.data;
+      $scope.allFriends.forEach(function(friend) {
+        if (friend.installed) {
+          $scope.otherUsers.push(friend);
+        }
+      });
       $scope.friendsToDisplay = $scope.allFriends;
     }
   }
@@ -94,10 +99,23 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) 
   // Initialize the page.
   $scope.initialize();
 
+  // We need this special conversion because
+  // floating number arithmetic is weird.
+  // 0.1 * 0.3 = 0.30000000004 ???!!!!
+  // Read about it here: http://floating-point-gui.de/basic/
+  function numConvert(num) {
+    return Number(num.toFixed(2));
+  }
+
  $scope.calcBetAmount = function() {
    if ($scope.bet) {
-     var numFriendsBeted = $scope.selectedFriends.length;
-     $scope.bet.amount = numFriendsBeted * 0.1; // Each friend worth 10 cents in bet!
+     var selectedFriendCount = $scope.selectedFriends.length;
+     var betCount = selectedFriendCount;
+     for (var i = 0; i < $scope.selectedFriends.length; i++) {
+       if ($scope.otherUsers.indexOf($scope.selectedFriends[i]) >= 0) betCount--;
+     }
+     $scope.bet.realAmount = numConvert(betCount * 0.1); // Each friend worth 10 cents in bet!
+     $scope.bet.displayAmount = numConvert(selectedFriendCount * 0.1);
    }
  }
 
@@ -111,8 +129,11 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) 
      } else if (newVal == 'selected') {
        $scope.queryFriend = '';
        $scope.friendsToDisplay = $scope.selectedFriends;
+     } else if (newVal == 'installed') {
+       $scope.queryFriend = '';
+       $scope.friendsToDisplay = $scope.otherUsers;
      }
-   }, 50, true);
+   }, 1, true);
  });
  // -------------------------------------------------------
 
@@ -125,7 +146,8 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) 
      game: game,
      winner: winnerId,
      winRatio: $scope.calcWinRatio(spread),
-     amount:  0,
+     displayAmount:  0,
+     realAmount: 0,
      winnerName: winnerName
    };
    $scope.calcBetAmount();
@@ -151,6 +173,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) 
  }
 
  $scope.toggleSelect = function(friend) {
+   // We need the index here so we cannot use inSelectedFriends funciton above.
    var index = $scope.selectedFriends.indexOf(friend);
    if (index >= 0) {
      $scope.selectedFriends.splice(index, 1);
@@ -159,22 +182,130 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser) 
    }
  }
 
+ // Show an advertisement for the user to watch.
+ $scope.watchAd = function() {
+   loadMask.show({hideSpinner: true});
+   videoAd.showAd({delegate: $scope});
+ }
+
+ // Delegate method to be called by videoAd service
+ $scope.adEnded = function() {
+   loadMask.hide();
+   $scope.doPostBet();
+ }
+
+ // Invoked when the place bet button is clicked by user.
+ $scope.betBtnClicked = function() {
+     if ($scope.needsRequest()) {
+       $scope.sendRequestToNoneUsers();
+     } else {
+       $scope.postBet();
+     }
+ }
+
  $scope.postBet = function() {
+   // Just to make sure the bet amount is most up to date, since the 
+   // watcher will only be called async.
+   $scope.calcBetAmount();
+   if ($scope.bet.realAmount > $scope.user.balance) {
+     // Should pop up a dialog box, give user ways to get more money.
+     $scope.watchAd();
+   } else {
+     $scope.doPostBet();
+   }
+ }
+
+ // Check if any selected friends are not in the list of friends that
+ // have already installed our app.
+ $scope.needsRequest = function() {
+   for (var i = 0; i < $scope.selectedFriends.length; i++) {
+     if ($scope.otherUsers.indexOf($scope.selectedFriends[i]) < 0) return true;
+   }
+   return false;
+ }
+
+ $scope.sendRequestToNoneUsers = function() {
+   // Figure out who are the non-users
+   var nonUserIds = [];
+   for (var i = 0; i < $scope.selectedFriends.length; i++) {
+     if ($scope.otherUsers.indexOf($scope.selectedFriends[i]) < 0) {
+       nonUserIds.push($scope.selectedFriends[i].id);
+     }
+   }
+
+   var opts = {
+     method: 'apprequests',
+     message: 'I challenge you to a Swagger bet!',
+     to: nonUserIds.join(','),
+     title: 'Follwing friends are not yet on Swagger:'
+   }
+
+   fb.ui($scope, opts).then(function(res) {
+     if (res) {
+       // If res is defined, user has accepted the request to send to friends.
+       $scope.postBet();
+     } else {
+       // User does not want to send requests to new friends(remove these friends and
+       // post bet request for the rest of the friends)
+       var newSelectedFriends = [];
+       for (var i = 0; i < $scope.selectedFriends.length; i++) {
+         var tmp =$scope.selectedFriends[i];
+         if ($scope.otherUsers.indexOf(tmp) >= 0) {
+           newSelectedFriends.push(tmp);
+         }
+       }
+       if (newSelectedFriends.length > 0) {
+         $scope.selectedFriends = newSelectedFriends;
+         $scope.postBet();
+       }
+     }
+   });
+ }
+
+
+ // Actually posting bet to the server, after making sure the requests are sent
+ // to none-users.
+ $scope.doPostBet = function() {
+   var friendIds = [];
+   for (var i=0; i < $scope.selectedFriends.length; i++)
+   {
+     friendIds.push($scope.selectedFriends[i].id);
+   }
    var bet = {
      initFBId: currentUser.id,
+     callFBIds: friendIds,
      // Assuming even distribution
-     betAmount: $scope.bet.amount / $scope.selectedFriends.length,
+     betAmount: $scope.bet.amount,
      type: 'spread',
      gameId: $scope.bet.game.gid,
-     initTeamBet: $scope.bet.winner,
+     initTeamBetId: $scope.bet.winner,
      spreadTeam1: $scope.bet.game.spreadTeam1,
      spreadTeam2: $scope.bet.game.spreadTeam2
    };
-   for (var i=0; i < $scope.selectedFriends.length; i++)
-   {
-     bet.callFBId = $scope.selectedFriends[i].id;
-     betAPI.placeBet(bet);
+   loadMask.show({text: 'Placing bets....'});
+   betAPI.placeBet(bet).then($scope.networkSuccess, $scope.networkFailed);
+ }
+
+ $scope.networkSuccess = function(res) {
+   if (res.err) {
+     $scope.betFailed(res);
+   } else {
+     $scope.betSuccess(res);
    }
  }
+
+ $scope.networkFailed = function(err) {
+   loadMask.loadFailed({text: 'Failed, please check your connections'});
+ }
+
+ $scope.betFailed = function(err) {
+   loadMask.loadFailed({text: 'Failed to place bet. Please try again.'});
+ }
+
+ $scope.betSuccess = function(res) {
+   loadMask.loadSuccess({text: 'Bet posted, redirecting...'});
+   $timeout(angular.bind($scope.$parent, $scope.$parent.showProfile), 500);
+ }
+
 }
-SocialBetCtrl.$inject = ['$scope',  'fb', 'loadMask', 'betAPI', '$q', '$timeout', 'currentUser'];
+SocialBetCtrl.$inject = ['$scope',  'fb', 'loadMask', 'betAPI', '$q', '$timeout', 'currentUser', 'videoAd'];

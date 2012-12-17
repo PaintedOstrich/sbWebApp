@@ -1,16 +1,18 @@
 <div ng-click="betInviteClicked(bet)" class="betChip">
-  <div class="otherUserName">{{bet.initFBName}}</div>
+  <div class="otherUserName">
+    {{bet.callFBName || bet.initFBName}}
+  </div>
   <div class="body">
     <div class="left">
       <img class="profileImg" 
-          ng-src="http://graph.facebook.com/{{bet.callFBId}}/picture/">
+          ng-src="http://graph.facebook.com/{{bet.initFBId}}/picture/">
       <div class="teamName">St Louis Rams</div>
       <div class="spread">-130</div>
     </div>
     <div class="vsText"><br/>VS</div>
     <div class="right">
       <img class="profileImg" 
-          ng-src="http://graph.facebook.com/{{bet.initFBId}}/picture/">
+          ng-src="http://graph.facebook.com/{{bet.callFBId}}/picture/">
       <div class="teamName">Denver Broncos</div>
       <div class="spread">+130</div>
     </div>

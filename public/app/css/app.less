@@ -3,6 +3,7 @@
 /* Global variables */
 @panelWidth: 90%;
 @mainPanelWidth: 900px;
+@loadMaskZIndex: 99990;
 
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none;
@@ -54,6 +55,13 @@ body {
   text-shadow: 1px 1px 2px gray;
 }
 
+#playerContainer {
+  // Make sure the player appears on top of the loadMask
+  z-index: @loadMaskZIndex + 1;
+  position: fixed;
+  left: 25%;
+  top: 140px;
+}
 
 /* CSS for widgets that may be used in multiple views */
 
@@ -110,7 +118,7 @@ body {
     .friendName {
       font-weight: bold;
       color: blue;
-    } 
+    }
   }
   .friendImage {
     text-align: center;
@@ -131,7 +139,7 @@ body {
       bottom: 0px;
     }
   }
-  .friendName { 
+  .friendName {
     min-height: 45px;
     text-align: center;
     font-size: 0.9em;
@@ -147,7 +155,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 99999;
+  z-index: @loadMaskZIndex;
   background-color: transparent;
   opacity: 0.0;
   .transition(opacity, .6s);
@@ -180,6 +188,26 @@ body {
     width: 150px;
     height: 150px;
     background-color: transparent;
+
+    .successTick {
+      width: 80px;
+      height: 75px;
+      background-image: url('../img/tick.png');
+      background-size: 100%;
+      position: absolute;
+      top: 20px;
+      left: 23%;
+    }
+
+    .failedIcon {
+      width: 80px;
+      height: 75px;
+      background-image: url('../img/exclamation.png');
+      background-size: 100%;
+      position: absolute;
+      top: 20px;
+      left: 23%;
+    }
 
     .text{
       position: absolute;
@@ -318,7 +346,7 @@ body {
     ul {
       li {
         &:first-child {
-         margin-left: @leftIndent; 
+         margin-left: @leftIndent;
         }
         a {
           font-weight: bold;
@@ -533,6 +561,21 @@ body {
       bottom: @marginBottom;
       right: 15px;
     }
+  }
+}
+
+.betInfoModal {
+  position: relative;
+  overflow: visible !important;
+  .closeBtn {
+    background-image:url('../img/close.png');
+    background-size: 100%;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    right: -18px;
+    top: -18px;
+    cursor: pointer;
   }
 }
 

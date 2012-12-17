@@ -8,18 +8,23 @@
 </head>
 <body ng-controller="MainCtrl">
   <!-- This invisible span will convey initial data such as
-  opening bet invites if user arrives at our app by clicking an 
+  opening bet invites if user arrives at our app by clicking an
   invite link -->
-  <span id="initialData"style="display:none;" 
+  <span id="initialData"style="display:none;"
       data="<%= req.url %>"></span>
+
+  <!-- The div youtube uses to embed and show iframe -->
+  <div id="playerContainer">
+    <div id="player" class="youtubePlayer"></div>
+  </div>
 
   <div class="navbar navbar-inverse">
     <div class="navbar-inner">
       <div class="container">
         <img class="logo" src="app/img/logo.png" ng-click="showProfile()">
-        <div class="username ng-cloak" ng-cloak ng-click="showProfile()">
+        <a class="username ng-cloak" ng-cloak ng-click="showProfile()">
           {{user.name}}
-        </div>
+        </a>
         <button class="btn btn-danger betBtn"
             ng-click="newBet()">
           Make a bet
@@ -43,6 +48,7 @@
     window.fbAsyncInit = function() {
       FB.init({
         appId      : <%= app.id %>, // App ID
+        frictionlessRequests: true,
         channelUrl : '//'+window.location.hostname+'/channel', // Channel File
         status     : true, // check login status
         cookie     : true, // enable cookies to allow the server to access the session
@@ -50,7 +56,40 @@
       });
     };
   </script>
+  
+
   <script src="//connect.facebook.net/en_US/all.js"></script>
+  <!-- start Mixpanel --><script type="text/javascript">
+  (function(c,a){window.mixpanel=a;
+  	var b,d,h,e;b=c.createElement("script");
+  	b.type="text/javascript";b.async=!0;
+  	b.src=("https:"===c.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.1.min.js';
+  	d=c.getElementsByTagName("script")[0];d.parentNode.insertBefore(b,d);
+  	a._i=[];a.init=function(b,c,f){
+  		function d(a,b){
+  			var c=b.split(".");
+  			2==c.length&&(a=a[c[0]],b=c[1]);
+  			a[b]=function(){
+  				a.push([b].concat(Array.prototype.slice.call(arguments,0)))
+  			}
+  		}
+
+  		var g=a;"undefined"!==typeof f? g=a[f]=[]:f="mixpanel";
+  		g.people=g.people||[];
+  		h="disable track track_pageview track_links track_forms register register_once unregister identify name_tag set_config people.identify people.set people.increment".split(" ");
+  		for(e=0;e<h.length;e++)
+  			d(g,h[e]);
+
+  		a._i.push([b,c,f])
+  	};
+
+  	a.__SV=1.1})(document,window.mixpanel||[]);
+
+          // dev id = below id
+    mixpanel.init("<%= mixPanelToken %>");
+
+  </script><!-- end Mixpanel -->
+
 
   <script src="app/lib/angular/angular.js"></script>
   <script src="app/lib/angular-ui/angular-ui.js"></script>

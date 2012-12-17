@@ -26,7 +26,11 @@ function BetAPI($resource, $q, $http) {
   }
 
   this.placeBet = function(bet) {
-    $http.post(this.url + 'bet', bet).success(function(res) {console.log(res)});
+    var deferred = $q.defer();
+    $http.post(this.url + 'bet/batch', bet).
+      success(function(res) {deferred.resolve(res)}).
+      error(function(err) {deferred.reject(err)});
+    return deferred.promise;
   }
 }
 
@@ -34,13 +38,18 @@ function BetAPI($resource, $q, $http) {
  * The user singleton to be shared among all controllers.
  */
 function User($q, $timeout, fb, $http) {
+  this.fbInfoLoaded = false;
+  this.betInfoLoaded = false;
+  var self = this;
+
   this.isLoaded = function() {
-    return !!this.id;
+    return this.fbInfoLoaded && this.betInfoLoaded;
   }
 
   // Private function to process loaded user data from facebook
   this.processDataFromFb = function($scope, res) {
     var deferred = $q.defer();
+    self.fbInfoLoaded = false;
     if (res.error) {
       console.error('Failed to load user!');
       deferred.reject();
@@ -54,6 +63,7 @@ function User($q, $timeout, fb, $http) {
       }
       this.imgUrl = "http://graph.facebook.com/"
           + this.id + "/picture?type=large";
+      self.fbInfoLoaded = true;
       deferred.resolve();
     }
     return deferred.promise;
@@ -66,6 +76,7 @@ function User($q, $timeout, fb, $http) {
   this.queryBackend = function($scope) {
     var deferred = $q.defer();
     var serviceScope = this;
+    self.betInfoLoaded = false;
     fb.getLoginStatus($scope).then(function(res) {
       $http.get(apiUrl + res.authResponse.signedRequest).success(function(data) {
         if (!data.err) {
@@ -74,6 +85,7 @@ function User($q, $timeout, fb, $http) {
               serviceScope[fieldName] = data[fieldName];
             }
           });
+          self.betInfoLoaded = true;
           deferred.resolve();
         } else {
           deferred.reject();

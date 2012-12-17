@@ -3,9 +3,8 @@
 /* Controllers */
 
 // The top most controller, mainly in charge of navigations.
-function MainCtrl($scope, currentUser, $location) {
+function MainCtrl($scope, currentUser, $location, parentUrlParser) {
   $scope.user = currentUser;
-
   $scope.$on('betInviteCliked', function(e, bet) {
     $scope.$broadcast('showBetInvite', bet);
   });
@@ -20,10 +19,15 @@ function MainCtrl($scope, currentUser, $location) {
   }
 
   $scope.newBet = function() {
-    $location.path('socialbet');
+    if ($scope.user.isLoaded()) {
+      $location.path('socialbet');
+    }
   }
+
+  // Initialize parentUrlParser so its _data will be populated.
+  parentUrlParser.init();
 }
-MainCtrl.$inject = ['$scope', 'currentUser', '$location'];
+MainCtrl.$inject = ['$scope', 'currentUser', '$location', 'parentUrlParser'];
 
 // A sort of widget controllers for bet info widget popup
 function BetInviteCtrl($scope, $timeout) {
@@ -51,20 +55,13 @@ function BetInviteCtrl($scope, $timeout) {
   }
 
   $scope.acceptBet = function() {
-    $scope.closeModal();
+    $scope.modalShown = false;
     console.log("TODO! implement accept bet logic!!");
   }
 
   $scope.declineBet = function() {
     console.log("TODO! implement decline bet logic!!");
-    $scope.closeModal();
-  }
-  
-  // We need better way to close modal without taking away the mask
-  // for better chained invite confirmation effect!!!!
-  $scope.closeModal = function() {
     $scope.modalShown = false;
-    $timeout($scope.checkNextInQueue, 1000);
   }
 
   // Show next bet in betQueue if there is any.
@@ -76,6 +73,12 @@ function BetInviteCtrl($scope, $timeout) {
         $scope.focusedBet = nextBet;
       }
   }
+
+  $scope.$watch('modalShown', function(newVal) {
+    if (newVal == false) {
+      $timeout($scope.checkNextInQueue, 1000);
+    }
+  })
 }
 BetInviteCtrl.$inject = ['$scope', '$timeout'];
 // ---------- End of widget controllers ------------------------
@@ -113,7 +116,7 @@ LandingCtrl.$inject = ['$scope', '$location', 'fb'];
 
 
 // Controller for user profile screen
-function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q) {
+function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q, parentUrlParser) {
   $scope.$parent.showInfoBackground = true;
   $scope.currentTab = 'active';
   $scope.betTemplateUrl = 'app/partials/profile/bet.html';
@@ -131,6 +134,12 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q) {
       currentUser.loadUser($scope).then(function() {
         $scope.user = currentUser;
         deferred.resolve();
+        // Initialize mixPanel here!
+        if (window.mixpanel) {
+          mixpanel.identify($scope.user.id);
+          mixpanel.name_tag($scope.user.name);
+          mixpanel.track('totalAppLoads', { uid: $scope.user.id});
+        }
       }, function() {
         loadMask.hide();
         deferred.reject();
@@ -140,27 +149,42 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q) {
   }
 
   // We need to load user name for each user that initiates the bet from facebook.
+  // In addition, we also manually add a _betType field into the bet object for conveniece
+  // ONLY use it on the front end.
   $scope.loadBetInfo = function() {
     var promises = [];
     var allBets = [];
 
      $scope.user.bets.current.forEach(function(bet) {
+       bet._betType = 'current';
        allBets.push(bet);
      });
      $scope.user.bets.past.forEach(function(bet) {
+       bet._betType = 'past';
        allBets.push(bet);
      });
      $scope.user.bets.pendingUserAccept.forEach(function(bet) {
+       bet._betType = 'pendingUserAccept';
        allBets.push(bet);
      });
      $scope.user.bets.pendingOtherAccept.forEach(function(bet) {
+       bet._betType = 'pendingOtherAccept';
        allBets.push(bet);
      });
 
      allBets.forEach(function(bet) {
-       var promise = fb.api($scope, bet.initFBId + '?fields=name').
-           then(function(res) {bet.initFBName = res.name});
-       promises.push(promise);
+       
+       if (bet.initFBId != currentUser.id) {
+         var promise1 = fb.api($scope, bet.initFBId + '?fields=name').
+             then(function(res) {bet.initFBName = res.name});
+          promises.push(promise1);
+       }
+
+       if (bet.callFBId != currentUser.id) {
+         var promise2 = fb.api($scope, bet.callFBId + '?fields=name').
+             then(function(res) {bet.callFBName = res.name});
+         promises.push(promise2);
+       }
      });
     return $q.all(promises);
   }
@@ -174,17 +198,19 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q) {
   // bet invites we need to show up for the user to confirm (this
   // happens when user arrives to our app by clicking on an invite)
   $scope.checkInitActions = function() {
-    loadMask.hide();
-    var dom = $('#initialData');
-    var data = dom.attr('data');
-    if (dom.length > 0 && data) {
-      var betsToShow = $scope.parseInitData(data);
+    loadMask.loadSuccess({text: 'User Info Loaded'});
+    var data;
+    if (data = parentUrlParser.get('showbet')) {
+      // Need to clear it so next time we will not show these notifications
+      // again.
+      parentUrlParser.set('showbet', '');
+      var betsToShow = data.split('%2C');
       if (betsToShow.length > 0) {
         var bets = [];
         betsToShow.forEach(function(betId) {
           for (var i = 0; i <  $scope.user.bets.pendingUserAccept.length; i++) {
             var betInvite = $scope.user.bets.pendingUserAccept[i];
-            if (betId == betInvite.betId) {
+            if (betId == betInvite['_id']) {
               bets.push(betInvite);
               break;
             }
@@ -195,24 +221,6 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q) {
         }
       }
     }
-    //Remember to remove it so it does not pop uo again.
-    dom.remove();
-  }
-
-  // Helper method to parse initial data passed in from url
-  $scope.parseInitData = function(dataStr) {
-    var toR = [];
-    var chunks = dataStr.split('?');
-    if (chunks.length < 2) return toR;
-
-    chunks = chunks[1].split('=');
-    if (chunks.length < 2) return toR;
-
-    var fieldName = chunks[0];
-    if (fieldName != 'showBet') return toR;
-
-    var betIds = chunks[1].split('%2C');
-    return betIds;
   }
 
   loadMask.show({text: 'Loading User Profile...'});
@@ -225,7 +233,7 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q) {
     $scope.$emit('betInviteCliked', bet);
   }
 }
-ProfileCtrl.$inject = ['$scope', '$location', 'fb', 'loadMask', 'currentUser', '$q'];
+ProfileCtrl.$inject = ['$scope', '$location', 'fb', 'loadMask', 'currentUser', '$q', 'parentUrlParser'];
 
 
 

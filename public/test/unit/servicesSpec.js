@@ -19,4 +19,82 @@ describe('services', function() {
           }
       });
   });
+
+
+  describe('VideoAd', function() {
+    var videoAdService;
+
+    beforeEach(inject(function(videoAd, $injector) {
+      videoAdService = videoAd;
+    }));
+
+    it('should be defined', function() {
+      expect(videoAdService).toBeDefined();
+    });
+  });
+
+
+  describe('ParentUrlParser', function() {
+    var parser;
+
+    beforeEach(inject(function(parentUrlParser, $injector) {
+      parser = parentUrlParser;
+    }));
+
+    it('should be defined', function() {
+      expect(parser).toBeDefined();
+    });
+
+
+    describe('ParentUrlParser.init', function() {
+      it('should be a function', function() {
+        expect(parser.init).toBeFunction();
+      });
+    });
+
+
+    describe('ParentUrlParser.parseUrl', function() {
+      it('should be a function', function() {
+        expect(parser.parseUrl).toBeFunction();
+      });
+
+      it('should do nothing with empty url', function() {
+        expect(parser._data).toEqual({});
+        parser.parseUrl('/abc');
+        expect(parser._data).toEqual({});
+        parser.parseUrl('/?');
+        expect(parser._data).toEqual({});
+        parser.parseUrl('/?abc');
+        expect(parser._data).toEqual({});
+      });
+
+      it('should get relevant params and value paris', function() {
+        expect(parser._data).toEqual({});
+        parser.parseUrl('/?a=aVal');
+        expect(parser._data).toEqual({a: 'aVal'});
+
+        parser._data = {};
+        parser.parseUrl('/?a=aVal&');
+        expect(parser._data).toEqual({a: 'aVal'});
+
+        parser._data = {};
+        parser.parseUrl('/?a=aVal&b');
+        expect(parser._data).toEqual({a: 'aVal'});
+
+        parser._data = {};
+        parser.parseUrl('/?a=aVal&b=');
+        expect(parser._data).toEqual({a: 'aVal', b: ''});
+
+        parser._data = {};
+        parser.parseUrl('/?a=aVal&b=bVal');
+        expect(parser._data).toEqual({a: 'aVal', b: 'bVal'});
+      });
+
+      it('should parse more realistic examples', function() {
+        expect(parser._data).toEqual({});
+        parser.parseUrl('/?showbet=1,2,3&fb_source=notification&');
+        expect(parser._data).toEqual({showbet: '1,2,3', fb_source:'notification'});
+      });
+    });
+  });
 });

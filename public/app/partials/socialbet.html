@@ -13,12 +13,12 @@
             </div>
             <div class="teamBlock">
               <div class="team">
-                <img ng-src="app/img/helmets/{{game.team1Name.split(' ').join('')}}1.png" 
+                <img ng-src="app/img/helmets/{{game.team1Name.split(' ').join('').toLowerCase()}}1.png" 
                     class="teamLogo">
                 {{game.team1Name}}
               </div>
               <div class="team">
-                <img ng-src="app/img/helmets/{{game.team2Name.split(' ').join('')}}2.png" 
+                <img ng-src="app/img/helmets/{{game.team2Name.split(' ').join('').toLowerCase()}}2.png" 
                     class="teamLogo">
                 {{game.team2Name}}
               </div>
@@ -55,14 +55,14 @@
         <div class="teamBlock"
             ng-class="{'highlight': bet.winner==bet.game.team1Id}"
             ng-click="initBet(bet.game, bet.game.team1Id)">
-          <img ng-src="app/img/helmets/{{bet.game.team1Name.split(' ').join('')}}1.png" 
+          <img ng-src="app/img/helmets/{{bet.game.team1Name.split(' ').join('').toLowerCase()}}1.png" 
               class="teamLogo">
           <div>{{bet.game.spreadTeam1}}</div>
         </div>
         <div class="teamBlock"
             ng-class="{'highlight': bet.winner==bet.game.team2Id}"
             ng-click="initBet(bet.game, bet.game.team2Id)">
-          <img ng-src="app/img/helmets/{{bet.game.team2Name.split(' ').join('')}}2.png" 
+          <img ng-src="app/img/helmets/{{bet.game.team2Name.split(' ').join('').toLowerCase()}}2.png" 
               class="teamLogo">
           <div>{{bet.game.spreadTeam2}}</div>
         </div>
@@ -83,8 +83,15 @@
     <div class="friendPanel">
       <div class="friendFilters">
         <select class="filter" ng-model="friendFilter">
-          <option value="all">Friends to invite</option>
-          <option value="selected">Selected Friends</option>
+          <option value="all">
+            All friends
+          </option>
+          <option value="installed">
+            Friends using Swagger
+          </option>
+          <option value="selected">
+            Selected Friends
+          </option>
         </select>
         <input type="text" class="searchBox" placeholder="Search..."
             ng-model="queryFriend" ng-show="friendFilter == 'all'">
@@ -111,7 +118,7 @@
         <div class="numbers">
           <div class="field">
             <span class="fieldName">Bet: </span>
-            <span class="uneditable">${{bet.amount | number:2}}</span>
+            <span class="uneditable">${{bet.displayAmount | number:2}}</span>
           </div>
           <div class="field">
             <span class="fieldName">Friends: </span>
@@ -120,12 +127,12 @@
           <div class="field">
             <span class="fieldName">Win: </span>
             <span class="uneditable" style="color: green;">
-              ${{bet.amount * bet.winRatio | number:2}}
+              ${{bet.displayAmount * bet.winRatio | number:2}}
             </span>
           </div>
         </div>
         <div class="btn btn-danger btn-large" 
-            ng-click="postBet()"
+            ng-click="betBtnClicked()"
             ng-show="selectedFriends.length > 0">
           PLACE BET!
         </div>

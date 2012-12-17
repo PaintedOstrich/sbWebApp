@@ -12,12 +12,19 @@ describe('SportsBet controllers', function() {
             return typeof this.actual == 'function';
           }
       });
+
+      module('services', function($provide) {
+      });
   });
 
   // The fb service mock that does nothing but returning a promise,
   // imitating the api of actual fb service in services.js.
-  var mockFb, mockLoadMask;
+  var mockFb, mockLoadMask, mockLocation;
   beforeEach(inject(function($q){
+    mockLocation = {
+      path: jasmine.createSpy('location')
+    };
+
     mockFb = {
       promises: {}
     }
@@ -32,7 +39,9 @@ describe('SportsBet controllers', function() {
 
     mockLoadMask = {
       show: jasmine.createSpy('showMask'),
-      hide: jasmine.createSpy('hideMask')
+      hide: jasmine.createSpy('hideMask'),
+      loadSuccess: jasmine.createSpy('loadSuccess'),
+      loadFailed: jasmine.createSpy('loadFailed')
     };
   }));
 
@@ -41,7 +50,8 @@ describe('SportsBet controllers', function() {
     beforeEach(inject(function($rootScope, $controller) {
       var mockUser = {}
       scope = $rootScope.$new();
-      ctrl = $controller(MainCtrl, {$scope: scope, currentUser: mockUser});
+      ctrl = $controller(MainCtrl,
+        {$scope: scope, currentUser: mockUser, $location: mockLocation});
     }));
 
     it('should have the right number of listeners', function() {
@@ -52,12 +62,13 @@ describe('SportsBet controllers', function() {
 
 
   describe('BetInviteCtrl', function() {
-    var rootScope, scope, ctrl, mockLocation;
+    var rootScope, scope, ctrl;
 
     beforeEach(inject(function($rootScope, $controller) {
       rootScope = $rootScope.$new();
       var mockUser = {}
-      var mainCtrl = $controller(MainCtrl, {$scope: rootScope, currentUser: mockUser});
+      var mainCtrl = $controller(MainCtrl,
+          {$scope: rootScope, currentUser: mockUser, $location: mockLocation});
       scope = rootScope.$new();
       ctrl = $controller(BetInviteCtrl, {$scope: scope});
     }));
@@ -76,13 +87,9 @@ describe('SportsBet controllers', function() {
   });
 
   describe('LandingCtrl', function() {
-    var scope, ctrl, mockLocation;
+    var scope, ctrl;
 
     beforeEach(inject(function($rootScope, $controller) {
-      mockLocation = {
-        path: jasmine.createSpy('location')
-      };
-
       var mainScope = $rootScope.$new();
       var mainCtrl = $controller(MainCtrl, {$scope: mainScope});
       scope = mainScope.$new();
@@ -130,10 +137,6 @@ describe('SportsBet controllers', function() {
     var scope, ctrl, mockLocation, mockCurrentUser;
 
     beforeEach(inject(function($rootScope, $controller) {
-      mockLocation = {
-        path: jasmine.createSpy('location')
-      };
-
       mockCurrentUser = {
         isLoaded: jasmine.createSpy(),
 
@@ -143,7 +146,7 @@ describe('SportsBet controllers', function() {
       }
       var mainScope = $rootScope.$new();
       var mainCtrl = $controller(MainCtrl,
-          {$scope: mainScope, currentUser: mockCurrentUser});
+          {$scope: mainScope, currentUser: mockCurrentUser, $location: mockLocation});
       scope = mainScope.$new();
       ctrl = $controller(ProfileCtrl,
           {$scope: scope, fb: mockFb, $location: mockLocation,
@@ -172,6 +175,12 @@ describe('SportsBet controllers', function() {
 
 
     describe('ProfileCtrl.checkInitActions', function() {
+      var realParentUrlParser;
+      
+      beforeEach(inject(function(parentUrlParser) {
+        realParentUrlParser = parentUrlParser
+      }));
+      
       afterEach(function () {
         window.$ = undefined;
       });
@@ -180,38 +189,16 @@ describe('SportsBet controllers', function() {
         expect(scope.checkInitActions).toBeFunction();
       });
 
-      it('should obtain data from dom', function() {
-        expect(window.$).toBeUndefined();
-
-        var data = '/?showBet=123'
-        var fakeDom = {
-          length: 1,
-          attr: function() {return data;},
-          remove: jasmine.createSpy('remove')
-        }
-        window.$ = jasmine.createSpy().andReturn(fakeDom);
-        spyOn(scope, 'parseInitData').andReturn([]);
-        scope.checkInitActions();
-        expect(scope.parseInitData).toHaveBeenCalledWith(data);
-        expect(fakeDom.remove).toHaveBeenCalled();
-      });
-
       it('should emit the right event with data', function() {
         expect(window.$).toBeUndefined();
-        var bet1 = { betId: '123' };
-        var bet2 = { betId: '456' };
+        var bet1 = { _id: '123' };
+        var bet2 = { _id: '456' };
         scope.user = {
           bets: {
             pendingUserAccept: [bet1, bet2]
           }
         }
-        var fakeDom = {
-          length: 1,
-          attr: function() {return '/?showBet=123,noSuchBet'},
-          remove: jasmine.createSpy('remove')
-        }
-        window.$ = jasmine.createSpy().andReturn(fakeDom);
-        spyOn(scope, 'parseInitData').andReturn(['123', '456', 'noSuchBet']);
+        spyOn(realParentUrlParser, 'get').andReturn('123%2C456%2CnoSuchBet');
         spyOn(scope, '$emit');
         scope.checkInitActions();
         expect(scope.$emit).toHaveBeenCalledWith('showMultipleBets', [bet1, bet2]);
@@ -223,45 +210,10 @@ describe('SportsBet controllers', function() {
             pendingUserAccept: []
           }
         }
-        var fakeDom = {
-          attr: function() {return '/?showBet=123,noSuchBet'},
-          length: 1,
-          remove: jasmine.createSpy('remove')
-        }
-        window.$ = jasmine.createSpy().andReturn(fakeDom);
-        spyOn(scope, 'parseInitData').andReturn(['123', 'noSuchBet']);
+        spyOn(realParentUrlParser, 'get').andReturn('noSuchBet');
         spyOn(scope, '$emit');
         scope.checkInitActions();
         expect(scope.$emit).not.toHaveBeenCalled();
-      });
-
-
-      describe('ProfileCtrl.parseInitData', function() {
-        it('should parse data and return an array', function() {
-          var data = '/?showBet=123';
-          var arr = scope.parseInitData(data);
-          expect(arr.length).toBe(1);
-          expect(arr[0]).toEqual('123');
-
-          data = '/?showBet=23%2C45';
-          arr = scope.parseInitData(data);
-          expect(arr.length).toBe(2);
-          expect(arr[1]).toEqual('45');
-        });
-
-        it('should return nothin if no real data passed in', function() {
-          var data = '/';
-          var arr = scope.parseInitData(data);
-          expect(arr.length).toBe(0);
-
-          data = '/?bogus=abc';
-          arr = scope.parseInitData(data);
-          expect(arr.length).toBe(0);
-
-          data = '/?bogus-abc';
-          arr = scope.parseInitData(data);
-          expect(arr.length).toBe(0);
-        });
       });
     });
   });
