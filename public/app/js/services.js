@@ -4,7 +4,6 @@
 
 angular.module('services', ['ng', 'ngResource'])
     .service('fb', FBSdk)
-    .service('loadMask', LoadMask)
     .service('videoAd', VideoAd)
     .service('parentUrlParser', ParentUrlParser);
 
@@ -164,6 +163,7 @@ angular.module('services').service('SwMask', function SwMask() {
     var maskEl = scope._swMaskEl = $(template);
     rootEl.append(maskEl);
     maskEl.fadeIn(options.duration);
+    return maskEl;
   }
 
   this.hide = function(scope, opts) {
@@ -178,6 +178,96 @@ angular.module('services').service('SwMask', function SwMask() {
   }
 });
 
+
+/**
+ * Create a spinner and show it at the center of the page.
+ * Note: This service has implicit dependency on jQuery, Spin.js and jQuery.spin.js.
+ */
+angular.module('services').service('SwSpinner', function SwSpinner(SwMask) {
+  var defaultOpts = {
+    root: '#body',
+    color: 'white',
+    top: '40%',
+    left: '50%',
+    duration: 300
+  };
+
+  var domStrSpinner =   '<div class="spinnerOuter" style="display:none;">' +
+                          '<div class="spinnerBg"></div>' +
+                          '<div class="innerMask">' +
+                              '<div class="text">Loading...</div>' +
+                          '</div>' +
+                        '</div>';
+
+  var successDomStr = '<div class="innerMask">' +
+                          '<div class="successTick"></div>' +
+                          '<div class="text">Done</div>' +
+                        '</div>';
+
+  var failedDomStr = '<div class="innerMask">' +
+                        '<div class="failedIcon"></div>' +
+                        '<div class="text">Sorry, please try again</div>' +
+                      '</div>';
+
+    // Creating a spinner component with default configurations.
+  function createSpinnerEl(opts) {
+   var el = $(domStrSpinner);
+   var innerMask = el.find('.innerMask');
+   innerMask.spin(opts);
+    return el;
+  }
+
+  this.show = function(scope, opts) {
+    var options = {};
+    angular.extend(options, defaultOpts, opts);
+    var spinnerEl = createSpinnerEl(options);
+    SwMask.show(scope, options);
+
+    var rootEl = $(options.root);
+    setTimeout(function() {
+      rootEl.append(spinnerEl);
+      spinnerEl.fadeIn(options.duration);
+    }, 1);
+  }
+
+  this.hide = function(scope, opts) {
+    var options = {};
+    angular.extend(options, defaultOpts, opts);
+    if (!options.keepMask) {
+      SwMask.hide(scope);
+    }
+
+  }
+
+  // // Show a success tick mark before hiding the load mask
+  // this.loadSuccess = function(opt) {
+  //   if (maskEl) {
+  //     maskEl.children('.innerMask').remove();
+  //     var domStr = this.successDomStr
+  //     if (opt) {
+  //       if (opt.text) {
+  //         domStr = this.successDomStr.replace('Done', opt.text);
+  //       }
+  //     }
+  //     maskEl.append(domStr);
+  //     $timeout(angular.bind(this, this.hide), 200);
+  //   }
+  // }
+
+  // this.loadFailed = function(opt) {
+  //   if (maskEl) {
+  //     maskEl.children('.innerMask').remove();
+  //     var domStr = this.failedDomStr
+  //     if (opt) {
+  //       if (opt.text) {
+  //         domStr = this.failedDomStr.replace('Sorry, please try again', opt.text);
+  //       }
+  //     }
+  //     maskEl.append(domStr);
+  //     $timeout(angular.bind(this, this.hide), 2000);
+  //   }
+  // }
+});
 /**
  * A load mask singleton class that is used to show and hide a loading mask
  * Note: This service has implicit dependency on jQuery, Spin.js and jQuery.spin.js.

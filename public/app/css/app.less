@@ -160,6 +160,63 @@ body {
   height: 100%;
   background-color: black;
 }
+.spinnerOuter {
+  position: absolute;
+  left: 45%;
+  top: 35%;
+  width: 150px;
+  height: 150px;
+
+  .spinnerBg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: .7;
+    .rounded-corners(10px);
+  }
+
+  .innerMask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+
+    .successTick {
+      width: 80px;
+      height: 75px;
+      background-image: url('../img/tick.png');
+      background-size: 100%;
+      position: absolute;
+      top: 20px;
+      left: 23%;
+    }
+
+    .failedIcon {
+      width: 80px;
+      height: 75px;
+      background-image: url('../img/exclamation.png');
+      background-size: 100%;
+      position: absolute;
+      top: 20px;
+      left: 23%;
+    }
+
+    .text{
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      bottom: 10%;
+      font-weight: bold;
+      color: white;
+      font-size: 15px;
+    }
+  }
+}
 
 /* CSS for loading mask */
 .loadMask {
