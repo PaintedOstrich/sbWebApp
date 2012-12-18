@@ -21,6 +21,44 @@ describe('services', function() {
   });
 
 
+  describe('SWMask', function() {
+    var swMask;
+
+    beforeEach(inject(function(SwMask) {
+      swMask = SwMask;
+    }));
+
+    it('should be defined', function() {
+      expect(swMask).toBeDefined();
+    });
+
+    it('should override right props', function() {
+      // Playing with angular.extend to make
+      // sure it works as intended
+      var dst = {};
+      var src1 = {a: 'a1'};
+      var src2 = {a: 'a2', b: 'b2'};
+
+      angular.extend(dst, src1);
+      expect(dst.a).toBe('a1');
+
+      dst = {};
+      angular.extend(dst, src1, src2);
+      expect(dst.a).toBe('a2');
+      expect(dst.b).toBe('b2');
+
+      dst = {};
+      angular.extend(dst, src2, src1);
+      expect(dst.a).toBe('a1');
+      expect(dst.b).toBe('b2');
+
+      dst = {};
+      angular.extend(dst, src2, src1, undefined);
+      expect(dst.a).toBe('a1');
+      expect(dst.b).toBe('b2');
+    })
+  })
+
   describe('VideoAd', function() {
     var videoAdService;
 

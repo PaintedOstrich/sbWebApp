@@ -6,7 +6,9 @@
   <link rel="stylesheet" href="app/css/app.css">
   <link rel="stylesheet" href="app/lib/bootstrap/bootstrap.css">
 </head>
-<body ng-controller="MainCtrl">
+<!-- For some reason I cannot get hold of the document.body within service. So use
+  this id as a work around-->
+<body ng-controller="MainCtrl" id="body">
   <!-- This invisible span will convey initial data such as
   opening bet invites if user arrives at our app by clicking an
   invite link -->
@@ -56,7 +58,7 @@
       });
     };
   </script>
-  
+
 
   <script src="//connect.facebook.net/en_US/all.js"></script>
   <!-- start Mixpanel --><script type="text/javascript">

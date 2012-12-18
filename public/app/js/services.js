@@ -131,6 +131,53 @@ function VideoAd() {
   }
 }
 
+
+/**
+ * SwMask service
+ * This service can create a semi-transparent mask over a component
+ * or full screen to prevent further user interactions
+ */
+angular.module('services').service('SwMask', function SwMask() {
+  var defaultOpts = {
+    // I have set the id of the body of the document to be 'body'
+    root: '#body',
+    duration: 300
+  }
+
+  var template = '<div class="swMask" style="display:none;"></div>';
+  /**
+   * Show the mask.
+   * @param  {obj} scope the scope of the controller invoking this service
+   *                     we use this to show and remove the correct mask.
+   * @param  {obj} opts additional options to be used
+   */
+  this.show = function(scope, opts) {
+    if (scope._swMaskEl) {
+      // Mask already exist on this scope, should not show again.
+      console.warn('trying to show swMask twice in scope:', scope);
+      return;
+    };
+
+    var options = {};
+    angular.extend(options, defaultOpts, opts);
+    var rootEl = $(options.root);
+    var maskEl = scope._swMaskEl = $(template);
+    rootEl.append(maskEl);
+    maskEl.fadeIn(options.duration);
+  }
+
+  this.hide = function(scope, opts) {
+    var options = {};
+    angular.extend(options, defaultOpts, opts);
+    if (scope._swMaskEl) {
+      scope._swMaskEl.fadeOut(options.duration, function() {
+        scope._swMaskEl.remove();
+        scope._swMaskEl = undefined;
+      });
+    };
+  }
+});
+
 /**
  * A load mask singleton class that is used to show and hide a loading mask
  * Note: This service has implicit dependency on jQuery, Spin.js and jQuery.spin.js.
