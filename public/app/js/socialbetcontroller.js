@@ -204,7 +204,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
  }
 
  $scope.postBet = function() {
-   // Just to make sure the bet amount is most up to date, since the 
+   // Just to make sure the bet amount is most up to date, since the
    // watcher will only be called async.
    $scope.calcBetAmount();
    if ($scope.bet.realAmount > $scope.user.balance) {

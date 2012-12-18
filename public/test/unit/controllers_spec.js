@@ -8,7 +8,7 @@ describe('SportsBet controllers', function() {
           toBeFunction: function(expected) {
             this.message = function () {
               return "Expected " + this.actual + " to be a function";
-            }
+            };
             return typeof this.actual == 'function';
           }
       });
@@ -27,15 +27,15 @@ describe('SportsBet controllers', function() {
 
     mockFb = {
       promises: {}
-    }
+    };
     mockFb.getLoginStatus = function() {
         mockFb.promises.getLoginStatus = $q.defer();
         return mockFb.promises.getLoginStatus.promise;
-    }
+    };
     mockFb.api = function() {
         mockFb.promises.api = $q.defer();
         return mockFb.promises.api.promise;
-    }
+    };
 
     mockLoadMask = {
       show: jasmine.createSpy('showMask'),
@@ -122,7 +122,7 @@ describe('SportsBet controllers', function() {
     it('should redirect to login page', function() {
       var location = {
         path: jasmine.createSpy('location')
-      }
+      };
       var ctrl = $ctrl(RouteCtrl,
           {$scope: scope, fb: mockFb, $location: location});
       scope.$apply(function() {
@@ -143,7 +143,7 @@ describe('SportsBet controllers', function() {
         loadUser : jasmine.createSpy().andReturn({
           then: function() {}
         })
-      }
+      };
       var mainScope = $rootScope.$new();
       var mainCtrl = $controller(MainCtrl,
           {$scope: mainScope, currentUser: mockCurrentUser, $location: mockLocation});
@@ -176,11 +176,11 @@ describe('SportsBet controllers', function() {
 
     describe('ProfileCtrl.checkInitActions', function() {
       var realParentUrlParser;
-      
+
       beforeEach(inject(function(parentUrlParser) {
-        realParentUrlParser = parentUrlParser
+        realParentUrlParser = parentUrlParser;
       }));
-      
+
       afterEach(function () {
         window.$ = undefined;
       });
@@ -197,7 +197,7 @@ describe('SportsBet controllers', function() {
           bets: {
             pendingUserAccept: [bet1, bet2]
           }
-        }
+        };
         spyOn(realParentUrlParser, 'get').andReturn('123%2C456%2CnoSuchBet');
         spyOn(scope, '$emit');
         scope.checkInitActions();
@@ -209,7 +209,7 @@ describe('SportsBet controllers', function() {
           bets: {
             pendingUserAccept: []
           }
-        }
+        };
         spyOn(realParentUrlParser, 'get').andReturn('noSuchBet');
         spyOn(scope, '$emit');
         scope.checkInitActions();

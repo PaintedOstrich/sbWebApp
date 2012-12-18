@@ -8,7 +8,7 @@ fi
 /usr/bin/osascript <<-EOF
 activate application "Terminal"
 tell application "Terminal"
-  do script "mate ." in window 1
+  do script "sublime ." in window 1
 end tell
 set x to 4
 repeat while x > 0

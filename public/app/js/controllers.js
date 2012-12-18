@@ -16,13 +16,13 @@ function MainCtrl($scope, currentUser, $location, parentUrlParser) {
   // Show profile page after the user name on nav bar is clicked
   $scope.showProfile = function() {
     $location.path('/profile');
-  }
+  };
 
   $scope.newBet = function() {
     if ($scope.user.isLoaded()) {
       $location.path('socialbet');
     }
-  }
+  };
 
   // Initialize parentUrlParser so its _data will be populated.
   parentUrlParser.init();
@@ -46,23 +46,23 @@ function BetInviteCtrl($scope, $timeout) {
   $scope.showBet = function(bet) {
     $scope.modalShown = true;
     $scope.focusedBet = bet;
-  }
+  };
 
   // Show multiple bets, one after another
   $scope.showMultipleBets = function(betArr) {
     $scope.betQueue = betArr;
     $scope.checkNextInQueue();
-  }
+  };
 
   $scope.acceptBet = function() {
     $scope.modalShown = false;
     console.log("TODO! implement accept bet logic!!");
-  }
+  };
 
   $scope.declineBet = function() {
     console.log("TODO! implement decline bet logic!!");
     $scope.modalShown = false;
-  }
+  };
 
   // Show next bet in betQueue if there is any.
   $scope.checkNextInQueue = function() {
@@ -72,13 +72,13 @@ function BetInviteCtrl($scope, $timeout) {
         $scope.modalShown = true;
         $scope.focusedBet = nextBet;
       }
-  }
+  };
 
   $scope.$watch('modalShown', function(newVal) {
-    if (newVal == false) {
+    if (newVal === false) {
       $timeout($scope.checkNextInQueue, 1000);
     }
-  })
+  });
 }
 BetInviteCtrl.$inject = ['$scope', '$timeout'];
 // ---------- End of widget controllers ------------------------
@@ -110,7 +110,7 @@ function LandingCtrl($scope, $location, fb) {
         $location.path('/socialbet');
       }
     });
-  }
+  };
 }
 LandingCtrl.$inject = ['$scope', '$location', 'fb'];
 
@@ -146,7 +146,7 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q, parentUrl
       });
     }
     return deferred.promise;
-  }
+  };
 
   // We need to load user name for each user that initiates the bet from facebook.
   // In addition, we also manually add a _betType field into the bet object for conveniece
@@ -173,26 +173,26 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q, parentUrl
      });
 
      allBets.forEach(function(bet) {
-       
+
        if (bet.initFBId != currentUser.id) {
          var promise1 = fb.api($scope, bet.initFBId + '?fields=name').
-             then(function(res) {bet.initFBName = res.name});
+             then(function(res) {bet.initFBName = res.name;});
           promises.push(promise1);
        }
 
        if (bet.callFBId != currentUser.id) {
          var promise2 = fb.api($scope, bet.callFBId + '?fields=name').
-             then(function(res) {bet.callFBName = res.name});
+             then(function(res) {bet.callFBName = res.name;});
          promises.push(promise2);
        }
      });
     return $q.all(promises);
-  }
+  };
 
   // Invoked when loadBetInfo failed in some way
   $scope.loadBetFailed = function() {
     loadMask.hide();
-  }
+  };
 
   // After bets are loaded, we check to see if there is any initial
   // bet invites we need to show up for the user to confirm (this
@@ -221,7 +221,7 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q, parentUrl
         }
       }
     }
-  }
+  };
 
   loadMask.show({text: 'Loading User Profile...'});
   $scope.loadUser().
@@ -231,7 +231,7 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q, parentUrl
   // fire bet invite clicked event to parent
   $scope.betInviteClicked = function(bet) {
     $scope.$emit('betInviteCliked', bet);
-  }
+  };
 }
 ProfileCtrl.$inject = ['$scope', '$location', 'fb', 'loadMask', 'currentUser', '$q', 'parentUrlParser'];
 
