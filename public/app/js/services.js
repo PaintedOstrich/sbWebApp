@@ -150,31 +150,26 @@ angular.module('services').service('SwMask', function SwMask() {
    *                     we use this to show and remove the correct mask.
    * @param  {obj} opts additional options to be used
    */
-  this.show = function(scope, opts) {
-    if (scope._swMaskEl) {
-      // Mask already exist on this scope, should not show again.
-      console.warn('trying to show swMask twice in scope:', scope);
-      return;
-    };
-
+  this.createMask = function(opts) {
     var options = {};
     angular.extend(options, defaultOpts, opts);
     var rootEl = $(options.root);
-    var maskEl = scope._swMaskEl = $(template);
+    var maskEl = $(template);
     rootEl.append(maskEl);
     maskEl.fadeIn(options.duration);
-    return maskEl;
-  }
-
-  this.hide = function(scope, opts) {
-    var options = {};
-    angular.extend(options, defaultOpts, opts);
-    if (scope._swMaskEl) {
-      scope._swMaskEl.fadeOut(options.duration, function() {
-        scope._swMaskEl.remove();
-        scope._swMaskEl = undefined;
-      });
-    };
+    return (function(el, defaultOptions) {
+        return {
+          hide: function(opts) {
+            var options = {};
+            angular.extend(options, defaultOptions, opts);
+            if (el) {
+              el.fadeOut(options.duration, function() {
+                el.remove();
+              })
+            }
+          }
+        }
+     }(maskEl, defaultOpts));
   }
 });
 
@@ -199,11 +194,6 @@ angular.module('services').service('SwSpinner', function SwSpinner(SwMask) {
                           '</div>' +
                         '</div>';
 
-  var successDomStr = '<div class="innerMask">' +
-                          '<div class="successTick"></div>' +
-                          '<div class="text">Done</div>' +
-                        '</div>';
-
   var failedDomStr = '<div class="innerMask">' +
                         '<div class="failedIcon"></div>' +
                         '<div class="text">Sorry, please try again</div>' +
@@ -217,56 +207,63 @@ angular.module('services').service('SwSpinner', function SwSpinner(SwMask) {
     return el;
   }
 
-  this.show = function(scope, opts) {
+  this.createSpinner = function(opts) {
     var options = {};
     angular.extend(options, defaultOpts, opts);
     var spinnerEl = createSpinnerEl(options);
-    SwMask.show(scope, options);
+    var maskObj = SwMask.createMask(options);
 
     var rootEl = $(options.root);
-    setTimeout(function() {
-      rootEl.append(spinnerEl);
-      spinnerEl.fadeIn(options.duration);
-    }, 1);
+    rootEl.append(spinnerEl);
+    spinnerEl.fadeIn(options.duration);
+
+    return (function(el, mask, defaultOptions) {
+      var successDomStr = '<div class="innerMask">' +
+                        '<div class="successTick"></div>' +
+                        '<div class="text">Done</div>' +
+                      '</div>';
+      var failedDomStr = '<div class="innerMask">' +
+                      '<div class="failedIcon"></div>' +
+                      '<div class="text">Sorry, please try again</div>' +
+                    '</div>';
+
+      // Helper function to extarct duplicated codes for loadSuccess and loadFailed
+      function beforeHide (self, opts, domStr, timeoutDuration) {
+          var options = angular.extend({}, opts);
+          if (el) {
+            el.children('.innerMask').remove();
+            if (options.text) {
+              domStr = domStr.replace('Done', options.text);
+            }
+            el.append(domStr);
+            setTimeout(angular.bind(self, self.hide), timeoutDuration);
+          }
+      }
+
+      return {
+        hide: function(opts) {
+          var options = {};
+          angular.extend(options, defaultOptions, opts);
+          if (mask) {
+            mask.hide(options);
+          }
+          if (el) {
+            el.fadeOut(options.duration, function() {
+              el.remove();
+            });
+          }
+        },
+
+        loadSuccess: function(opts) {
+          beforeHide(this, opts, successDomStr, 300);
+        },
+
+        loadFailed: function(opts) {
+          beforeHide(this, opts, failedDomStr,1500);
+        }
+      }
+    }(spinnerEl, maskObj, defaultOpts));
   }
-
-  this.hide = function(scope, opts) {
-    var options = {};
-    angular.extend(options, defaultOpts, opts);
-    if (!options.keepMask) {
-      SwMask.hide(scope);
-    }
-
-  }
-
-  // // Show a success tick mark before hiding the load mask
-  // this.loadSuccess = function(opt) {
-  //   if (maskEl) {
-  //     maskEl.children('.innerMask').remove();
-  //     var domStr = this.successDomStr
-  //     if (opt) {
-  //       if (opt.text) {
-  //         domStr = this.successDomStr.replace('Done', opt.text);
-  //       }
-  //     }
-  //     maskEl.append(domStr);
-  //     $timeout(angular.bind(this, this.hide), 200);
-  //   }
-  // }
-
-  // this.loadFailed = function(opt) {
-  //   if (maskEl) {
-  //     maskEl.children('.innerMask').remove();
-  //     var domStr = this.failedDomStr
-  //     if (opt) {
-  //       if (opt.text) {
-  //         domStr = this.failedDomStr.replace('Sorry, please try again', opt.text);
-  //       }
-  //     }
-  //     maskEl.append(domStr);
-  //     $timeout(angular.bind(this, this.hide), 2000);
-  //   }
-  // }
 });
 /**
  * A load mask singleton class that is used to show and hide a loading mask
