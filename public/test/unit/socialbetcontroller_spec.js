@@ -1,6 +1,6 @@
 describe('SocialBetCtrl', function() {
   var scope, ctrl, mockFb, mockQ,
-      mockUser, mockVideoAd, mockLocation, realParentUrlParser
+      mockUser, mockVideoAd, mockLocation, realParentUrlParser, mockSwSpinner;
 
   beforeEach(function() {
       // Services module need to be inluded so we can use the real url parser.
@@ -40,6 +40,10 @@ describe('SocialBetCtrl', function() {
   beforeEach(inject(function($rootScope, $controller, $q, parentUrlParser) {
     realParentUrlParser = parentUrlParser;
 
+    mockSwSpinner = {
+      createSpinner: jasmine.createSpy()
+    };
+
     mockBetAPI = {
       loadGames: jasmine.createSpy('loadGames'),
       placeBet: jasmine.createSpy('placeBet').andReturn({then: function() {}})
@@ -67,7 +71,7 @@ describe('SocialBetCtrl', function() {
        $location: mockLocation, parentUrlParser: realParentUrlParser});
     scope = mainScope.$new();
     ctrl = $controller(SocialBetCtrl,
-        {$scope: scope, fb: mockFb, SwSpinner: {},
+        {$scope: scope, fb: mockFb, SwSpinner: mockSwSpinner,
           betAPI: mockBetAPI, $q: mockQ,
           $timeout: undefined, currentUser: mockUser,
           videoAd: mockVideoAd});
