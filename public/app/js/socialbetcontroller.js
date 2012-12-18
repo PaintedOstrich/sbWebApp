@@ -1,5 +1,5 @@
 // Controller for social bet screen
-function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, videoAd) {
+function SocialBetCtrl($scope, fb, SwSpinner, betAPI, $q, $timeout, currentUser, videoAd) {
   $scope.$parent.showInfoBackground = true;
   // ------------------- Controller variables ----------------
   // Friends selected to place bet on.
@@ -33,6 +33,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
 
   $scope.pages = ['gameSelection', 'friendSelection'];
   $scope.currentPage = 0;
+  $scope._spinner = {};
   // ---------------------------------------------------------
 
   // ----------------- Initializing funciton ----------------
@@ -58,7 +59,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
     $scope.processFriendsData(friendRes);
     var gameRes = combinedData[1];
     $scope.processGameData(gameRes);
-    loadMask.loadSuccess();
+    $scope._spinner.loadSuccess();
   }
 
   $scope.processGameData = function(res) {
@@ -87,7 +88,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
   }
 
   $scope.initialize = function() {
-    loadMask.show({text: 'Loading friends and games...'});
+    $scope._spinner = SwSpinner.createSpinner({text: 'Loading friends and games...'});
     if (currentUser.isLoaded()) {
       $scope.loadData();
     } else {
@@ -184,13 +185,11 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
 
  // Show an advertisement for the user to watch.
  $scope.watchAd = function() {
-   loadMask.show({hideSpinner: true});
    videoAd.showAd({delegate: $scope});
  }
 
  // Delegate method to be called by videoAd service
  $scope.adEnded = function() {
-   loadMask.hide();
    $scope.doPostBet();
  }
 
@@ -282,7 +281,7 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
      spreadTeam1: $scope.bet.game.spreadTeam1,
      spreadTeam2: $scope.bet.game.spreadTeam2
    };
-   loadMask.show({text: 'Placing bets....'});
+   $scope._spinner = SwSpinner.createSpinner({text: 'Placing bets....'});
    betAPI.placeBet(bet).then($scope.networkSuccess, $scope.networkFailed);
  }
 
@@ -295,17 +294,17 @@ function SocialBetCtrl($scope, fb, loadMask, betAPI, $q, $timeout, currentUser, 
  }
 
  $scope.networkFailed = function(err) {
-   loadMask.loadFailed({text: 'Failed, please check your connections'});
+   $scope._spinner.loadFailed({text: 'Failed, please check your connections'});
  }
 
  $scope.betFailed = function(err) {
-   loadMask.loadFailed({text: 'Failed to place bet. Please try again.'});
+   $scope._spinner.loadFailed({text: 'Failed to place bet. Please try again.'});
  }
 
  $scope.betSuccess = function(res) {
-   loadMask.loadSuccess({text: 'Bet posted, redirecting...'});
+   $scope._spinner.loadSuccess({text: 'Bet posted, redirecting...'});
    $timeout(angular.bind($scope.$parent, $scope.$parent.showProfile), 500);
  }
 
 }
-SocialBetCtrl.$inject = ['$scope',  'fb', 'loadMask', 'betAPI', '$q', '$timeout', 'currentUser', 'videoAd'];
+SocialBetCtrl.$inject = ['$scope',  'fb', 'SwSpinner', 'betAPI', '$q', '$timeout', 'currentUser', 'videoAd'];

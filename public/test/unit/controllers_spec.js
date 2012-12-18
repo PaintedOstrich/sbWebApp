@@ -19,7 +19,7 @@ describe('SportsBet controllers', function() {
 
   // The fb service mock that does nothing but returning a promise,
   // imitating the api of actual fb service in services.js.
-  var mockFb, mockLoadMask, mockLocation;
+  var mockFb, mockLocation;
   beforeEach(inject(function($q){
     mockLocation = {
       path: jasmine.createSpy('location')
@@ -35,13 +35,6 @@ describe('SportsBet controllers', function() {
     mockFb.api = function() {
         mockFb.promises.api = $q.defer();
         return mockFb.promises.api.promise;
-    };
-
-    mockLoadMask = {
-      show: jasmine.createSpy('showMask'),
-      hide: jasmine.createSpy('hideMask'),
-      loadSuccess: jasmine.createSpy('loadSuccess'),
-      loadFailed: jasmine.createSpy('loadFailed')
     };
   }));
 
@@ -150,7 +143,7 @@ describe('SportsBet controllers', function() {
       scope = mainScope.$new();
       ctrl = $controller(ProfileCtrl,
           {$scope: scope, fb: mockFb, $location: mockLocation,
-              loadMask: mockLoadMask, currentUser: mockCurrentUser});
+              SwSpinner: {}, currentUser: mockCurrentUser});
     }));
 
     it('should set showInfoBackground to true on parent', function() {

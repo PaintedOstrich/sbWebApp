@@ -1,5 +1,5 @@
 describe('SocialBetCtrl', function() {
-  var scope, ctrl, mockFb, mockLoadMask, mockQ,
+  var scope, ctrl, mockFb, mockQ,
       mockUser, mockVideoAd, mockLocation, realParentUrlParser
 
   beforeEach(function() {
@@ -39,10 +39,6 @@ describe('SocialBetCtrl', function() {
 
   beforeEach(inject(function($rootScope, $controller, $q, parentUrlParser) {
     realParentUrlParser = parentUrlParser;
-    mockLoadMask = {
-      show: jasmine.createSpy('showMask'),
-      hide: jasmine.createSpy('hideMask')
-    };
 
     mockBetAPI = {
       loadGames: jasmine.createSpy('loadGames'),
@@ -71,7 +67,7 @@ describe('SocialBetCtrl', function() {
        $location: mockLocation, parentUrlParser: realParentUrlParser});
     scope = mainScope.$new();
     ctrl = $controller(SocialBetCtrl,
-        {$scope: scope, fb: mockFb, loadMask: mockLoadMask,
+        {$scope: scope, fb: mockFb, SwSpinner: {},
           betAPI: mockBetAPI, $q: mockQ,
           $timeout: undefined, currentUser: mockUser,
           videoAd: mockVideoAd});
@@ -224,7 +220,6 @@ describe('SocialBetCtrl', function() {
     it('should show mask and invoke videoAd.showAd', function() {
       scope.watchAd();
       expect(mockVideoAd.showAd).toHaveBeenCalled();
-      expect(mockLoadMask.show).toHaveBeenCalled();
     });
   });
 

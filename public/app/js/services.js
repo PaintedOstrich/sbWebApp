@@ -194,16 +194,15 @@ angular.module('services').service('SwSpinner', function SwSpinner(SwMask) {
                           '</div>' +
                         '</div>';
 
-  var failedDomStr = '<div class="innerMask">' +
-                        '<div class="failedIcon"></div>' +
-                        '<div class="text">Sorry, please try again</div>' +
-                      '</div>';
-
     // Creating a spinner component with default configurations.
   function createSpinnerEl(opts) {
-   var el = $(domStrSpinner);
-   var innerMask = el.find('.innerMask');
-   innerMask.spin(opts);
+    var domStr = domStrSpinner;
+    if (opts && opts.text) {
+      domStr = domStrSpinner.replace('Loading...', opts.text);
+    }
+    var el = $(domStr);
+    var innerMask = el.find('.innerMask');
+    innerMask.spin(opts);
     return el;
   }
 
@@ -224,17 +223,13 @@ angular.module('services').service('SwSpinner', function SwSpinner(SwMask) {
                       '</div>';
       var failedDomStr = '<div class="innerMask">' +
                       '<div class="failedIcon"></div>' +
-                      '<div class="text">Sorry, please try again</div>' +
+                      '<div class="text">Failed, please try again</div>' +
                     '</div>';
 
       // Helper function to extarct duplicated codes for loadSuccess and loadFailed
-      function beforeHide (self, opts, domStr, timeoutDuration) {
-          var options = angular.extend({}, opts);
+      function beforeHide (self, domStr, timeoutDuration) {
           if (el) {
             el.children('.innerMask').remove();
-            if (options.text) {
-              domStr = domStr.replace('Done', options.text);
-            }
             el.append(domStr);
             setTimeout(angular.bind(self, self.hide), timeoutDuration);
           }
@@ -255,11 +250,19 @@ angular.module('services').service('SwSpinner', function SwSpinner(SwMask) {
         },
 
         loadSuccess: function(opts) {
-          beforeHide(this, opts, successDomStr, 300);
+          var domStr = successDomStr;
+          if (opts && opts.text) {
+            domStr = successDomStr.replace('Done', opts.text);
+          }
+          beforeHide(this, domStr, 300);
         },
 
         loadFailed: function(opts) {
-          beforeHide(this, opts, failedDomStr,1500);
+          var domStr = failedDomStr;
+          if (opts && opts.text) {
+            domStr = failedDomStr.replace('Failed, please try again', opts.text);
+          }
+          beforeHide(this, domStr, 1500);
         }
       }
     }(spinnerEl, maskObj, defaultOpts));

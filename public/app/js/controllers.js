@@ -116,12 +116,14 @@ LandingCtrl.$inject = ['$scope', '$location', 'fb'];
 
 
 // Controller for user profile screen
-function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q, parentUrlParser) {
+function ProfileCtrl($scope, $location, fb, SwSpinner, currentUser, $q, parentUrlParser) {
   $scope.$parent.showInfoBackground = true;
   $scope.currentTab = 'active';
   $scope.betTemplateUrl = 'app/partials/profile/bet.html';
 
   $scope.user = {};
+  // Spinner object created by SwSpinner service later in initiation.
+  $scope._spinner = {};
 
   $scope.loadUser = function() {
     var deferred = $q.defer();
@@ -141,7 +143,7 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q, parentUrl
           mixpanel.track('totalAppLoads', { uid: $scope.user.id});
         }
       }, function() {
-        loadMask.hide();
+        $scope._spinner.hide();
         deferred.reject();
       });
     }
@@ -191,14 +193,14 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q, parentUrl
 
   // Invoked when loadBetInfo failed in some way
   $scope.loadBetFailed = function() {
-    loadMask.hide();
+    $scope._spinner.loadFailed({text: 'failed to load bet informations'})
   };
 
   // After bets are loaded, we check to see if there is any initial
   // bet invites we need to show up for the user to confirm (this
   // happens when user arrives to our app by clicking on an invite)
   $scope.checkInitActions = function() {
-    loadMask.loadSuccess({text: 'User Info Loaded'});
+    $scope._spinner.loadSuccess();
     var data;
     if (data = parentUrlParser.get('showbet')) {
       // Need to clear it so next time we will not show these notifications
@@ -223,7 +225,7 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q, parentUrl
     }
   };
 
-  loadMask.show({text: 'Loading User Profile...'});
+  $scope._spinner = SwSpinner.createSpinner({text: 'Loading User Profile...'});
   $scope.loadUser().
       then($scope.loadBetInfo).
       then($scope.checkInitActions, $scope.loadBetFailed);
@@ -233,7 +235,7 @@ function ProfileCtrl($scope, $location, fb, loadMask, currentUser, $q, parentUrl
     $scope.$emit('betInviteCliked', bet);
   };
 }
-ProfileCtrl.$inject = ['$scope', '$location', 'fb', 'loadMask', 'currentUser', '$q', 'parentUrlParser'];
+ProfileCtrl.$inject = ['$scope', '$location', 'fb', 'SwSpinner', 'currentUser', '$q', 'parentUrlParser'];
 
 
 
