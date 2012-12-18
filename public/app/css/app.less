@@ -4,6 +4,7 @@
 @panelWidth: 90%;
 @mainPanelWidth: 900px;
 @loadMaskZIndex: 99990;
+@activeTabColor: rgb(249,249,250);
 
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none;
@@ -64,6 +65,25 @@ body {
 }
 
 /* CSS for widgets that may be used in multiple views */
+.nav-tabs {
+  margin-left: 24px !important;
+  margin-right: 24px;
+}
+
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover{
+background-color: @activeTabColor !important;
+border-bottom-color: transparent !important; 
+}
+
+.nav-tabs > li > a{
+background-color: #EBEBEB !important;
+border: 1px solid lightGrey !important;
+}
+
+.nav-tabs > li > a:hover{
+background-color: #FAFAFA !important;
+border: 1px solid lightGrey !important;
+}
 
 .gameChip {
   height: 75px;
@@ -234,6 +254,10 @@ body {
   position: relative;
 }
 
+.nav{
+  margin-bottom: 0px !important;
+}
+
 .navbar {
   margin-bottom: 0 !important;
   .navbar-inner {
@@ -274,6 +298,7 @@ body {
   width: 100%;
   height: 650px;
   opacity: 0.5;
+  background-image: url('../img/debut_dark.png');
   background-color: white;
 }
 
@@ -306,32 +331,38 @@ body {
 .profilePagePanel {
   position: relative;
   @leftIndent: 40px;
+
 /*  .infoBackground {
     top: 20px !important;
   }*/
   .profileHeader {
     position: relative;
-    margin-left: @leftIndent;
+    margin-left: 20px;
+    margin-right: 520px;
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid #DDD;
     //.round-block(@panelWidth);
 
     .profileImg {
       display: inline-block;
-      border: 2px blue solid;
-      width: 100px;
-      height: 130px;
+      border: 1px rgb(69,69,69) solid;
+      width: 90px;
+      height: 90px;
       margin: 10px;
-      .rounded-corners (5px);
+      .rounded-corners (2px);
     }
 
     .profileInfo {
       display: inline-block;
       vertical-align: middle;
       line-height: 1.5;
-      text-shadow: 1px 1px 2px gray;
       .username {
         font-weight: bold;
         font-size: 18px;
-        font-family: Zapf Chancery, cursive;
+        font-family: arial, sans-serif;
+        margin-bottom: 2px;
+        margin-top: -5px;
       }
       .betBtn {
         margin-top: 10px;
@@ -346,7 +377,7 @@ body {
     ul {
       li {
         &:first-child {
-         margin-left: @leftIndent;
+         margin-left: 20px;
         }
         a {
           font-weight: bold;
@@ -356,41 +387,49 @@ body {
     .tabContent {
        //.round-block(100%, 4px);
        overflow: auto;
+       padding-top: 12px;
+       margin-left: 20px;
+       margin-right: 20px;
        max-height: 350px;
        min-height: 120px;
+       background-color: @activeTabColor;
+       border-left: 1px solid #DDD;
+       border-right: 1px solid #DDD;
+       .rounded-corners (4px);
        .noBets {
          text-align: center;
          margin-top: 100px;
          font-size: 1.5em;
          font-weight: bold;
-         text-shadow: 0px 1px 1px #474442;
+
          color: #BBB;
          height: 40px;
        }
        .betChip {
          cursor: pointer;
          width: 265px;
-         height: 140px;
-         border-style: solid;
-         border-color: #DDD;
-         border-left-width: 2px;
-         border-right-width: 2px;
-         border-bottom-width: 2px;
-         border-top-width: 0px;
-         .rounded-corners (5px);
-         .box-shadow(0px 2px 2px 1px grey);
+         height: 160px;
+         background: rgb(251,251,253);
+         border: 1px solid #BEBEBE;
+         .rounded-corners (4px);
          float: left;
-         margin-left: 20px;
+         margin-left: 16px;
+         margin-top: 3px;
          margin-bottom: 20px;
+         .box-shadow(0px 1px 3px rgba(0, 0, 0, 0.1));
          &:hover {
-           background-color: #F0F8FF;
+          .box-shadow(0px 1px 3px rgba(0, 0, 0, 0.3));
+           background: rgb(255,255,255);
          }
          .otherUserName {
+          color: black;
+          font-weight: bold;
+          border-bottom: 1px solid lightGray;
            text-align: center;
-           font-weight: bold;
-           margin-bottom: 6px;
-           font-size: 1.1em;
+           margin-bottom: 8px;
+           font-size: 1.2em;
            height: 20px;
+           padding: 4px;
          }
          .body {
            height: 95px;
@@ -401,7 +440,7 @@ body {
            .vsText {
              width: 20%;
              font-weight: bold;
-             font-size: 1.3em;
+             font-size: 0.8em;
            }
            .right {
              float: right;
@@ -415,7 +454,7 @@ body {
              height: 40px;
              border-style: solid;
              border-color: #6D84B4;
-             border-width: 3px;
+             border-width: 1px;
              .rounded-corners(4px);
              width: 50px;
              height: 50px;
@@ -425,8 +464,9 @@ body {
            }
          }
          .betAmount {
-           width: 100%;
-           background-color: gray;
+           padding: 3px;
+           margin: 10px;
+           margin-top: -5px;
            font-weight: bold;
            text-align: center;
          }
